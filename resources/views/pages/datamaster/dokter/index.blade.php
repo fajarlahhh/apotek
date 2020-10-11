@@ -1,6 +1,6 @@
 @extends('pages.datamaster.main')
 
-@section('title', ' | Jenis Dokumen')
+@section('title', ' | Dokter')
 
 @push('css')
 	<link href="/assets/plugins/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
@@ -8,11 +8,11 @@
 @endpush
 
 @section('page')
-	<li class="breadcrumb-item active">Jenis Dokumen</li>
+	<li class="breadcrumb-item active">Dokter</li>
 @endsection
 
 @section('header')
-	<h1 class="page-header">Jenis Dokumen</h1>
+	<h1 class="page-header">Dokter</h1>
 @endsection
 
 @section('subcontent')
@@ -23,12 +23,12 @@
             <div class="col-xl-3 col-sm-6">
                 @role('user|super-admin|supervisor')
                 <div class="form-inline">
-                    <a href="{{ route('jenisdokumen.tambah') }}" class="btn btn-primary"><i class="fad fa-plus"></i> Tambah</a>
+                    <a href="{{ route('dokter.tambah') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</a>
                 </div>
                 @endrole
             </div>
             <div class="col-xl-9 col-sm-6">
-                <form id="frm-cari" action="{{ route('jenisdokumen') }}" method="GET">
+                <form id="frm-cari" action="{{ route('dokter') }}" method="GET">
                     <div class="form-inline pull-right">
                         <div class="form-group">
                             <select class="form-control selectpicker cari" name="tipe" data-live-search="true" data-style="btn-warning" data-width="100%">
@@ -40,7 +40,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control cari" name="cari" placeholder="Cari" aria-label="Sizing example input" autocomplete="off" aria-describedby="basic-addon2" value="{{ $cari }}">
                             <div class="input-group-append">
-                                <span class="input-group-text" id="basic-addon2"><i class="fad fa-search"></i></span>
+                                <span class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i></span>
                             </div>
                         </div>
                     </div>
@@ -53,7 +53,8 @@
             <thead>
                 <tr>
                     <th class="width-80">No.</th>
-                    <th>Jenis Dokumen</th>
+                    <th>Nama</th>
+                    <th>Bidang</th>
                     @role('super-admin|supervisor|user')
                     <th class="width-90"></th>
                     @endif
@@ -64,20 +65,21 @@
                 <tr>
                     <td class="align-middle">{{ ++$i }}</td>
                     <td class="align-middle">
-                        <span data-toggle="tooltip" data-container="body" data-placement="right" data-html="true" data-placement="top" title="{!! $row->pengguna->pegawai->nm_pegawai.", <br><small>".$row->updated_at."</small>" !!}">{{ $row->jenis_dokumen_uraian }}</span>
+                        <span data-toggle="tooltip" data-container="body" data-placement="right" data-html="true" data-placement="top" title="{!! $row->pengguna->pengguna_nama.", <br><small>".$row->updated_at."</small>" !!}">{{ $row->dokter_nama }}</span>
                     </td>
+                    <td class="align-middle">{{ $row->dokter_bidang }}</td>
                     @role('super-admin|supervisor|user')
                     <td class="with-btn-group align-middle" nowrap>
                         <div class="btn-group">
                             @if ($row->trashed())
-                            <a href="javascript:;" data-id="{{ $row->jenis_dokumen_id }}" data-no="{{ $i }}" class="btn btn-danger btn-sm btn-restore"> Restore</a>
+                            <a href="javascript:;" data-id="{{ $row->dokter_id }}" data-no="{{ $i }}" class="btn btn-danger btn-sm btn-restore"> Restore</a>
                             @else
-                            <a href="{{ route('jenisdokumen.edit', array('id' => $row->jenis_dokumen_id)) }}" class="btn btn-aqua btn-sm"> Edit</a>
+                            <a href="{{ route('dokter.edit', array('id' => $row->dokter_id)) }}" class="btn btn-aqua btn-sm"> Edit</a>
                             <a href="#" class="btn btn-white btn-sm dropdown-toggle width-30 no-caret" data-toggle="dropdown">
                             <span class="caret"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="javascript:;" data-id="{{ $row->jenis_dokumen_id }}" data-no="{{ $i }}" class="btn-hapus dropdown-item" > Hapus</a>
+                                <a href="javascript:;" data-id="{{ $row->dokter_id }}" data-no="{{ $i }}" class="btn-hapus dropdown-item" > Hapus</a>
                             </div>
                             @endif
                         </div>
@@ -121,7 +123,7 @@
                     }
                 });
                 $.ajax({
-                    url: "/jenisdokumen/restore",
+                    url: "/dokter/restore",
                     type: "POST",
                     data: {
                         "_method": 'PATCH',
@@ -162,7 +164,7 @@
                     }
                 });
                 $.ajax({
-                    url: "/jenisdokumen/hapus",
+                    url: "/dokter/hapus",
                     type: "POST",
                     data: {
                         "_method": 'DELETE',

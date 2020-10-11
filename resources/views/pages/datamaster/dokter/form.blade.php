@@ -1,6 +1,6 @@
 @extends('pages.datamaster.main')
 
-@section('title', ' | '.$aksi.' PBF')
+@section('title', ' | '.$aksi.' Dokter')
 
 @push('css')
 	<link href="/assets/plugins/parsleyjs/src/parsley.css" rel="stylesheet" />
@@ -8,12 +8,12 @@
 @endpush
 
 @section('page')
-    <li class="breadcrumb-item">PBF</li>
+    <li class="breadcrumb-item">Dokter</li>
 	<li class="breadcrumb-item active">{{ $aksi }} Data</li>
 @endsection
 
 @section('header')
-    <h1 class="page-header">PBF <small>{{ $aksi }} Data</small></h1>
+    <h1 class="page-header">Dokter <small>{{ $aksi }} Data</small></h1>
 @endsection
 
 @section('subcontent')
@@ -25,23 +25,19 @@
             <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
         </div>
     </div>
-    <form action="{{ route('pbf.simpan') }}" method="post" data-parsley-validate="true" data-parsley-errors-messages-disabled="">
+    <form action="{{ route('dokter.simpan') }}" method="post" data-parsley-validate="true" data-parsley-errors-messages-disabled="">
         @if ($aksi == 'Edit')
-        <input type="hidden" name="id" value="{{ $data->pbf_id }}">
+        <input type="hidden" name="id" value="{{ $data->dokter_id }}">
         @endif
         @csrf
         <div class="panel-body">
             <div class="form-group">
                 <label class="control-label">Nama</label>
-                <input class="form-control" type="text" name="pbf_nama" value="{{ old('pbf_nama')? old('pbf_nama'): ($aksi == 'Edit'? $data->pbf_nama: '') }}" autocomplete="off" required/>
+                <input class="form-control" type="text" name="dokter_nama" value="{{ old('dokter_nama')? old('dokter_nama'): ($aksi == 'Edit'? $data->dokter_nama: '') }}" autocomplete="off" required/>
             </div>
             <div class="form-group">
-                <label class="control-label">Alamat</label>
-                <input class="form-control" type="text" name="pbf_alamat" value="{{ old('pbf_alamat')? old('pbf_alamat'): ($aksi == 'Edit'? $data->pbf_alamat: '') }}" autocomplete="off" required/>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Kontak</label>
-                <input class="form-control" type="text" name="pbf_kontak" value="{{ old('pbf_kontak')? old('pbf_kontak'): ($aksi == 'Edit'? $data->pbf_kontak: '') }}" autocomplete="off" required/>
+                <label class="control-label">Bidang</label>
+                <input class="form-control" type="text" name="dokter_bidang" value="{{ old('dokter_bidang')? old('dokter_bidang'): ($aksi == 'Edit'? $data->dokter_bidang: '') }}" autocomplete="off" required/>
             </div>
         </div>
         <div class="panel-footer">

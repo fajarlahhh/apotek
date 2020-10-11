@@ -8,24 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Barang extends Model
+class Dokter extends Model
 {
     use HasFactory;
     use SoftDeletes;
     use Pengguna;
     //
-    protected $table = 'barang';
-    protected $primaryKey = 'barang_id';
-
-    public function jenis_barang()
-    {
-        return $this->belongsTo('App\Models\JenisBarang', 'jenis_barang_id', 'jenis_barang_id');
-    }
-
-    public function pbf()
-    {
-        return $this->belongsTo('App\Models\Pbf', 'pbf_id', 'pbf_id');
-    }
+    protected $table = 'dokter';
+    protected $primaryKey = 'dokter_id';
 
     public function pengguna()
     {

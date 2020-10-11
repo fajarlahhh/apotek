@@ -12,15 +12,10 @@ class PbfController extends Controller
     public function index(Request $req)
 	{
         $tipe = $req->tipe? $req->tipe: 0;
-        $konsinyasi = $req->konsinyasi? $req->konsinyasi: 0;
 
         $data = Pbf::with('pengguna')->where(function($q) use ($req){
             $q->where('pbf_nama', 'like', '%'.$req->cari.'%')->orWhere('pbf_alamat', 'like', '%'.$req->cari.'%');
         });
-
-        if($konsinyasi != 'semua'){
-            $data = $data->where('konsinyasi', $konsinyasi);
-        }
 
         switch ($tipe) {
             case '1':
@@ -50,7 +45,7 @@ class PbfController extends Controller
         ]);
     }
 
-	public function do_tambah(Request $req)
+	public function simpan(Request $req)
 	{
         $req->validate([
             'pbf_nama' => 'required',
@@ -59,14 +54,22 @@ class PbfController extends Controller
         ]);
 
         try{
-            $data = new Pbf();
-            $data->pbf_nama = $req->get('pbf_nama');
-            $data->pbf_alamat = $req->get('pbf_alamat');
-            $data->pbf_kontak = $req->get('pbf_kontak');
-            $data->konsinyasi = $req->get('konsinyasi');
-            $data->save();
+            if ($req->get('id')) {
+                $data = Pbf::findOrFail($req->get('id'));
+                $data->pbf_nama = $req->get('pbf_nama');
+                $data->pbf_alamat = $req->get('pbf_alamat');
+                $data->pbf_kontak = $req->get('pbf_kontak');
+                $data->save();
+                toast('Berhasil mengedit data', 'success')->autoClose(2000);
+            }else{
+                $data = new Pbf();
+                $data->pbf_nama = $req->get('pbf_nama');
+                $data->pbf_alamat = $req->get('pbf_alamat');
+                $data->pbf_kontak = $req->get('pbf_kontak');
+                $data->save();
 
-            toast('Berhasil menambah data', 'success')->autoClose(2000);
+                toast('Berhasil menambah data', 'success')->autoClose(2000);
+            }
             return redirect($req->get('redirect')? $req->get('redirect'): 'pbf');
 		}catch(\Exception $e){
             alert()->error('Tambah Data Gagal', $e->getMessage());
@@ -81,30 +84,6 @@ class PbfController extends Controller
             'back' => Str::contains(url()->previous(), ['pbf/tambah', 'pbf/edit'])? '/pbf': url()->previous(),
             'aksi' => 'Edit'
         ]);
-    }
-
-	public function do_edit(Request $req)
-	{
-        $req->validate([
-            'id' => 'required',
-            'pbf_nama' => 'required',
-            'pbf_alamat' => 'required',
-            'pbf_kontak' => 'required'
-        ]);
-
-		try{
-            $data = Pbf::findOrFail($req->get('id'));
-            $data->pbf_nama = $req->get('pbf_nama');
-            $data->pbf_alamat = $req->get('pbf_alamat');
-            $data->pbf_kontak = $req->get('pbf_kontak');
-            $data->konsinyasi = $req->get('konsinyasi');
-            $data->save();
-            toast('Berhasil mengedit data', 'success')->autoClose(2000);
-            return redirect($req->get('redirect')? $req->get('redirect'): 'pbf');
-		}catch(\Exception $e){
-            alert()->error('Edit Data Gagal', $e->getMessage());
-            return redirect()->back()->withInput();
-        }
     }
 
 	public function hapus(Request $req)

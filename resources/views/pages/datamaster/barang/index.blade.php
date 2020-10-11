@@ -32,9 +32,17 @@
                     <div class="form-inline pull-right">
                         <div class="form-group">
                             <select class="form-control selectpicker cari" name="jenis" data-live-search="true" data-style="btn-success" data-width="100%">
-                                <option value="semua" {{ $jenis == '0'? 'selected': '' }}>Semua Jenis</option>
+                                <option value="semua" {{ $jenis == 'semua'? 'selected': '' }}>Semua Jenis</option>
                                 @foreach ($jenis_barang as $row)
                                 <option value="{{ $row->jenis_barang_id }}" {{ $jenis == $row->jenis_barang_id? 'selected': '' }}>{{ $row->jenis_barang_uraian }}</option>
+                                @endforeach
+                            </select>
+                        </div>&nbsp;
+                        <div class="form-group">
+                            <select class="form-control selectpicker cari" name="konsinyasi" data-live-search="true" data-style="btn-danger" data-width="100%">
+                                <option value="semua" {{ $konsinyasi == 'semua'? 'selected': '' }}>Semua Konsinyasi</option>
+                                @foreach ($pbf as $row)
+                                <option value="{{ $row->pbf_id }}" {{ $konsinyasi == $row->pbf_id? 'selected': '' }}>{{ $row->pbf_nama }}</option>
                                 @endforeach
                             </select>
                         </div>&nbsp;
@@ -60,13 +68,16 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th class="width-80">No.</th>
+                    <th class="width-60">No.</th>
                     <th>Nama</th>
-                    <th>Satuan</th>
-                    <th>Stok Minimal</th>
-                    <th>Harga Jual</th>
+                    <th class="text-nowrap">Stok Minimal</th>
+                    <th class="text-nowrap">Satuan</th>
+                    <th class="text-nowrap">Harga Jual</th>
+                    <th class="text-nowrap">Satuan Racikan</th>
+                    <th class="text-nowrap">Harga Racikan</th>
+                    <th class="text-nowrap">Jenis Barang</th>
+                    <th>Konsinyasi</th>
                     <th>Keterangan</th>
-                    <th>Jenis Barang</th>
                     @role('super-admin|supervisor|user')
                     <th class="width-90"></th>
                     @endif
@@ -79,11 +90,14 @@
                     <td class="align-middle">
                         <span data-toggle="tooltip" data-container="body" data-placement="right" data-html="true" data-placement="top" title="{!! $row->pengguna->pengguna_nama.", <br><small>".$row->updated_at."</small>" !!}">{{ $row->barang_nama }}</span>
                     </td>
-                    <td class="align-middle">{{ $row->barang_satuan }}</td>
-                    <td class="align-middle text-center">{{ number_format($row->barang_stok_min) }}</td>
-                    <td class="align-middle text-right">{{ number_format($row->barang_harga_jual, 2) }}</td>
-                    <td class="align-middle">{{ $row->barang_keterangan }}</td>
+                    <td class="align-middle text-center text-nowrap">{{ number_format($row->barang_stok_min) }}</td>
+                    <td class="align-middle">{{ $row->barang_satuan_1 }}</td>
+                    <td class="align-middle text-right text-nowrap">{{ number_format($row->barang_harga_jual_1, 2) }}</td>
+                    <td class="align-middle">{{ $row->barang_satuan_2 }}</td>
+                    <td class="align-middle text-right text-nowrap">{{ number_format($row->barang_harga_jual_2, 2) }}</td>
                     <td class="align-middle">{{ $row->jenis_barang? $row->jenis_barang->jenis_barang_uraian: "" }}</td>
+                    <td class="align-middle">{{ $row->pbf? $row->pbf->pbf_nama: "" }}</td>
+                    <td class="align-middle">{{ $row->barang_keterangan }}</td>
                     @role('super-admin|supervisor|user')
                     <td class="with-btn-group align-middle" nowrap>
                         <div class="btn-group">

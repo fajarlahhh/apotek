@@ -25,8 +25,7 @@
             <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
         </div>
     </div>
-    <form action="{{ route('pengguna.'.strtolower($aksi)) }}" method="post" data-parsley-validate="true" data-parsley-errors-messages-disabled="">
-        @method(strtolower($aksi) == 'tambah'? 'POST': 'PUT')
+    <form action="{{ route('pengguna.simpan') }}" method="post" data-parsley-validate="true" data-parsley-errors-messages-disabled="">
         @csrf
         <div class="panel-body">
             <input type="hidden" name="redirect" value="{{ $back }}">
@@ -45,7 +44,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Kata Sandi</label>
-                        <input class="form-control" type="password" name="pengguna_sandi" autocomplete="off" id="pengguna_sandi" data-parsley-minlength="5" required />
+                        <input class="form-control" type="password" name="pengguna_sandi" autocomplete="off" id="pengguna_sandi" data-parsley-minlength="5" {{ $aksi == 'Tambah'? 'required': '' }} />
                     </div>
                     <div class="form-group">
                         <label class="control-label">Level</label>

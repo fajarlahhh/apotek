@@ -2,18 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\JenisBarang;
+use App\Models\Dokter;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
-class JenisbarangController extends Controller
+class DokterController extends Controller
 {
     //
     public function index(Request $req)
 	{
         $tipe = $req->tipe? $req->tipe: 0;
+        $konsinyasi = $req->konsinyasi? $req->konsinyasi: 0;
 
-        $data = JenisBarang::with('pengguna')->where('jenis_barang_uraian', 'like', '%'.$req->cari.'%');
+        $data = Dokter::with('pengguna')->where(function($q) use ($req){
+            $q->where('dokter_nama', 'like', '%'.$req->cari.'%')->orWhere('dokter_bidang', 'like', '%'.$req->cari.'%');
+        });
+
+        if($konsinyasi != 'semua'){
+            $data = $data->where('konsinyasi', $konsinyasi);
+        }
 
         switch ($tipe) {
             case '1':
@@ -25,10 +32,11 @@ class JenisbarangController extends Controller
         }
 
         $data = $data->paginate(10);
-        $data->appends([$req->cari, $req->tipe]);
-        return view('pages.datamaster.jenisbarang.index', [
+        $data->appends([$req->cari, $req->tipe, $req->konsinyasi]);
+        return view('pages.datamaster.dokter.index', [
             'data' => $data,
             'i' => ($req->input('page', 1) - 1) * 10,
+            'konsinyasi' => $konsinyasi,
             'tipe' => $tipe,
             'cari' => $req->cari,
         ]);
@@ -36,8 +44,8 @@ class JenisbarangController extends Controller
 
 	public function tambah(Request $req)
 	{
-        return view('pages.datamaster.jenisbarang.form', [
-            'back' => Str::contains(url()->previous(), ['jenisbarang/tambah', 'jenisbarang/edit'])? '/jenisbarang': url()->previous(),
+        return view('pages.datamaster.dokter.form', [
+            'back' => Str::contains(url()->previous(), ['dokter/tambah', 'dokter/edit'])? '/dokter': url()->previous(),
             'aksi' => 'Tambah'
         ]);
     }
@@ -45,24 +53,26 @@ class JenisbarangController extends Controller
 	public function simpan(Request $req)
 	{
         $req->validate([
-            'jenis_barang_uraian' => 'required'
+            'dokter_nama' => 'required',
+            'dokter_bidang' => 'required'
         ]);
 
         try{
             if ($req->get('id')) {
-                $data = JenisBarang::findOrFail($req->get('id'));
-                $data->jenis_barang_uraian = $req->get('jenis_barang_uraian');
+                $data = Dokter::findOrFail($req->get('id'));
+                $data->dokter_nama = $req->get('dokter_nama');
+                $data->dokter_bidang = $req->get('dokter_bidang');
                 $data->save();
                 toast('Berhasil mengedit data', 'success')->autoClose(2000);
-            } else {
-                $data = new JenisBarang();
-                $data->jenis_barang_uraian = $req->get('jenis_barang_uraian');
+            }else{
+                $data = new Dokter();
+                $data->dokter_nama = $req->get('dokter_nama');
+                $data->dokter_bidang = $req->get('dokter_bidang');
                 $data->save();
 
                 toast('Berhasil menambah data', 'success')->autoClose(2000);
             }
-
-            return redirect($req->get('redirect')? $req->get('redirect'): 'jenisbarang');
+            return redirect($req->get('redirect')? $req->get('redirect'): 'dokter');
 		}catch(\Exception $e){
             alert()->error('Tambah Data Gagal', $e->getMessage());
             return redirect()->back()->withInput();
@@ -71,9 +81,9 @@ class JenisbarangController extends Controller
 
 	public function edit(Request $req)
 	{
-        return view('pages.datamaster.jenisbarang.form', [
-            'data' => JenisBarang::findOrFail($req->get('id')),
-            'back' => Str::contains(url()->previous(), ['jenisbarang/tambah', 'jenisbarang/edit'])? '/jenisbarang': url()->previous(),
+        return view('pages.datamaster.dokter.form', [
+            'data' => Dokter::findOrFail($req->get('id')),
+            'back' => Str::contains(url()->previous(), ['dokter/tambah', 'dokter/edit'])? '/dokter': url()->previous(),
             'aksi' => 'Edit'
         ]);
     }
@@ -81,7 +91,7 @@ class JenisbarangController extends Controller
 	public function hapus(Request $req)
 	{
 		try{
-            JenisBarang::findOrFail($req->get('id'))->delete();
+            Dokter::findOrFail($req->get('id'))->delete();
             toast('Berhasil menghapus data', 'success')->autoClose(2000);
 		}catch(\Exception $e){
             alert()->error('Hapus Data Gagal', $e->getMessage());
@@ -91,7 +101,7 @@ class JenisbarangController extends Controller
 	public function restore(Request $req)
 	{
 		try{
-            JenisBarang::withTrashed()->findOrFail($req->get('id'))->restore();
+            Dokter::withTrashed()->findOrFail($req->get('id'))->restore();
             toast('Berhasil mengembalikan data', 'success')->autoClose(2000);
 		}catch(\Exception $e){
             alert()->error('Restore Data Gagal', $e->getMessage());

@@ -6,6 +6,7 @@ use App\Models\Pegawai;
 use App\Models\Pengguna;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -124,30 +125,54 @@ class PenggunaController extends Controller
         ]);
 	}
 
-	public function do_tambah(Request $req)
+	public function simpan(Request $req)
 	{
         $req->validate([
             'pengguna_id' => 'required',
             'pengguna_nama' => 'required',
-            'pengguna_sandi' => 'required|min:5',
             'pengguna_level' => 'required'
         ]);
 
 		try{
-			$pengguna = new Pengguna();
-			$pengguna->pengguna_nama = $req->get('pengguna_nama');
-			$pengguna->pengguna_id = $req->get('pengguna_id');
-			$pengguna->pengguna_sandi = Hash::make($req->get('pengguna_sandi'));
-			$pengguna->save();
-			$pengguna->assignRole($req->get('pengguna_level'));
+            if($req->get('ID')){
+                DB::transaction(function() use($req){
+                    $pengguna = Pengguna::findOrFail($req->get('ID'));
+                    if ($req->get('pengguna_sandi')) {
+                        $pengguna->pengguna_sandi = Hash::make($req->get('pengguna_sandi'));
+                    }
+                    $pengguna->pengguna_id = $req->get('pengguna_id');
+                    $pengguna->pengguna_nama = $req->get('pengguna_nama');
+                    $pengguna->save();
+                    $pengguna->syncPermissions();
+                    $pengguna->removeRole($pengguna->getRoleNames()[0]);
+                    $pengguna->assignRole($req->get('pengguna_level'));
 
-			$pengguna->givePermissionTo('dashboard');
-			if($req->get('menu')){
-				for ($i=0; $i < sizeof($req->get('menu')); $i++) {
-					$pengguna->givePermissionTo($req->get('menu')[$i]);
-				}
-			}
-            toast('Berhasil menambah data', 'success')->autoClose(2000);
+                    $pengguna->givePermissionTo('dashboard');
+                    if($req->get('menu')){
+                        foreach ($req->get('menu') as $key => $menu) {
+                            $pengguna->givePermissionTo($menu);
+                        }
+                    }
+                });
+                toast('Berhasil mengedit data', 'success')->autoClose(2000);
+            }else{
+                DB::transaction(function() use($req){
+                    $pengguna = new Pengguna();
+                    $pengguna->pengguna_nama = $req->get('pengguna_nama');
+                    $pengguna->pengguna_id = $req->get('pengguna_id');
+                    $pengguna->pengguna_sandi = Hash::make($req->get('pengguna_sandi'));
+                    $pengguna->save();
+                    $pengguna->assignRole($req->get('pengguna_level'));
+
+                    $pengguna->givePermissionTo('dashboard');
+                    if($req->get('menu')){
+                        for ($i=0; $i < sizeof($req->get('menu')); $i++) {
+                            $pengguna->givePermissionTo($req->get('menu')[$i]);
+                        }
+                    }
+                });
+                toast('Berhasil menambah data', 'success')->autoClose(2000);
+            }
 			return redirect($req->get('redirect')? $req->get('redirect'): 'pengguna');
 		}catch(\Exception $e){
             alert()->error('Tambah Data Gagal', $e->getMessage());
@@ -180,40 +205,6 @@ class PenggunaController extends Controller
             'aksi' => 'Edit',
             'i' => 0
         ]);
-	}
-
-	public function do_edit(Request $req)
-	{
-        $req->validate([
-            'pengguna_id' => 'required',
-            'pengguna_nama' => 'required',
-            'pengguna_level' => 'required'
-        ]);
-
-		try{
-            $pengguna = Pengguna::findOrFail($req->get('ID'));
-			if ($req->get('pengguna_sandi')) {
-				$pengguna->pengguna_sandi = Hash::make($req->get('pengguna_sandi'));
-			}
-			$pengguna->pengguna_id = $req->get('pengguna_id');
-			$pengguna->pengguna_nama = $req->get('pengguna_nama');
-			$pengguna->save();
-            $pengguna->syncPermissions();
-			$pengguna->removeRole($pengguna->getRoleNames()[0]);
-            $pengguna->assignRole($req->get('pengguna_level'));
-
-			$pengguna->givePermissionTo('dashboard');
-			if($req->get('menu')){
-				foreach ($req->get('menu') as $key => $menu) {
-					$pengguna->givePermissionTo($menu);
-				}
-			}
-            toast('Berhasil mengedit data', 'success')->autoClose(2000);
-			return redirect($req->get('redirect')? $req->get('redirect'): 'pengguna');
-		}catch(\Exception $e){
-            alert()->error('Edit Data Gagal', $e->getMessage());
-            return redirect()->back()->withInput();
-		}
 	}
 
 	public function ganti_sandi($value='')

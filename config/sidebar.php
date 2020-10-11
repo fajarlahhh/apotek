@@ -30,13 +30,39 @@ return [
 			'title' => 'Posting Stok'
 		]]
 	],[
+		'icon' => 'fa fa-inbox',
+		'title' => 'Barang Masuk',
+		'url' => '/barangmasuk',
+		'id' => 'barangmasuk'
+	],[
 		'icon' => 'fa fa-file',
 		'title' => 'Cetak',
 		'url' => 'javascript:;',
 		'caret' => true,
 		'id' => 'cetak',
-		'sub_menu' => [
-        ]
+		'sub_menu' => [[
+			'url' => '/laporanbarangmasuk',
+			'id' => 'laporanbarangmasuk',
+			'title' => 'Laporan Barang Masuk'
+        ],[
+            'title' => 'Penjualan',
+            'url' => 'javascript:;',
+            'caret' => true,
+            'id' => 'laporanpenjualan',
+            'sub_menu' => [[
+                'url' => '/laporanpenjualanbebas',
+                'id' => 'laporanpenjualanbebas',
+                'title' => 'Laporan Penjualan Bebas'
+            ],[
+                'url' => '/laporanpenjualanresep',
+                'id' => 'laporanpenjualanresep',
+                'title' => 'Laporan Penjualan Resep'
+            ]]
+        ],[
+			'url' => '/laporanstokbarang',
+			'id' => 'laporanstokbarang',
+			'title' => 'Laporan Stok Barang'
+        ]]
 	],[
 		'icon' => 'fa fa-database',
 		'title' => 'Data Master',
@@ -48,6 +74,10 @@ return [
 			'id' => 'barang',
 			'title' => 'Barang'
         ],[
+			'url' => '/dokter',
+			'id' => 'dokter',
+			'title' => 'Dokter'
+        ],[
 			'url' => '/jenisbarang',
 			'id' => 'jenisbarang',
 			'title' => 'Jenis Barang'
@@ -57,10 +87,20 @@ return [
             'title' => 'PBF'
         ],]
 	],[
-		'icon' => 'fa fa-chart-line',
-		'title' => 'Investasi',
-		'url' => '/investasi',
-		'id' => 'investasi'
+		'icon' => 'fa fa-calculator',
+		'title' => 'Penjualan',
+		'url' => 'javascript:;',
+		'caret' => true,
+		'id' => 'penjualan',
+		'sub_menu' => [[
+			'url' => '/bebas',
+			'id' => 'bebas',
+			'title' => 'Bebas'
+        ],[
+			'url' => '/resep',
+			'id' => 'resep',
+			'title' => 'Resep'
+        ]]
 	],[
 		'icon' => 'fa fa-cog',
 		'title' => 'Setup',
