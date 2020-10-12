@@ -20,7 +20,25 @@ class BarangMasuk extends Component
         $this->pbf = Pbf::all();
         $this->back = Str::contains(url()->previous(), ['barangmasuk/tambah', 'barangmasuk/edit'])? '/barangmasuk': url()->previous();
         $this->barang_masuk = [
-            []
+            [
+                'barang_id' => '',
+                'barang_masuk_qty' => '1',
+                'barang_masuk_harga_barang' => '0',
+                'barang_masuk_nomor_batch' => '',
+                'barang_masuk_kadaluarsa' => date('d F Y'),
+            ]
+        ];
+    }
+
+    public function tambahBarang()
+    {
+        $this->barang_masuk[] =
+        [
+            'barang_id' => '',
+            'barang_masuk_qty' => '1',
+            'barang_masuk_harga_barang' => '0',
+            'barang_masuk_nomor_batch' => '',
+            'barang_masuk_kadaluarsa' => date('d F Y'),
         ];
     }
 

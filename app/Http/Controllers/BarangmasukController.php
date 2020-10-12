@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Pbf;
 use App\Models\BarangMasuk;
 use Illuminate\Support\Str;
@@ -59,9 +60,20 @@ class BarangmasukController extends Controller
         ]);
 
         try{
-            $data = new BarangMasuk();
-            $data->barang_masuk_uraian = $req->get('barang_masuk_uraian');
-            $data->save();
+            foreach ($req->barang as $row) {
+                $data = new BarangMasuk();
+                $data->barang_masuk_tanggal = Carbon::parse($req->get('barang_masuk_tanggal'))->format('Y-m-d');
+                $data->barang_masuk_faktur = $req->get('barang_masuk_faktur');
+                $data->barang_masuk_jatuh_tempo = Carbon::parse($req->get('barang_masuk_jatuh_tempo'))->format('Y-m-d');
+                $data->barang_masuk_sales = $req->get('barang_masuk_sales');
+                $data->pbf_id = $req->get('pbf_id');
+                $data->barang_id = $row['barang_id'];
+                $data->barang_masuk_qty = $row['barang_masuk_qty'];
+                $data->barang_masuk_harga_barang = str_replace(',', '', $row['barang_masuk_harga_barang']);
+                $data->barang_masuk_nomor_batch = $row['barang_masuk_nomor_batch'];
+                $data->barang_masuk_kadaluarsa = Carbon::parse($row['barang_masuk_kadaluarsa'])->format('Y-m-d');
+                $data->save();
+            }
 
             toast('Berhasil menambah data', 'success')->autoClose(2000);
             return redirect($req->get('redirect')? $req->get('redirect'): 'jenisbarang');

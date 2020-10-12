@@ -4,8 +4,8 @@
 
 @push('css')
 	<link href="/assets/plugins/parsleyjs/src/parsley.css" rel="stylesheet" />
-	<link href="/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" rel="stylesheet" />
-	<link href="/assets/plugins/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+<link href="/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" rel="stylesheet" />
+<link href="/assets/plugins/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
 @endpush
 
 @section('page')
@@ -33,22 +33,19 @@
 @endsection
 
 @push('scripts')
-	<script src="/assets/plugins/parsleyjs/dist/parsley.js"></script>
-    <script src="/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
-    <script src="/assets/plugins/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-    <script>
-		$('#barang_masuk_tanggal').datepicker({
-			todayHighlight: true,
-			format: 'dd MM yyyy',
-			orientation: "bottom",
-			autoclose: true
-        });
+<script src="/assets/plugins/autonumeric/autoNumeric.js"></script>
+<script src="/assets/plugins/parsleyjs/dist/parsley.js"></script>
+<script src="/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+<script src="/assets/plugins/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+<script>
+    AutoNumeric.multiple('.numbering', {
+        modifyValueOnWheel : false
+    });
 
-		$('#barang_masuk_jatuh_tempo').datepicker({
-			todayHighlight: true,
-			format: 'dd MM yyyy',
-			orientation: "bottom",
-			autoclose: true
-		});
-    </script>
+    $('.date').datepicker({
+        todayHighlight: true,
+        format: 'dd MM yyyy',
+        autoclose: true
+    });
+</script>
 @endpush
