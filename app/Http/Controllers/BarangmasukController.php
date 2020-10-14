@@ -53,6 +53,7 @@ class BarangmasukController extends Controller
 	{
         return view('pages.barangmasuk.form', [
             'pbf' => Pbf::all(),
+            'barang_masuk' => [],
             'back' => Str::contains(url()->previous(), ['barangmasuk/tambah', 'barangmasuk/edit'])? '/barangmasuk': url()->previous()
         ]);
     }

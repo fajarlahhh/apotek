@@ -40,10 +40,10 @@
             <div class="form-group">
                 <label class="control-label">PBF</label>
                 <select class="form-control selectpicker" name="pbf_id" id="pbf_id" data-live-search="true" data-style="btn-warning" data-width="100%" >
+                    <option value="" {{ old('pbf_id') == ''? 'selected': '' }}>-- Pilih PBF --</option>
                     @foreach($pbf as $row)
                     <option value="{{ $row->pbf_id }}" {{ old('pbf_id') == $row->pbf_id? 'selected': '' }}>{{ $row->pbf_nama }} - {{ $row->pbf_alamat }}</option>
                     @endforeach
-                    <option value="" {{ old('pbf_id') == ''? 'selected': '' }}>-- Pilih PBF --</option>
                 </select>
             </div>
             <div class="form-group">
@@ -72,6 +72,11 @@
                             </tr>
                         </thead>
                         <tbody  id="barang">
+                            @foreach (old('barang_masuk', $barang_masuk) as $item)
+                                <tr>
+                                    <td>tes</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                         <tfoot>
                             <tr>

@@ -31,7 +31,6 @@ class PbfController extends Controller
         return view('pages.datamaster.pbf.index', [
             'data' => $data,
             'i' => ($req->input('page', 1) - 1) * 10,
-            'konsinyasi' => $konsinyasi,
             'tipe' => $tipe,
             'cari' => $req->cari,
         ]);
