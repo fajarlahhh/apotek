@@ -21,14 +21,14 @@
     <!-- begin panel-heading -->
     <div class="panel-heading">
         <div class="row width-full">
-            <div class="col-xl-3 col-sm-6">
+            <div class="col-xl-3 col-sm-3">
                 @role('user|super-admin|supervisor')
                 <div class="form-inline">
                     <a href="{{ route('barangmasuk.tambah') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</a>
                 </div>
                 @endrole
             </div>
-            <div class="col-xl-9 col-sm-6">
+            <div class="col-xl-9 col-sm-9">
                 <form id="frm-cari" action="{{ route('barangmasuk') }}" method="GET">
                     <div class="form-inline pull-right">
                         <div class="input-group" id="default-daterange">
@@ -87,7 +87,13 @@
                     <td>{{ $row->barang_masuk_keterangan }}</td>
                     @role('super-admin|supervisor|user')
                     <td class="with-btn-group align-middle" nowrap>
-                        <a href="javascript:;" data-id="{{ $row->barang_masuk_id }}" data-no="{{ $i }}" class="btn-hapus dropdown-item" > Hapus</a>
+                        @if ($row->trashed())
+                        @role('super-admin|supervisor')
+                        <a href="javascript:;" data-id="{{ $row->barang_masuk_id }}" data-no="{{ $i }}" class="btn-restore btn-xs btn btn-success" > Restore</a>
+                        @endrole
+                        @else
+                        <a href="javascript:;" data-id="{{ $row->barang_masuk_id }}" data-no="{{ $i }}" class="btn-hapus btn-xs btn btn-danger" > Hapus</a>
+                        @endif
                     </td>
                     @endrole
                 </tr>
@@ -123,6 +129,48 @@
 
     $('#default-daterange').on('apply.daterangepicker', function(ev, picker) {
         $("#frm-cari").submit();
+    });
+
+
+    $(".btn-restore").on('click', function () {
+        var no = $(this).data('no');
+        var id = $(this).data('id');
+        Swal.fire({
+            title: 'Restore Data',
+            text: 'Anda akan mengembalikan data no ' + no,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.value == true) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: "/barangmasuk/restore",
+                    type: "POST",
+                    data: {
+                        "_method": 'PATCH',
+                        "id" : id
+                    },
+                    success: function(data){
+                        location.reload(true);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Restore data',
+                            text: xhr.responseJSON.message
+                        })
+                    }
+                });
+            }
+        });
     });
 
     $(".btn-hapus").on('click', function () {

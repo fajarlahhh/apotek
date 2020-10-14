@@ -85,10 +85,12 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['role_or_permission:super-admin|barangmasuk']], function () {
         Route::prefix('barangmasuk')->group(function () {
+            Route::get('/tambahbarang', [BarangmasukController::class, 'tambah_barang']);
             Route::get('/', [BarangmasukController::class, 'index'])->name('barangmasuk');
             Route::get('/tambah', [BarangmasukController::class, 'tambah'])->middleware(['role:super-admin|user|supervisor'])->name('barangmasuk.tambah');
             Route::post('/simpan', [BarangmasukController::class, 'simpan'])->middleware(['role:super-admin|user|supervisor'])->name('barangmasuk.simpan');
             Route::delete('/hapus', [BarangmasukController::class, 'hapus'])->middleware(['role:super-admin|user|supervisor']);
+            Route::patch('/restore', [BarangmasukController::class, 'restore'])->middleware(['role:super-admin|user|supervisor']);
         });
     });
 });

@@ -5,12 +5,14 @@ namespace App\Models;
 use Carbon\Carbon;
 use App\Traits\Pengguna;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class BarangMasuk extends Model
 {
     use HasFactory;
     use Pengguna;
+    use SoftDeletes;
     //
     protected $table = 'barang_masuk';
     protected $primaryKey = 'barang_masuk_id';

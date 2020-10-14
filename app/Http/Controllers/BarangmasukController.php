@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Pbf;
+use App\Models\Barang;
 use App\Models\BarangMasuk;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -15,16 +16,16 @@ class BarangmasukController extends Controller
 	{
         $tipe = $req->tipe? $req->tipe: 0;
 		$tanggal = explode(' - ', $req->get('tanggal'));
-		$tgl1 = $req->get('tanggal')? date('Y-m-d', strtotime($tanggal[0])): date('Y-m-1');
+		$tgl1 = $req->get('tanggal')? date('Y-m-d', strtotime($tanggal[0])): date('Y-m-01');
 		$tgl2 = $req->get('tanggal')? date('Y-m-d', strtotime($tanggal[1])): date('Y-m-d');
 
         $data = BarangMasuk::with('pengguna')->where(function($q) use ($req){
-            $q->where('barang_masuk_keterangan', 'like', '%'.$req->cari.'%')->orWhere('barang_masuk_sales', 'like', '%'.$req->cari.'%')->orWhere('barang_masuk_keterangan', 'like', '%'.$req->cari.'%');
-        })->orWhereHas('barang', function($q) use ($req){
-            $q->where('barang_nama', 'like', '%'.$req->cari.'%');
-        })->orWhereHas('pbf', function($q) use ($req){
-            $q->where('pbf_nama', 'like', '%'.$req->cari.'%');
-        })->whereBetween('barang_masuk_jatuh_tempo', [$tgl1, $tgl2]);
+            $q->where('barang_masuk_keterangan', 'like', '%'.$req->cari.'%')->orWhere('barang_masuk_sales', 'like', '%'.$req->cari.'%')->orWhere('barang_masuk_keterangan', 'like', '%'.$req->cari.'%')->orWhereHas('barang', function($q) use ($req){
+                $q->where('barang_nama', 'like', '%'.$req->cari.'%');
+            })->orWhereHas('pbf', function($q) use ($req){
+                $q->where('pbf_nama', 'like', '%'.$req->cari.'%');
+            });
+        })->whereBetween('barang_masuk_tanggal', [$tgl1, $tgl2]);
 
         switch ($tipe) {
             case '1':
@@ -50,33 +51,46 @@ class BarangmasukController extends Controller
 
 	public function tambah(Request $req)
 	{
-        return view('pages.barangmasuk.form');
+        return view('pages.barangmasuk.form', [
+            'pbf' => Pbf::all(),
+            'back' => Str::contains(url()->previous(), ['barangmasuk/tambah', 'barangmasuk/edit'])? '/barangmasuk': url()->previous()
+        ]);
+    }
+
+	public function tambah_barang()
+	{
+        return view('pages.barangmasuk.barang',[
+            'barang' => Barang::all(),
+            'id' => date('YmdHisu')
+        ]);
     }
 
 	public function simpan(Request $req)
 	{
         $req->validate([
-            'barang_masuk_uraian' => 'required'
+            'barang_masuk_faktur' => 'required',
+            'barang_masuk_jatuh_tempo' => 'required',
+            'barang_masuk_tanggal' => 'required'
         ]);
 
         try{
-            foreach ($req->barang as $row) {
+            foreach ($req->barang_masuk as $barang_masuk) {
                 $data = new BarangMasuk();
                 $data->barang_masuk_tanggal = Carbon::parse($req->get('barang_masuk_tanggal'))->format('Y-m-d');
                 $data->barang_masuk_faktur = $req->get('barang_masuk_faktur');
                 $data->barang_masuk_jatuh_tempo = Carbon::parse($req->get('barang_masuk_jatuh_tempo'))->format('Y-m-d');
                 $data->barang_masuk_sales = $req->get('barang_masuk_sales');
                 $data->pbf_id = $req->get('pbf_id');
-                $data->barang_id = $row['barang_id'];
-                $data->barang_masuk_qty = $row['barang_masuk_qty'];
-                $data->barang_masuk_harga_barang = str_replace(',', '', $row['barang_masuk_harga_barang']);
-                $data->barang_masuk_nomor_batch = $row['barang_masuk_nomor_batch'];
-                $data->barang_masuk_kadaluarsa = Carbon::parse($row['barang_masuk_kadaluarsa'])->format('Y-m-d');
+                $data->barang_id = $barang_masuk['barang_id'];
+                $data->barang_masuk_qty = $barang_masuk['barang_masuk_qty'];
+                $data->barang_masuk_harga_barang = str_replace(',', '', $barang_masuk['barang_masuk_harga_barang']);
+                $data->barang_masuk_nomor_batch = $barang_masuk['barang_masuk_nomor_batch'];
+                $data->barang_masuk_kadaluarsa = Carbon::parse($barang_masuk['barang_masuk_kadaluarsa'])->format('Y-m-d');
                 $data->save();
             }
 
             toast('Berhasil menambah data', 'success')->autoClose(2000);
-            return redirect($req->get('redirect')? $req->get('redirect'): 'jenisbarang');
+            return redirect($req->get('redirect')? $req->get('redirect'): 'barangmasuk');
 		}catch(\Exception $e){
             alert()->error('Tambah Data Gagal', $e->getMessage());
             return redirect()->back()->withInput();

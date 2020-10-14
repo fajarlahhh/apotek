@@ -48,9 +48,8 @@
 		@include('includes.component.scroll-top-btn')
 
 	</div>
-
+    @livewireScripts
     @include('sweetalert::alert')
     @include('includes.page-js')
-    @livewireScripts
 </body>
 </html>
