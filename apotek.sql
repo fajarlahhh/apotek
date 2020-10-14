@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : Localhost 57
+ Source Server         : localhost
  Source Server Type    : MySQL
  Source Server Version : 50724
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 50724
  File Encoding         : 65001
 
- Date: 14/10/2020 15:58:28
+ Date: 15/10/2020 07:33:03
 */
 
 SET NAMES utf8mb4;
@@ -84,7 +84,7 @@ CREATE TABLE `barang_masuk`  (
   CONSTRAINT `barang_masuk_barang_id_foreign` FOREIGN KEY (`barang_id`) REFERENCES `barang` (`barang_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `barang_masuk_pbf_id_foreign` FOREIGN KEY (`pbf_id`) REFERENCES `pbf` (`pbf_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `barang_masuk_pengguna_id_foreign` FOREIGN KEY (`pengguna_id`) REFERENCES `pengguna` (`pengguna_id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of barang_masuk
@@ -93,6 +93,8 @@ INSERT INTO `barang_masuk` VALUES (2, '2020-10-13', '234', '2020-10-13', NULL, 1
 INSERT INTO `barang_masuk` VALUES (3, '2020-10-13', 'asdf', '2020-10-13', NULL, 1, '2020-10-13', 3415235, '2aafawerw', NULL, 386, 2, 'administrator', '2020-10-13 04:57:36', '2020-10-14 07:41:53', '2020-10-14 07:41:53');
 INSERT INTO `barang_masuk` VALUES (4, '2020-10-14', 'sdf', '2020-10-14', NULL, 14, '2020-10-14', 23423423, '4', NULL, 387, NULL, 'administrator', '2020-10-14 07:41:47', '2020-10-14 07:43:52', '2020-10-14 07:43:52');
 INSERT INTO `barang_masuk` VALUES (5, '2020-10-14', 'sdf', '2020-10-14', NULL, 1, '2020-10-27', 44, 'fsdfgsdfg', NULL, 388, NULL, 'administrator', '2020-10-14 07:41:47', '2020-10-14 07:41:47', NULL);
+INSERT INTO `barang_masuk` VALUES (6, '2020-10-14', 'asdf', '2020-10-14', 'tes', 12, '2020-10-14', 23, '123123', NULL, 386, 2, 'administrator', '2020-10-14 10:20:32', '2020-10-14 10:20:32', NULL);
+INSERT INTO `barang_masuk` VALUES (7, '2020-10-14', 'asdf', '2020-10-14', NULL, 1, '2020-10-14', 0, '12', NULL, 387, NULL, 'administrator', '2020-10-14 10:21:53', '2020-10-14 10:21:53', NULL);
 
 -- ----------------------------
 -- Table structure for biaya
