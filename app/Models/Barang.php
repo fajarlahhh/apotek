@@ -22,6 +22,21 @@ class Barang extends Model
         return $this->belongsTo('App\Models\JenisBarang', 'jenis_barang_id', 'jenis_barang_id');
     }
 
+    public function satuan_utama()
+    {
+        return $this->hasOne('App\Models\Satuan', 'barang_id', 'barang_id')->where('utama', 1);
+    }
+
+    public function satuan()
+    {
+        return $this->hasMany('App\Models\Satuan', 'barang_id', 'barang_id')->where('utama', 0);
+    }
+
+    public function satuan_semua()
+    {
+        return $this->hasMany('App\Models\Satuan', 'barang_id', 'barang_id')->orderBy('utama', 'desc');
+    }
+
     public function pbf()
     {
         return $this->belongsTo('App\Models\Pbf', 'pbf_id', 'pbf_id');

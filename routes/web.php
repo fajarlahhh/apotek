@@ -9,6 +9,8 @@ use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BarangmasukController;
 use App\Http\Controllers\JenisbarangController;
+use App\Http\Controllers\PenjualanbebasController;
+use App\Http\Controllers\PenjualanresepController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +32,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['role_or_permission:super-admin|barang']], function () {
         Route::prefix('barang')->group(function () {
+            Route::get('/tambahsatuan/{id}', [BarangController::class, 'tambah_satuan']);
             Route::get('/', [BarangController::class, 'index'])->name('barang');
             Route::get('/tambah', [BarangController::class, 'tambah'])->middleware(['role:super-admin|user|supervisor'])->name('barang.tambah');
             Route::get('/edit', [BarangController::class, 'edit'])->middleware(['role:super-admin|user|supervisor'])->name('barang.edit');
@@ -85,12 +88,36 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['role_or_permission:super-admin|barangmasuk']], function () {
         Route::prefix('barangmasuk')->group(function () {
-            Route::get('/tambahbarang', [BarangmasukController::class, 'tambah_barang']);
+            Route::get('/tambahbarang/{id}', [BarangmasukController::class, 'tambah_barang']);
             Route::get('/', [BarangmasukController::class, 'index'])->name('barangmasuk');
             Route::get('/tambah', [BarangmasukController::class, 'tambah'])->middleware(['role:super-admin|user|supervisor'])->name('barangmasuk.tambah');
             Route::post('/simpan', [BarangmasukController::class, 'simpan'])->middleware(['role:super-admin|user|supervisor'])->name('barangmasuk.simpan');
             Route::delete('/hapus', [BarangmasukController::class, 'hapus'])->middleware(['role:super-admin|user|supervisor']);
             Route::patch('/restore', [BarangmasukController::class, 'restore'])->middleware(['role:super-admin|user|supervisor']);
+        });
+    });
+
+    Route::group(['middleware' => ['role_or_permission:super-admin|penjualanbebas']], function () {
+        Route::prefix('penjualanbebas')->group(function () {
+            Route::get('/tambahbarang/{id}', [PenjualanbebasController::class, 'tambah_barang']);
+            Route::get('/ambilsatuan', [BarangController::class, 'satuan']);
+            Route::get('/data', [PenjualanbebasController::class, 'index'])->name('penjualanbebas');
+            Route::get('/', [PenjualanbebasController::class, 'tambah'])->name('penjualanbebas');
+            Route::get('/tambah', [PenjualanbebasController::class, 'tambah'])->middleware(['role:super-admin|user|supervisor'])->name('penjualanbebas.tambah');
+            Route::post('/simpan', [PenjualanbebasController::class, 'simpan'])->middleware(['role:super-admin|user|supervisor'])->name('penjualanbebas.simpan');
+            Route::delete('/hapus', [PenjualanbebasController::class, 'hapus'])->middleware(['role:super-admin|user|supervisor']);
+            Route::patch('/restore', [PenjualanbebasController::class, 'restore'])->middleware(['role:super-admin|user|supervisor']);
+        });
+    });
+
+    Route::group(['middleware' => ['role_or_permission:super-admin|penjualanresep']], function () {
+        Route::prefix('penjualanresep')->group(function () {
+            Route::get('/tambahbarang/{id}', [PenjualanresepController::class, 'tambah_barang']);
+            Route::get('/', [PenjualanresepController::class, 'index'])->name('penjualanresep');
+            Route::get('/tambah', [PenjualanresepController::class, 'tambah'])->middleware(['role:super-admin|user|supervisor'])->name('penjualanresep.tambah');
+            Route::post('/simpan', [PenjualanresepController::class, 'simpan'])->middleware(['role:super-admin|user|supervisor'])->name('penjualanresep.simpan');
+            Route::delete('/hapus', [PenjualanresepController::class, 'hapus'])->middleware(['role:super-admin|user|supervisor']);
+            Route::patch('/restore', [PenjualanresepController::class, 'restore'])->middleware(['role:super-admin|user|supervisor']);
         });
     });
 });

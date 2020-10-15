@@ -25,7 +25,7 @@ class BarangmasukController extends Controller
             })->orWhereHas('pbf', function($q) use ($req){
                 $q->where('pbf_nama', 'like', '%'.$req->cari.'%');
             });
-        })->whereBetween('barang_masuk_tanggal', [$tgl1, $tgl2]);
+        })->whereBetween('barang_masuk_tanggal', [$tgl1, $tgl2])->orderBy('created_at', 'desc');
 
         switch ($tipe) {
             case '1':
@@ -54,15 +54,17 @@ class BarangmasukController extends Controller
         return view('pages.barangmasuk.form', [
             'pbf' => Pbf::all(),
             'barang_masuk' => [],
+            'banyak' => $req->jumlah,
             'back' => Str::contains(url()->previous(), ['barangmasuk/tambah', 'barangmasuk/edit'])? '/barangmasuk': url()->previous()
         ]);
     }
 
-	public function tambah_barang()
+	public function tambah_barang(Request $req, $id)
 	{
         return view('pages.barangmasuk.barang',[
             'barang' => Barang::all(),
-            'id' => date('YmdHisu')
+            'data' => $req->barang,
+            'id' => $id
         ]);
     }
 
@@ -75,8 +77,9 @@ class BarangmasukController extends Controller
         ]);
 
         try{
-            foreach ($req->barang_masuk as $barang_masuk) {
+            foreach ($req->barang_masuk as $index => $barang_masuk) {
                 $data = new BarangMasuk();
+                $data->barang_masuk_id = Carbon::now()->format('Ymdhmsu').$index;
                 $data->barang_masuk_tanggal = Carbon::parse($req->get('barang_masuk_tanggal'))->format('Y-m-d');
                 $data->barang_masuk_faktur = $req->get('barang_masuk_faktur');
                 $data->barang_masuk_jatuh_tempo = Carbon::parse($req->get('barang_masuk_jatuh_tempo'))->format('Y-m-d');
@@ -91,8 +94,11 @@ class BarangmasukController extends Controller
             }
 
             toast('Berhasil menambah data', 'success')->autoClose(2000);
-            return redirect($req->get('redirect')? $req->get('redirect'): 'barangmasuk');
-		}catch(\Exception $e){
+            if($req->banyak == 1)
+                return redirect('barangmasuk/tambah?jumlah=banyak');
+            else
+                return redirect($req->get('redirect')? $req->get('redirect'): 'barangmasuk');
+        }catch(\Exception $e){
             alert()->error('Tambah Data Gagal', $e->getMessage());
             return redirect()->back()->withInput();
         }

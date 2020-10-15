@@ -20,14 +20,14 @@
     <!-- begin panel-heading -->
     <div class="panel-heading">
         <div class="row width-full">
-            <div class="col-xl-3 col-sm-6">
+            <div class="col-xl-3 col-sm-3">
                 @role('user|super-admin|supervisor')
                 <div class="form-inline">
                     <a href="{{ route('barang.tambah') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</a>
                 </div>
                 @endrole
             </div>
-            <div class="col-xl-9 col-sm-6">
+            <div class="col-xl-9 col-sm-9">
                 <form id="frm-cari" action="{{ route('barang') }}" method="GET">
                     <div class="form-inline pull-right">
                         <div class="form-group">
@@ -73,8 +73,6 @@
                     <th class="text-nowrap">Stok Minimal</th>
                     <th class="text-nowrap">Satuan</th>
                     <th class="text-nowrap">Harga Jual</th>
-                    <th class="text-nowrap">Satuan Racikan</th>
-                    <th class="text-nowrap">Harga Racikan</th>
                     <th class="text-nowrap">Jenis Barang</th>
                     <th>Konsinyasi</th>
                     <th>Keterangan</th>
@@ -91,10 +89,8 @@
                         <span data-toggle="tooltip" data-container="body" data-placement="right" data-html="true" data-placement="top" title="{!! $row->pengguna->pengguna_nama.", <br><small>".$row->updated_at."</small>" !!}">{{ $row->barang_nama }}</span>
                     </td>
                     <td class="align-middle text-center text-nowrap">{{ number_format($row->barang_stok_min) }}</td>
-                    <td class="align-middle">{{ $row->barang_satuan_1 }}</td>
-                    <td class="align-middle text-right text-nowrap">{{ number_format($row->barang_harga_jual_1, 2) }}</td>
-                    <td class="align-middle">{{ $row->barang_satuan_2 }}</td>
-                    <td class="align-middle text-right text-nowrap">{{ number_format($row->barang_harga_jual_2, 2) }}</td>
+                    <td class="align-middle">{{ $row->satuan_utama? $row->satuan_utama->satuan_nama: '' }}</td>
+                    <td class="align-middle text-right text-nowrap">{{ number_format($row->satuan_utama? $row->satuan_utama->satuan_harga: 0, 2) }}</td>
                     <td class="align-middle">{{ $row->jenis_barang? $row->jenis_barang->jenis_barang_uraian: "" }}</td>
                     <td class="align-middle">{{ $row->pbf? $row->pbf->pbf_nama: "" }}</td>
                     <td class="align-middle">{{ $row->barang_keterangan }}</td>

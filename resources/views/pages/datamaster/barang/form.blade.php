@@ -31,15 +31,15 @@
         @endif
         @csrf
         <div class="panel-body">
-            <div class="row">
+            <div class="row width-full">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label">Nama Barang</label>
-                        <input class="form-control" type="text" name="barang_nama" value="{{ old('barang_nama')? old('barang_nama'): ($aksi == 'Edit'? $data->barang_nama: '') }}" autocomplete="off" required/>
+                        <input class="form-control" type="text" name="barang_nama" value="{{ old('barang_nama', ($aksi == 'Edit'? $data->barang_nama: '')) }}" autocomplete="off" required/>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Stok Minimal</label>
-                        <input class="form-control" type="number" name="barang_stok_min" value="{{ old('barang_stok_min')? old('barang_stok_min'): ($aksi == 'Edit'? $data->barang_stok_min: '') }}" autocomplete="off" required/>
+                        <input class="form-control" type="number" name="barang_stok_min" value="{{ old('barang_stok_min', ($aksi == 'Edit'? $data->barang_stok_min: '')) }}" autocomplete="off" required/>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Jenis Barang</label>
@@ -108,33 +108,40 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label class="control-label">Satuan Utama</label>
+                        <input class="form-control" type="text" name="satuan_nama" value="{{ old('satuan_nama', ($aksi == 'Edit' && $data->satuan_utama? $data->satuan_utama->satuan_nama: '')) }}" autocomplete="off" required/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Harga Jual</label>
+                        <input class="form-control decimal text-right" type="text" name="satuan_harga" value="{{ old('satuan_harga', ($aksi == 'Edit' && $data->satuan_utama? $data->satuan_utama->satuan_harga: '')) }}" required autocomplete="off"/>
+                    </div>
+                    <div class="form-group">
                         <label class="control-label">Keterangan</label>
-                        <input class="form-control" type="text" name="barang_keterangan" value="{{ old('barang_keterangan')? old('barang_keterangan'): ($aksi == 'Edit'? $data->barang_keterangan: '') }}" autocomplete="off" />
+                        <input class="form-control" type="text" name="barang_keterangan" value="{{ old('barang_keterangan', ($aksi == 'Edit'? $data->barang_keterangan: '')) }}" autocomplete="off" />
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="alert alert-aqua">
-                        <div class="form-group">
-                            <label class="control-label">Satuan</label>
-                            <input class="form-control" type="text" name="barang_satuan_1" id="barang_satuan_1" value="{{ old('barang_satuan_1')? old('barang_satuan_1'): ($aksi == 'Edit'? $data->barang_satuan_1: '') }}" autocomplete="off" required/>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Harga Jual</label>
-                            <input class="form-control decimal text-right" type="text" name="barang_harga_jual_1" value="{{ old('barang_harga_jual_1')? old('barang_harga_jual_1'): ($aksi == 'Edit'? $data->barang_harga_jual_1: '') }}" required autocomplete="off"/>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" id="isi">{{ $aksi == 'Edit'? "Isi Per ".$data->barang_satuan_1: "Isi" }}</label>
-                            <input class="form-control" type="number" name="barang_isi_persatuan" value="{{ old('barang_isi_persatuan')? old('barang_isi_persatuan'): ($aksi == 'Edit'? $data->barang_isi_persatuan: '') }}" autocomplete="off" />
-                        </div>
-                    </div>
-                    <div class="alert alert-indigo">
-                        <div class="form-group">
-                            <label class="control-label">Satuan Racikan</label>
-                            <input class="form-control" type="text" name="barang_satuan_2" value="{{ old('barang_satuan_2')? old('barang_satuan_2'): ($aksi == 'Edit'? $data->barang_satuan_2: '') }}" autocomplete="off" />
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Harga Racikan</label>
-                            <input class="form-control decimal text-right" type="text" name="barang_harga_jual_2" value="{{ old('barang_harga_jual_2')? old('barang_harga_jual_2'): ($aksi == 'Edit'? $data->barang_harga_jual_2: '') }}"  autocomplete="off"/>
+                    <div class="note bg-grey-transparent-5">
+                        <div class="note-content table-responsive p-l-5 p-r-5">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Satuan</th>
+                                        <th>Harga</th>
+                                        <th>Rasio atas Satuan Utama</th>
+                                        <th class="width-10"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="satuan">
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="4" class="text-center">
+                                            <a href="#" class="btn btn-sm btn-primary" onclick="event.preventDefault(); tambah_satuan()" id="tambah-satuan">Tambah Satuan</a>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -151,6 +158,9 @@
         </div>
     </form>
 </div>
+@foreach (old('satuan', $satuan) as $index => $item)
+    <div class="satuan" data-nama="{{ $item['satuan_nama'] }}" data-harga="{{ $item['satuan_harga'] }}" data-rasio="{{ $item['satuan_rasio_dari_utama'] }}"></div>
+@endforeach
 @include('includes.component.error')
 @endsection
 
@@ -159,13 +169,42 @@
 <script src="/assets/plugins/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 <script src="/assets/plugins/autonumeric/autoNumeric.js"></script>
 <script>
-    $('#barang_satuan_1').on('keyup change', function(){
-        $('#isi').html("Isi Per " + $(this).val());
-    });
+    var i = 0;
 
     AutoNumeric.multiple('.decimal', {
         modifyValueOnWheel : false,
         minimumValue: "0"
     });
+
+    $(".satuan").each(function(button){
+        tambah_satuan($(this).data());
+    });
+
+    function tambah_satuan(satuan = null){
+        $.ajax({
+            url : "/barang/tambahsatuan/" + i,
+            type : "GET",
+            data : { "satuan" : satuan },
+            async : false,
+            success: function(data){
+                $("#satuan").append(data);
+                new AutoNumeric('#harga' + i++, {
+                    modifyValueOnWheel : false,
+                    minimumValue: "0"
+                });
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Tambah Barang',
+                    text: xhr.responseJSON.message
+                })
+            }
+        });
+    }
+
+    function hapus_barang(id) {
+        $("#" + id).remove();
+    }
 </script>
 @endpush

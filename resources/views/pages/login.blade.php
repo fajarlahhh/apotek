@@ -14,7 +14,7 @@
             <!-- begin brand -->
 			<div class="login-header">
 				<div class="brand">
-                    <span class="logo"></span> <b>{{ config("app.name") }}</b>{{ env('APP_COMPANY') }}
+                    <span class="logo"></span> {{ env('APP_COMPANY') }}
                     <small>© 2020 | V1.0</small>
 				</div>
 				<div class="icon">

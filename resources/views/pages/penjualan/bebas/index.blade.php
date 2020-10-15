@@ -1,18 +1,19 @@
-@extends('pages.datamaster.main')
+@extends('pages.penjualan.main')
 
-@section('title', ' | PBF')
+@section('title', ' | Penjualan Bebas')
 
 @push('css')
 	<link href="/assets/plugins/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
 	<link href="/assets/plugins/parsleyjs/src/parsley.css" rel="stylesheet" />
+	<link href="/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
 @endpush
 
 @section('page')
-	<li class="breadcrumb-item active">PBF</li>
+	<li class="breadcrumb-item active">Penjualan Bebas</li>
 @endsection
 
 @section('header')
-	<h1 class="page-header">PBF</h1>
+	<h1 class="page-header">Penjualan Bebas</h1>
 @endsection
 
 @section('subcontent')
@@ -23,13 +24,19 @@
             <div class="col-xl-3 col-sm-3">
                 @role('user|super-admin|supervisor')
                 <div class="form-inline">
-                    <a href="{{ route('pbf.tambah') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</a>
+                    <a href="{{ route('barangmasuk.tambah') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</a>
                 </div>
                 @endrole
             </div>
             <div class="col-xl-9 col-sm-9">
-                <form id="frm-cari" action="{{ route('pbf') }}" method="GET">
+                <form id="frm-cari" action="{{ route('barangmasuk') }}" method="GET">
                     <div class="form-inline pull-right">
+                        <div class="input-group" id="default-daterange">
+                            <input type="text" name="tanggal" class="form-control" value="{{ $tgl }}" placeholder="Pilih Tanggal Izin" readonly />
+                            <span class="input-group-append">
+                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </span>
+                        </div>&nbsp;
                         <div class="form-group">
                             <select class="form-control selectpicker cari" name="tipe" data-live-search="true" data-style="btn-warning" data-width="100%">
                                 <option value="0" {{ $tipe == '0'? 'selected': '' }}>Exist</option>
@@ -52,10 +59,11 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th class="width-80">No.</th>
-                    <th>Nama</th>
-                    <th>Alamat</th>
-                    <th>Kontak</th>
+                    <th class="width-70">No.</th>
+                    <th>Tanggal</th>
+                    <th>Total</th>
+                    <th>Barang</th>
+                    <th>Keterangan</th>
                     @role('super-admin|supervisor|user')
                     <th class="width-90"></th>
                     @endif
@@ -66,25 +74,36 @@
                 <tr>
                     <td class="align-middle">{{ ++$i }}</td>
                     <td class="align-middle">
-                        <span data-toggle="tooltip" data-container="body" data-placement="right" data-html="true" data-placement="top" title="{!! $row->pengguna->pengguna_nama.", <br><small>".$row->updated_at."</small>" !!}">{{ $row->pbf_nama }}</span>
+                        <span data-toggle="tooltip" data-container="body" data-placement="right" data-html="true" data-placement="top" title="{!! $row->pengguna->pengguna_nama.", <br><small>".$row->updated_at."</small>" !!}">{{ $row->penjualan_tanggal }}</span>
                     </td>
-                    <td class="align-middle">{{ $row->pbf_alamat }}</td>
-                    <td class="align-middle">{{ $row->pbf_kontak }}</td>
+                    <td class="text-nowrap text-right">{{ number_format($row->penjualan_tagihan, 2) }}</td>
+                    <td>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Barang</th>
+                                    <th>Satuan</th>
+                                    <th>Harga</th>
+                                    <th>Qty</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </td>
+                    <td class="text-nowrap">{{ $row->pbf? $row->pbf->pbf_nama: '' }}</td>
+                    <td class="text-nowrap">{{ $row->barang? $row->barang->barang_nama: '' }}</td>
+                    <td class="text-nowrap">{{ number_format($row->penjualan_qty) }} {{ $row->barang? $row->barang->barang_satuan_1: '' }}</td>
+                    <td class="text-nowrap text-right">{{ number_format($row->penjualan_harga_barang, 2) }}</td>
+                    <td>{{ $row->penjualan_keterangan }}</td>
                     @role('super-admin|supervisor|user')
                     <td class="with-btn-group align-middle" nowrap>
-                        <div class="btn-group">
-                            @if ($row->trashed())
-                            <a href="javascript:;" data-id="{{ $row->pbf_id }}" data-no="{{ $i }}" class="btn btn-danger btn-sm btn-restore"> Restore</a>
-                            @else
-                            <a href="{{ route('pbf.edit', array('id' => $row->pbf_id)) }}" class="btn btn-aqua btn-sm"> Edit</a>
-                            <a href="#" class="btn btn-white btn-sm dropdown-toggle width-30 no-caret" data-toggle="dropdown">
-                            <span class="caret"></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a href="javascript:;" data-id="{{ $row->pbf_id }}" data-no="{{ $i }}" class="btn-hapus dropdown-item" > Hapus</a>
-                            </div>
-                            @endif
-                        </div>
+                        @if ($row->trashed())
+                        @role('super-admin|supervisor')
+                        <a href="javascript:;" data-id="{{ $row->penjualan_id }}" data-no="{{ $i }}" class="btn-restore btn-sm btn btn-success" > Restore</a>
+                        @endrole
+                        @else
+                        <a href="javascript:;" data-id="{{ $row->penjualan_id }}" data-no="{{ $i }}" class="btn-hapus btn-sm btn btn-danger" > Hapus</a>
+                        @endif
                     </td>
                     @endrole
                 </tr>
@@ -99,11 +118,29 @@
 @endsection
 
 @push('scripts')
+<script src="/assets/plugins/bootstrap-daterangepicker/moment.min.js"></script>
 <script src="/assets/plugins/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+<script src="/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script>
     $(".cari").change(function() {
          $("#frm-cari").submit();
     });
+
+    $('#default-daterange').daterangepicker({
+        opens: 'right',
+        format: 'DD MMMM YYYY',
+        separator: ' s/d ',
+        startDate: moment('{{ $tgl1 }}'),
+        endDate: moment('{{ $tgl2 }}'),
+        dateLimit: { days: 30 },
+    }, function (start, end) {
+        $('#default-daterange input').val(start.format('DD MMMM YYYY') + ' - ' + end.format('DD MMMM YYYY'));
+    });
+
+    $('#default-daterange').on('apply.daterangepicker', function(ev, picker) {
+        $("#frm-cari").submit();
+    });
+
 
     $(".btn-restore").on('click', function () {
         var no = $(this).data('no');
@@ -125,7 +162,7 @@
                     }
                 });
                 $.ajax({
-                    url: "/pbf/restore",
+                    url: "/barangmasuk/restore",
                     type: "POST",
                     data: {
                         "_method": 'PATCH',
@@ -166,7 +203,7 @@
                     }
                 });
                 $.ajax({
-                    url: "/pbf/hapus",
+                    url: "/barangmasuk/hapus",
                     type: "POST",
                     data: {
                         "_method": 'DELETE',

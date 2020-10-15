@@ -20,14 +20,14 @@
     <!-- begin panel-heading -->
     <div class="panel-heading">
         <div class="row width-full">
-            <div class="col-xl-3 col-sm-6">
+            <div class="col-xl-3 col-sm-3">
                 @role('user|super-admin|supervisor')
                 <div class="form-inline">
                     <a href="{{ route('jenisbarang.tambah') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</a>
                 </div>
                 @endrole
             </div>
-            <div class="col-xl-9 col-sm-6">
+            <div class="col-xl-9 col-sm-9">
                 <form id="frm-cari" action="{{ route('jenisbarang') }}" method="GET">
                     <div class="form-inline pull-right">
                         <div class="form-group">

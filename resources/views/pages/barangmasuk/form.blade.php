@@ -3,7 +3,7 @@
 @section('title', ' | Tambah Barang Masuk')
 
 @push('css')
-	<link href="/assets/plugins/parsleyjs/src/parsley.css" rel="stylesheet" />
+<link href="/assets/plugins/parsleyjs/src/parsley.css" rel="stylesheet" />
 <link href="/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" rel="stylesheet" />
 <link href="/assets/plugins/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
 @endpush
@@ -26,7 +26,7 @@
             <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
         </div>
     </div>
-    <form action="{{ route('barangmasuk.simpan') }}" method="post" data-parsley-validate="true" data-parsley-errors-messages-disabled="">
+    <form action="{{ route('barangmasuk.simpan') }}" method="post" data-parsley-validate="true" >
         @csrf
         <div class="panel-body">
             <div class="form-group">
@@ -72,11 +72,6 @@
                             </tr>
                         </thead>
                         <tbody  id="barang">
-                            @foreach (old('barang_masuk', $barang_masuk) as $item)
-                                <tr>
-                                    <td>tes</td>
-                                </tr>
-                            @endforeach
                         </tbody>
                         <tfoot>
                             <tr>
@@ -86,6 +81,13 @@
                             </tr>
                         </tfoot>
                     </table>
+                </div>
+            </div>
+            <div class="form-inline">
+                <div class="switcher form-group">
+                    <input type="checkbox" id="switcher_checkbox_1" {{ $banyak == 'banyak' || old('banyak') == 1? 'checked': '' }} value="1" name="banyak">
+                    <label for="switcher_checkbox_1" class="control-label"></label>
+                    &nbsp; &nbsp;Input Banyak
                 </div>
             </div>
         </div>
@@ -100,8 +102,10 @@
             </div>
         </div>
     </form>
-
 </div>
+@foreach (old('barang_masuk', $barang_masuk) as $index => $item)
+    <div class="barang" data-barang="{{ $item['barang_id'] }}" data-qty="{{ $item['barang_masuk_qty'] }}" data-harga="{{ $item['barang_masuk_harga_barang'] }}" data-batch="{{ $item['barang_masuk_nomor_batch'] }}" data-kadaluarsa="{{ $item['barang_masuk_kadaluarsa'] }}"></div>
+@endforeach
 @include('includes.component.error')
 @endsection
 
@@ -111,21 +115,51 @@
 <script src="/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
 <script src="/assets/plugins/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 <script>
-    $('select').selectpicker('destroy');
-    $('select').selectpicker('refresh');
+    var i = 0;
+
     $('.date').datepicker({
         todayHighlight: true,
         format: 'dd MM yyyy',
         autoclose: true
     });
 
-    function tambah_barang(){
-        $.get("/barangmasuk/tambahbarang", function (data) {
-            $("#barang").append(data);
+    $(".barang").each(function(button){
+        tambah_barang($(this).data());
+    });
+
+    function tambah_barang(barang = null){
+        $.ajax({
+            url : "/barangmasuk/tambahbarang/" + i,
+            type : "GET",
+            data : { "barang" : barang },
+            async : false,
+            success: function(data){
+                $("#barang").append(data);
+
+                $('.selectpicker').selectpicker('refresh');
+
+                new AutoNumeric('#harga' + i++, {
+                    modifyValueOnWheel : false,
+                    minimumValue: "0"
+                });
+
+                $('.date').datepicker({
+                    todayHighlight: true,
+                    format: 'dd MM yyyy',
+                    autoclose: true
+                });
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Tambah Barang',
+                    text: xhr.responseJSON.message
+                })
+            }
         });
     }
 
-    function hapus(id) {
+    function hapus_barang(id) {
         $("#" + id).remove();
     }
 </script>

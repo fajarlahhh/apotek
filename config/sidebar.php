@@ -93,12 +93,12 @@ return [
 		'caret' => true,
 		'id' => 'penjualan',
 		'sub_menu' => [[
-			'url' => '/bebas',
-			'id' => 'bebas',
+			'url' => '/penjualanbebas',
+			'id' => 'penjualanbebas',
 			'title' => 'Bebas'
         ],[
-			'url' => '/resep',
-			'id' => 'resep',
+			'url' => '/penjualanresep',
+			'id' => 'penjualanresep',
 			'title' => 'Resep'
         ]]
 	],[

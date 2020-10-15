@@ -59,7 +59,7 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th class="width-80">No.</th>
+                    <th class="width-70">No.</th>
                     <th>Tanggal</th>
                     <th>No. Faktur</th>
                     <th>PBF</th>
@@ -82,8 +82,8 @@
                     <td class="text-nowrap">{{ $row->barang_masuk_faktur }}</td>
                     <td class="text-nowrap">{{ $row->pbf? $row->pbf->pbf_nama: '' }}</td>
                     <td class="text-nowrap">{{ $row->barang? $row->barang->barang_nama: '' }}</td>
-                    <td class="text-nowrap">{{ $row->barang_masuk_jumlah }} {{ $row->barang? $row->barang->barang_satuan_1: '' }}</td>
-                    <td class="text-nowrap">{{ $row->barang_masuk_harga_barang }}</td>
+                    <td class="text-nowrap">{{ number_format($row->barang_masuk_qty) }} {{ $row->barang? $row->barang->barang_satuan_1: '' }}</td>
+                    <td class="text-nowrap text-right">{{ number_format($row->barang_masuk_harga_barang, 2) }}</td>
                     <td>{{ $row->barang_masuk_keterangan }}</td>
                     @role('super-admin|supervisor|user')
                     <td class="with-btn-group align-middle" nowrap>
