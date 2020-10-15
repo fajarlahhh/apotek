@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : Localhost 57
  Source Server Type    : MySQL
  Source Server Version : 50724
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 50724
  File Encoding         : 65001
 
- Date: 15/10/2020 07:33:03
+ Date: 15/10/2020 15:31:01
 */
 
 SET NAMES utf8mb4;
@@ -25,11 +25,6 @@ CREATE TABLE `barang`  (
   `barang_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `barang_nama` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `barang_stok_min` double NOT NULL DEFAULT 0,
-  `barang_isi_persatuan` double NULL DEFAULT 0,
-  `barang_satuan_1` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `barang_satuan_2` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `barang_harga_jual_1` decimal(15, 2) NULL DEFAULT NULL,
-  `barang_harga_jual_2` decimal(15, 2) NULL DEFAULT NULL,
   `barang_keterangan` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
   `jenis_barang_id` bigint(20) NULL DEFAULT NULL,
   `pbf_id` bigint(20) NULL DEFAULT NULL,
@@ -45,23 +40,25 @@ CREATE TABLE `barang`  (
   CONSTRAINT `barang_jenis_barang_id_foreign` FOREIGN KEY (`jenis_barang_id`) REFERENCES `jenis_barang` (`jenis_barang_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `barang_obat_pengguna_id_foreign` FOREIGN KEY (`pengguna_id`) REFERENCES `pengguna` (`pengguna_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `barang_pbf_id_foreign` FOREIGN KEY (`pbf_id`) REFERENCES `pbf` (`pbf_id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 391 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 417 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of barang
 -- ----------------------------
-INSERT INTO `barang` VALUES (386, 'aaaaaaa', 20, NULL, 'Tablet', NULL, 10000.00, NULL, NULL, NULL, 1, 'administrator', '2020-10-11 02:03:46', '2020-10-14 12:44:16', NULL);
-INSERT INTO `barang` VALUES (387, 'bbbbbbbbbb', 3, NULL, 'Tablet', NULL, 5000.00, NULL, NULL, NULL, NULL, 'administrator', '2020-10-11 02:31:20', '2020-10-14 12:44:16', NULL);
-INSERT INTO `barang` VALUES (388, 'ccccccc', 3, NULL, 'Tablet', NULL, 5000.00, NULL, NULL, NULL, NULL, 'administrator', '2020-10-11 02:31:20', '2020-10-11 02:31:20', NULL);
-INSERT INTO `barang` VALUES (389, 'ddddddd', 0, 0, NULL, NULL, 567777.00, NULL, NULL, NULL, NULL, 'administrator', '2020-10-14 12:44:25', '2020-10-14 14:40:45', NULL);
-INSERT INTO `barang` VALUES (390, 'eeeeeee', 0, 0, NULL, NULL, 72325.00, NULL, NULL, NULL, NULL, 'administrator', '2020-10-14 12:44:27', '2020-10-14 14:40:46', NULL);
+INSERT INTO `barang` VALUES (386, 'aaaaaaa', 20, NULL, NULL, 1, 'administrator', '2020-10-11 02:03:46', '2020-10-14 12:44:16', NULL);
+INSERT INTO `barang` VALUES (387, 'bbbbbbbbbb', 3, NULL, NULL, NULL, 'administrator', '2020-10-11 02:31:20', '2020-10-14 12:44:16', NULL);
+INSERT INTO `barang` VALUES (388, 'ccccccc', 3, NULL, NULL, NULL, 'administrator', '2020-10-11 02:31:20', '2020-10-11 02:31:20', NULL);
+INSERT INTO `barang` VALUES (389, 'ddddddd', 0, NULL, NULL, NULL, 'administrator', '2020-10-14 12:44:25', '2020-10-14 14:40:45', NULL);
+INSERT INTO `barang` VALUES (390, 'eeeeeee', 0, NULL, NULL, NULL, 'administrator', '2020-10-14 12:44:27', '2020-10-14 14:40:46', NULL);
+INSERT INTO `barang` VALUES (415, 'Nama Barang', 1, NULL, NULL, NULL, 'administrator', '2020-10-15 11:20:57', '2020-10-15 11:20:57', NULL);
+INSERT INTO `barang` VALUES (416, 'Tempor est fugiat q', 13, 'Aperiam non ipsa si', 1, 2, 'administrator', '2020-10-15 13:03:28', '2020-10-15 13:03:28', NULL);
 
 -- ----------------------------
 -- Table structure for barang_masuk
 -- ----------------------------
 DROP TABLE IF EXISTS `barang_masuk`;
 CREATE TABLE `barang_masuk`  (
-  `barang_masuk_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `barang_masuk_id` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `barang_masuk_tanggal` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `barang_masuk_faktur` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `barang_masuk_jatuh_tempo` date NULL DEFAULT NULL,
@@ -84,17 +81,14 @@ CREATE TABLE `barang_masuk`  (
   CONSTRAINT `barang_masuk_barang_id_foreign` FOREIGN KEY (`barang_id`) REFERENCES `barang` (`barang_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `barang_masuk_pbf_id_foreign` FOREIGN KEY (`pbf_id`) REFERENCES `pbf` (`pbf_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `barang_masuk_pengguna_id_foreign` FOREIGN KEY (`pengguna_id`) REFERENCES `pengguna` (`pengguna_id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of barang_masuk
 -- ----------------------------
-INSERT INTO `barang_masuk` VALUES (2, '2020-10-13', '234', '2020-10-13', NULL, 13, '2020-10-31', 60000, '74674567', NULL, 387, NULL, 'administrator', '2020-10-13 04:55:08', '2020-10-14 07:41:51', '2020-10-14 07:41:51');
-INSERT INTO `barang_masuk` VALUES (3, '2020-10-13', 'asdf', '2020-10-13', NULL, 1, '2020-10-13', 3415235, '2aafawerw', NULL, 386, 2, 'administrator', '2020-10-13 04:57:36', '2020-10-14 07:41:53', '2020-10-14 07:41:53');
-INSERT INTO `barang_masuk` VALUES (4, '2020-10-14', 'sdf', '2020-10-14', NULL, 14, '2020-10-14', 23423423, '4', NULL, 387, NULL, 'administrator', '2020-10-14 07:41:47', '2020-10-14 07:43:52', '2020-10-14 07:43:52');
-INSERT INTO `barang_masuk` VALUES (5, '2020-10-14', 'sdf', '2020-10-14', NULL, 1, '2020-10-27', 44, 'fsdfgsdfg', NULL, 388, NULL, 'administrator', '2020-10-14 07:41:47', '2020-10-14 07:41:47', NULL);
-INSERT INTO `barang_masuk` VALUES (6, '2020-10-14', 'asdf', '2020-10-14', 'tes', 12, '2020-10-14', 23, '123123', NULL, 386, 2, 'administrator', '2020-10-14 10:20:32', '2020-10-14 10:20:32', NULL);
-INSERT INTO `barang_masuk` VALUES (7, '2020-10-14', 'asdf', '2020-10-14', NULL, 1, '2020-10-14', 0, '12', NULL, 387, NULL, 'administrator', '2020-10-14 10:21:53', '2020-10-14 10:21:53', NULL);
+INSERT INTO `barang_masuk` VALUES ('202010150910193338770', '2020-10-15', '234234', '2020-10-15', NULL, 2342, '2020-10-15', 3423, NULL, NULL, 386, NULL, 'administrator', '2020-10-15 09:38:19', '2020-10-15 09:38:19', NULL);
+INSERT INTO `barang_masuk` VALUES ('202010150910193373221', '2020-10-15', '234234', '2020-10-15', NULL, 42, '2020-10-15', 423423, NULL, NULL, 387, NULL, 'administrator', '2020-10-15 09:38:19', '2020-10-15 09:38:19', NULL);
+INSERT INTO `barang_masuk` VALUES ('202010150910193399072', '2020-10-15', '234234', '2020-10-15', NULL, 34234, '2020-10-15', 4234, NULL, NULL, 388, NULL, 'administrator', '2020-10-15 09:38:19', '2020-10-15 09:38:19', NULL);
 
 -- ----------------------------
 -- Table structure for biaya
@@ -128,12 +122,14 @@ CREATE TABLE `dokter`  (
   PRIMARY KEY (`dokter_id`) USING BTREE,
   INDEX `dokter_obat_pengguna_id_foreign`(`pengguna_id`) USING BTREE,
   CONSTRAINT `dokter_obat_pengguna_id_foreign` FOREIGN KEY (`pengguna_id`) REFERENCES `pengguna` (`pengguna_id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dokter
 -- ----------------------------
 INSERT INTO `dokter` VALUES (1, 'Distinctio Est quae', 'Aut magni deserunt d', 'administrator', '2020-10-11 02:47:31', '2020-10-11 02:47:52', NULL);
+INSERT INTO `dokter` VALUES (2, 'asdf', 'asdf', 'administrator', '2020-10-15 00:39:13', '2020-10-15 00:39:13', NULL);
+INSERT INTO `dokter` VALUES (3, 'asdf', 'asdf', 'administrator', '2020-10-15 00:39:47', '2020-10-15 00:39:47', NULL);
 
 -- ----------------------------
 -- Table structure for failed_jobs
@@ -300,9 +296,13 @@ INSERT INTO `pengguna` VALUES ('testes', '$2y$10$iqPP5p7DcavMJAtqHhSTsOn9qV8qHcH
 -- ----------------------------
 DROP TABLE IF EXISTS `penjualan`;
 CREATE TABLE `penjualan`  (
-  `penjualan_id` bigint(255) NOT NULL,
+  `penjualan_id` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `penjualan_tanggal` date NULL DEFAULT NULL,
+  `penjualan_jenis` enum('Bebas','Resep') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `penjualan_keterangan` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
+  `penjualan_tagihan` decimal(15, 2) NULL DEFAULT NULL,
+  `penjualan_bayar` decimal(15, 2) NULL DEFAULT NULL,
+  `penjualan_sisa` decimal(15, 2) NULL DEFAULT NULL,
   `dokter_id` bigint(20) NULL DEFAULT NULL,
   `pengguna_id` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `created_at` timestamp(0) NULL DEFAULT NULL,
@@ -314,11 +314,16 @@ CREATE TABLE `penjualan`  (
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of penjualan
+-- ----------------------------
+INSERT INTO `penjualan` VALUES ('20201015031034160602', '2020-10-15', 'Bebas', 'Keterangan', 235200.00, 300000.00, 64800.00, NULL, 'administrator', '2020-10-15 15:10:34', '2020-10-15 15:10:34', NULL);
+
+-- ----------------------------
 -- Table structure for penjualan_biaya
 -- ----------------------------
 DROP TABLE IF EXISTS `penjualan_biaya`;
 CREATE TABLE `penjualan_biaya`  (
-  `penjualan_id` bigint(20) NOT NULL,
+  `penjualan_id` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `biaya_nama` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `biaya_nilai` decimal(15, 2) NOT NULL,
   `biaya_per` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
@@ -331,16 +336,22 @@ CREATE TABLE `penjualan_biaya`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `penjualan_detail`;
 CREATE TABLE `penjualan_detail`  (
-  `penjualan_id` bigint(20) NOT NULL,
-  `penjualan_resep` int(11) NULL DEFAULT NULL,
+  `penjualan_id` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `penjualan_detail_resep` int(11) NULL DEFAULT NULL,
   `barang_id` bigint(20) NOT NULL,
-  `barang_harga` decimal(15, 2) NOT NULL,
-  `barang_satuan` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `penjualan_qty` double NULL DEFAULT NULL,
-  `penjualan_diskon` double NULL DEFAULT NULL,
+  `satuan_nama` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `satuan_harga` decimal(15, 2) NOT NULL,
+  `satuan_rasio_dari_utama` double NOT NULL,
+  `penjualan_detail_qty` double NULL DEFAULT NULL,
+  `penjualan_detail_diskon` double NULL DEFAULT NULL,
   INDEX `penjualan_detail_penjualan_id_foreign`(`penjualan_id`) USING BTREE,
   CONSTRAINT `penjualan_detail_penjualan_id_foreign` FOREIGN KEY (`penjualan_id`) REFERENCES `penjualan` (`penjualan_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of penjualan_detail
+-- ----------------------------
+INSERT INTO `penjualan_detail` VALUES ('20201015031034160602', NULL, 386, 'botol', 20000.00, 1, 12, 2);
 
 -- ----------------------------
 -- Table structure for permissions
@@ -414,5 +425,29 @@ CREATE TABLE `roles`  (
 INSERT INTO `roles` VALUES (1, 'super-admin', 'web', '2019-04-24 03:38:59', '2019-04-24 03:38:59');
 INSERT INTO `roles` VALUES (2, 'user', 'web', '2019-04-24 03:38:59', '2019-04-24 03:38:59');
 INSERT INTO `roles` VALUES (3, 'guest', 'web', '2019-04-24 03:38:59', '2019-04-24 03:38:59');
+
+-- ----------------------------
+-- Table structure for satuan
+-- ----------------------------
+DROP TABLE IF EXISTS `satuan`;
+CREATE TABLE `satuan`  (
+  `barang_id` bigint(20) NOT NULL,
+  `satuan_id` int(11) NOT NULL,
+  `satuan_nama` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `satuan_harga` decimal(15, 2) NOT NULL,
+  `satuan_rasio_dari_utama` double NOT NULL,
+  `utama` tinyint(255) NOT NULL,
+  INDEX `satuan_barang_id_foreign`(`barang_id`) USING BTREE,
+  CONSTRAINT `satuan_barang_id_foreign` FOREIGN KEY (`barang_id`) REFERENCES `barang` (`barang_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of satuan
+-- ----------------------------
+INSERT INTO `satuan` VALUES (386, 0, 'botol', 20000.00, 1, 1);
+INSERT INTO `satuan` VALUES (415, 1, 'gr', 10000.00, 12, 0);
+INSERT INTO `satuan` VALUES (415, 0, 'tablet', 100000.00, 1, 1);
+INSERT INTO `satuan` VALUES (416, 1, 'gr', 100000.00, 4, 0);
+INSERT INTO `satuan` VALUES (416, 0, 'tablet', 400000.00, 1, 1);
 
 SET FOREIGN_KEY_CHECKS = 1;
