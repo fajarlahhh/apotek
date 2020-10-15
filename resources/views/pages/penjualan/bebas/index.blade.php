@@ -24,12 +24,12 @@
             <div class="col-xl-3 col-sm-3">
                 @role('user|super-admin|supervisor')
                 <div class="form-inline">
-                    <a href="{{ route('barangmasuk.tambah') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</a>
+                    <a href="{{ route('penjualanbebas.tambah') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</a>
                 </div>
                 @endrole
             </div>
             <div class="col-xl-9 col-sm-9">
-                <form id="frm-cari" action="{{ route('barangmasuk') }}" method="GET">
+                <form id="frm-cari" action="{{ route('penjualanbebas') }}" method="GET">
                     <div class="form-inline pull-right">
                         <div class="input-group" id="default-daterange">
                             <input type="text" name="tanggal" class="form-control" value="{{ $tgl }}" placeholder="Pilih Tanggal Izin" readonly />
@@ -76,25 +76,34 @@
                     <td class="align-middle">
                         <span data-toggle="tooltip" data-container="body" data-placement="right" data-html="true" data-placement="top" title="{!! $row->pengguna->pengguna_nama.", <br><small>".$row->updated_at."</small>" !!}">{{ $row->penjualan_tanggal }}</span>
                     </td>
-                    <td class="text-nowrap text-right">{{ number_format($row->penjualan_tagihan, 2) }}</td>
-                    <td>
-                        <table class="table">
+                    <td class="text-nowrap text-right align-middle">{{ number_format($row->penjualan_tagihan, 2) }}</td>
+                    <td class="align-middle">
+                        <table class="table table-bordered m-b-0">
                             <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Barang</th>
-                                    <th>Satuan</th>
-                                    <th>Harga</th>
-                                    <th>Qty</th>
+                                <tr class="bg-grey-transparent-2">
+                                    <th class="width-10 p-3">No.</th>
+                                    <th class="p-3">Barang</th>
+                                    <th class="p-3">Satuan</th>
+                                    <th class="p-3">Harga</th>
+                                    <th class="p-3">Qty</th>
+                                    <th class="p-3">Diskon</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                @foreach ($row->detail as $index => $detail)
+                                <tr>
+                                    <td class="p-3 text-center">{{ ++$index }}</td>
+                                    <td class="p-3 text-nowrap">{{ $detail->barang->barang_nama }}</td>
+                                    <td class="p-3 text-nowrap">{{ $detail->satuan_nama }}</td>
+                                    <td class="text-right p-3 text-nowrap">{{ number_format($detail->satuan_harga, 2) }}</td>
+                                    <td class="text-right p-3">{{ number_format($detail->penjualan_detail_qty) }}</td>
+                                    <td class="text-right p-3">{{ number_format($detail->penjualan_detail_diskon) }} %</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
                         </table>
                     </td>
-                    <td class="text-nowrap">{{ $row->pbf? $row->pbf->pbf_nama: '' }}</td>
-                    <td class="text-nowrap">{{ $row->barang? $row->barang->barang_nama: '' }}</td>
-                    <td class="text-nowrap">{{ number_format($row->penjualan_qty) }} {{ $row->barang? $row->barang->barang_satuan_1: '' }}</td>
-                    <td class="text-nowrap text-right">{{ number_format($row->penjualan_harga_barang, 2) }}</td>
-                    <td>{{ $row->penjualan_keterangan }}</td>
+                    <td class="align-middle">{{ $row->penjualan_keterangan }}</td>
                     @role('super-admin|supervisor|user')
                     <td class="with-btn-group align-middle" nowrap>
                         @if ($row->trashed())
@@ -162,7 +171,7 @@
                     }
                 });
                 $.ajax({
-                    url: "/barangmasuk/restore",
+                    url: "/penjualanbebas/restore",
                     type: "POST",
                     data: {
                         "_method": 'PATCH',
@@ -203,7 +212,7 @@
                     }
                 });
                 $.ajax({
-                    url: "/barangmasuk/hapus",
+                    url: "/penjualanbebas/hapus",
                     type: "POST",
                     data: {
                         "_method": 'DELETE',

@@ -17,6 +17,7 @@ class BarangMasuk extends Model
     protected $table = 'barang_masuk';
     protected $primaryKey = 'barang_masuk_id';
     public $incrementing = false;
+    protected $keyType = 'string';
 
     public function barang()
     {

@@ -17,6 +17,7 @@ class Penjualan extends Model
     protected $table = 'penjualan';
     protected $primaryKey = 'penjualan_id';
     public $incrementing = false;
+    protected $keyType = 'string';
 
     public function dokter()
     {
@@ -36,6 +37,11 @@ class Penjualan extends Model
     public function pengguna()
     {
         return $this->belongsTo('App\Models\Pengguna', 'pengguna_id', 'pengguna_id');
+    }
+
+    public function getPenjualanTanggalAttribute($value)
+    {
+         return Carbon::parse($value)->isoFormat('LL');
     }
 
     public function getCreatedAtAttribute($value)
