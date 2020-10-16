@@ -112,5 +112,15 @@ class BarangmasukController extends Controller
 		}catch(\Exception $e){
             alert()->error('Hapus Data Gagal', $e->getMessage());
 		}
+    }
+
+	public function restore(Request $req)
+	{
+		try{
+            BarangMasuk::withTrashed()->findOrFail($req->get('id'))->restore();
+            toast('Berhasil mengembalikan data', 'success')->autoClose(2000);
+		}catch(\Exception $e){
+            alert()->error('Restore Data Gagal', $e->getMessage());
+		}
 	}
 }

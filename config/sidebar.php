@@ -19,21 +19,15 @@ return [
 		'url' => '/dashboard',
 		'id' => 'dashboard'
 	],[
-		'icon' => 'fa fa-gavel',
-		'title' => 'Administrator',
-		'url' => 'javascript:;',
-		'caret' => true,
-		'id' => 'administrator',
-		'sub_menu' => [[
-			'url' => '/postingsstok',
-			'id' => 'postingsstok',
-			'title' => 'Posting Stok'
-		]]
-	],[
 		'icon' => 'fa fa-inbox',
 		'title' => 'Barang Masuk',
 		'url' => '/barangmasuk',
 		'id' => 'barangmasuk'
+	],[
+		'icon' => 'fa fa-search',
+		'title' => 'Cek Stok',
+		'url' => '/cekstok',
+		'id' => 'cekstok'
 	],[
 		'icon' => 'fa fa-file',
 		'title' => 'Cetak',
@@ -101,6 +95,11 @@ return [
 			'id' => 'penjualanresep',
 			'title' => 'Resep'
         ]]
+	],[
+		'icon' => 'fa fa-gavel',
+		'title' => 'Posting Stok',
+		'url' => '/postingstok',
+		'id' => 'postingstok'
 	],[
 		'icon' => 'fa fa-cog',
 		'title' => 'Setup',

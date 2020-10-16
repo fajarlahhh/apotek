@@ -5,6 +5,7 @@ use App\Http\Controllers\PbfController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\DokterController;
+use App\Http\Controllers\CekstokController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BarangmasukController;
@@ -29,6 +30,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', [DashboardController::class,'index']);
     Route::get('/gantisandi', [PenggunaController::class, 'ganti_sandi'])->name('gantisandi');
     Route::patch('/gantisandi', [PenggunaController::class, 'do_ganti_sandi'])->name('gantisandi.simpan');
+
+    Route::group(['middleware' => ['role_or_permission:super-admin|cekstok']], function () {
+        Route::prefix('cekstok')->group(function () {
+            Route::get('/', [CekstokController::class, 'index'])->name('cekstok');
+            Route::get('/tambahbarang/{id}', [CekstokController::class, 'tambah_barang']);
+            Route::get('/cek', [CekstokController::class, 'cek'])->middleware(['role:super-admin|user|supervisor'])->name('cekstok.cek');
+        });
+    });
 
     Route::group(['middleware' => ['role_or_permission:super-admin|barang']], function () {
         Route::prefix('barang')->group(function () {

@@ -58,7 +58,7 @@ class PenjualanbebasController extends Controller
 	public function tambah_barang(Request $req, $id)
 	{
         return view('pages.penjualan.bebas.barang',[
-            'barang' => Barang::all(),
+            'barang' => Barang::with('satuan_semua')->get(),
             'data' => $req->barang,
             'id' => $id
         ]);
@@ -68,6 +68,14 @@ class PenjualanbebasController extends Controller
 	{
         if (str_replace(',', '', $req->get('penjualan_bayar')) < str_replace(',', '', $req->get('penjualan_tagihan'))) {
             alert()->error('Simpan Data Gagal', "Jumlah Pembayaran Kurang");
+            return redirect()->back()->withInput();
+        }
+        if (str_replace(',', '', $req->get('penjualan_tagihan')) <= 0) {
+            alert()->error('Simpan Data Gagal', "Sub Total Harga Barang Tidak Boleh Lebih Kecil Atau Sama Dengan 0");
+            return redirect()->back()->withInput();
+        }
+        if (!$req->barang) {
+            alert()->error('Simpan Data Gagal', "Barang Belum Diinputkan");
             return redirect()->back()->withInput();
         }
         try{
@@ -109,6 +117,16 @@ class PenjualanbebasController extends Controller
             toast('Berhasil menghapus data', 'success')->autoClose(2000);
 		}catch(\Exception $e){
             alert()->error('Hapus Data Gagal', $e->getMessage());
+		}
+	}
+
+	public function restore(Request $req)
+	{
+		try{
+            Penjualan::withTrashed()->findOrFail($req->get('id'))->restore();
+            toast('Berhasil mengembalikan data', 'success')->autoClose(2000);
+		}catch(\Exception $e){
+            alert()->error('Restore Data Gagal', $e->getMessage());
 		}
 	}
 }

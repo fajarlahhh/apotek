@@ -51,15 +51,15 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="5" class="text-right">Sub Total Harga Barang : </th>
-                                <td class="with-btn">
+                                <th colspan="3" class="text-right">Sub Total Harga Barang : </th>
+                                <td colspan="3" class="with-btn">
                                     <input type="text" class="form-control text-right currency" id="sub-total" name="penjualan_tagihan" value="0" autocomplete="off" readonly/>
                                 </td>
                                 <td></td>
                             </tr>
                             <tr>
                                 <td colspan="7" class="text-center">
-                                    <a href="#" class="btn btn-sm btn-primary" onclick="event.preventDefault(); tambah_barang()" id="tambah-barang">Tambah Barang</a>
+                                    <a href="#" class="btn btn-sm btn-warning" onclick="event.preventDefault(); tambah_barang()" id="tambah-barang">Tambah Barang</a>
                                 </td>
                             </tr>
                         </tfoot>
@@ -87,9 +87,9 @@
         </div>
     </form>
 </div>
-@foreach (old('barang', $barang) as $index => $item)
-    <div class="barang" data-barang="{{ $item['barang_id'] }}" data-satuan="{{ $item['satuan_nama'] }}" data-rasio="{{ $item['satuan_rasio_dari_utama'] }}" data-harga="{{ $item['satuan_harga'] }}" data-qty="{{ $item['penjualan_detail_qty'] }}" data-diskon="{{ $item['penjualan_detail_diskon'] }}" data-total="{{ $item['penjualan_detail_total'] }}"></div>
-@endforeach
+{{-- @foreach (old('barang', $barang) as $index => $item)
+    <div class="barang" data-barang="{{ array_key_exists('barang_id', $item)? $item['barang_id']: null }}" data-satuan="{{ array_key_exists('satuan_nama', $item)? $item['satuan_nama']: null }}" data-rasio="{{ $item['satuan_rasio_dari_utama'] }}" data-harga="{{ $item['satuan_harga'] }}" data-qty="{{ $item['penjualan_detail_qty'] }}" data-diskon="{{ $item['penjualan_detail_diskon'] }}" data-total="{{ $item['penjualan_detail_total'] }}"></div>
+@endforeach --}}
 @include('includes.component.error')
 @endsection
 
@@ -106,9 +106,12 @@
                     minimumValue: "0"
                 });
 
+    var barang = @php
+            echo json_encode(old('barang'), JSON_NUMERIC_CHECK)
+            @endphp || []
 
-    $(".barang").each(function(button){
-        tambah_barang($(this).data());
+    barang.forEach(brg => {
+        tambah_barang(brg);
     });
 
     $("#bayar").on('keyup change', function () {
@@ -116,15 +119,15 @@
     });
 
     function bayar() {
-        var bayar = $("#bayar").val().length > 0? parseFloat($("#bayar").val().split(',').join('')): 0;
-        var tagihan = $("#sub-total").val().length > 0? parseFloat($("#sub-total").val().split(',').join('')): 0;
+        var bayar = parseFloat($("#bayar").val().split(',').join('') || 0);
+        var tagihan = parseFloat($("#sub-total").val().split(',').join('') || 0);
         AutoNumeric.getAutoNumericElement('#sisa').set(bayar - tagihan > 0 ? bayar - tagihan: 0);
     };
 
     function total_harga_barang(id) {
-        var qty = $("#qty" + id).val().length > 0? $("#qty" + id).val(): 0;
-        var harga = $("#harga" + id).val().length > 0? parseFloat($("#harga" + id).val().split(',').join('')): 0;
-        var diskon = $("#diskon" + id).val().length > 0? parseFloat($("#diskon" + id).val().split(',').join('')): 0;
+        var qty = $("#qty" + id).val() || 0;
+        var harga = parseFloat($("#harga" + id).val().split(',').join('') || 0);
+        var diskon = parseFloat($("#diskon" + id).val().split(',').join('') || 0);
 
         AutoNumeric.getAutoNumericElement('#total' + id).set((harga - (harga * diskon/100)) * (qty? qty: 0));
         sub_total();
@@ -134,42 +137,29 @@
         var sub_total = 0;
         $('.total-harga-barang').each(function(i, obj) {
             if(this.value)
-            sub_total += parseFloat(this.value.split(',').join(''));
+            sub_total += parseFloat(this.value.split(',').join('') || 0);
         });
         AutoNumeric.getAutoNumericElement('#sub-total').set(sub_total);
         bayar();
     }
 
     function harga(id) {
-        var harga = $("#satuan" + id + " option:selected").length > 0? $("#satuan" + id + " option:selected").data('harga'): 0;
-        var rasio = $("#satuan" + id + " option:selected").length > 0? $("#satuan" + id + " option:selected").data('rasio'): 0;
-        $("#rasio" + id).val(rasio);
+        $("#rasio" + id).val($("#satuan" + id + " option:selected").data('rasio') || 0);
+
+        var harga = $("#satuan" + id + " option:selected").data('harga') || 0;
         AutoNumeric.getAutoNumericElement('#harga' + id).set(harga);
         total_harga_barang(id);
     }
 
-    function satuan(obj, id) {
-        $.ajax({
-            url : "/penjualanbebas/ambilsatuan",
-            type : "GET",
-            data : { "id" : obj.value },
-            async : false,
-            success: function(data){
-                $("#satuan" + id + " option").remove();
-                data['satuan_semua'].forEach(row => {
-                    $("#satuan" + id).append('<option value="'+row['satuan_nama']+'" data-harga="'+row['satuan_harga']+'" data-rasio="'+row['satuan_rasio_dari_utama']+'">'+row['satuan_nama']+'</option>');
-                });
-                $("#satuan" + id).selectpicker('refresh');
-                harga(id);
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Tambah Barang',
-                    text: xhr.responseJSON.message
-                })
-            }
+    function satuan(id, slct = null) {
+        var satuan = $("#barang" + id + " option:selected").data('satuan') || [];
+        $("#satuan" + id + " option").remove();
+        satuan.forEach(row => {
+            var select = slct == row['satuan_nama']? "selected": "";
+            $("#satuan" + id).append('<option value="'+row['satuan_nama']+'" data-harga="'+row['satuan_harga']+'" data-rasio="'+row['satuan_rasio_dari_utama']+'" '+select+'>'+row['satuan_nama']+'</option>');
         });
+        $("#satuan" + id).selectpicker('refresh');
+        harga(id);
     }
 
     function tambah_barang(barang = null){
@@ -181,13 +171,20 @@
             success: function(data){
                 $("#barang").append(data);
 
-                $('.selectpicker').selectpicker('refresh');
+                $('#barang' + i).selectpicker({
+                    noneSelectedText : 'Nama Barang'
+                });
+
+                $('#satuan' + i).selectpicker({
+                    noneSelectedText : 'Tidak Ada'
+                });
 
                 new AutoNumeric('#harga' + i, {
                     modifyValueOnWheel : false,
                     minimumValue: "0"
                 });
-                new AutoNumeric('#total' + i++, {
+
+                new AutoNumeric('#total' + i, {
                     modifyValueOnWheel : false,
                     minimumValue: "0"
                 });
@@ -200,7 +197,9 @@
                 })
             }
         });
+        satuan(i, (barang? barang['satuan_nama']: null));
         sub_total();
+        i++;
     }
 
     function hapus_barang(id) {
