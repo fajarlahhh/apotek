@@ -109,7 +109,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['role_or_permission:super-admin|penjualanbebas']], function () {
         Route::prefix('penjualanbebas')->group(function () {
             Route::get('/tambahbarang/{id}', [PenjualanbebasController::class, 'tambah_barang']);
-            Route::get('/ambilsatuan', [BarangController::class, 'satuan']);
+            Route::post('/cekstok', [PenjualanbebasController::class, 'cek_stok']);
             Route::get('/data', [PenjualanbebasController::class, 'index'])->name('penjualanbebas');
             Route::get('/', [PenjualanbebasController::class, 'tambah']);
             Route::get('/tambah', [PenjualanbebasController::class, 'tambah'])->middleware(['role:super-admin|user|supervisor'])->name('penjualanbebas.tambah');

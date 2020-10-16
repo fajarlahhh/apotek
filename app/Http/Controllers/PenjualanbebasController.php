@@ -64,6 +64,20 @@ class PenjualanbebasController extends Controller
         ]);
     }
 
+    public function cek_stok(Request $req)
+    {
+        $pesan = null;
+        foreach ($req->penjualan as $index => $row) {
+            $data = explode(";", $row);
+            if(sizeof($data) == 4){
+
+            }else{
+                $pesan .= "Barang ".($index+1)." belum dipilih<br>";
+            }
+        }
+        return $pesan;
+    }
+
 	public function simpan(Request $req)
 	{
         if (str_replace(',', '', $req->get('penjualan_bayar')) < str_replace(',', '', $req->get('penjualan_tagihan'))) {

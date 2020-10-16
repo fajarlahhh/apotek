@@ -26,7 +26,7 @@
             <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
         </div>
     </div>
-    <form action="{{ route('penjualanbebas.simpan') }}" method="post" data-parsley-validate="true" target="_blank" onSubmit="return cek_stok()">
+    <form action="{{ route('penjualanbebas.simpan') }}" method="post" data-parsley-validate="true" >
         @csrf
         <div class="panel-body">
             <div class="form-group">
@@ -66,20 +66,17 @@
                     </table>
                 </div>
             </div>
-            <div class="alert alert-danger" style="display: none" id="stok">
-            </div>
             <div class="form-group">
                 <label class="control-label">Bayar</label>
                 <input class="form-control text-right currency" type="text" id="bayar" name="penjualan_bayar" value="{{ old('penjualan_bayar') }}" autocomplete="off" required/>
             </div>
             <div class="form-group">
                 <label class="control-label">Sisa</label>
-                <input class="form-control text-right currency bg-danger text-white" type="text" id="sisa" name="penjualan_sisa" value="{{ old('penjualan_sisa', 0) }}" autocomplete="off" required readonly/>
+                <input class="form-control text-right currency bg-red text-white" type="text" id="sisa" name="penjualan_sisa" value="{{ old('penjualan_sisa', 0) }}" autocomplete="off" required readonly/>
             </div>
         </div>
 
         <div class="panel-footer">
-            <a href="#" onclick="event.preventDefault(); cek_stok()">cek</a>
             @role('user|super-admin|supervisor')
             <input type="submit" value="Simpan" class="btn btn-sm btn-success m-r-3"  />
             @endrole
@@ -90,6 +87,9 @@
         </div>
     </form>
 </div>
+{{-- @foreach (old('barang', $barang) as $index => $item)
+    <div class="barang" data-barang="{{ array_key_exists('barang_id', $item)? $item['barang_id']: null }}" data-satuan="{{ array_key_exists('satuan_nama', $item)? $item['satuan_nama']: null }}" data-rasio="{{ $item['satuan_rasio_dari_utama'] }}" data-harga="{{ $item['satuan_harga'] }}" data-qty="{{ $item['penjualan_detail_qty'] }}" data-diskon="{{ $item['penjualan_detail_diskon'] }}" data-total="{{ $item['penjualan_detail_total'] }}"></div>
+@endforeach --}}
 @include('includes.component.error')
 @endsection
 
@@ -144,6 +144,8 @@
     }
 
     function harga(id) {
+        $("#rasio" + id).val($("#satuan" + id + " option:selected").data('rasio') || 0);
+
         var harga = $("#satuan" + id + " option:selected").data('harga') || 0;
         AutoNumeric.getAutoNumericElement('#harga' + id).set(harga);
         total_harga_barang(id);
@@ -154,7 +156,7 @@
         $("#satuan" + id + " option").remove();
         satuan.forEach(row => {
             var select = slct == row['satuan_nama']? "selected": "";
-            $("#satuan" + id).append('<option value="'+row['satuan_nama']+';'+row['satuan_rasio_dari_utama']+'" data-harga="'+row['satuan_harga']+'" data-rasio="'+row['satuan_rasio_dari_utama']+'" '+select+'>'+row['satuan_nama']+'</option>');
+            $("#satuan" + id).append('<option value="'+row['satuan_nama']+'" data-harga="'+row['satuan_harga']+'" data-rasio="'+row['satuan_rasio_dari_utama']+'" '+select+'>'+row['satuan_nama']+'</option>');
         });
         $("#satuan" + id).selectpicker('refresh');
         harga(id);
@@ -203,53 +205,6 @@
     function hapus_barang(id) {
         $("#" + id).remove();
         sub_total();
-    }
-
-    function cek_stok(){
-        var index = 0;
-        var penjualan = {};
-
-        $(".selectpicker.barang_id").each(function() {
-            penjualan[index] = $(this).val() + ";" + $(".qty").eq(index).val() + ";" + $(".selectpicker.satuan").eq(index).val();
-            index++;
-        });
-        if (index > 0) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            var sub = $.ajax({
-                url : '/penjualanbebas/cekstok',
-                type : 'POST',
-                data : { 'penjualan' : penjualan },
-                async: false,
-                cache: false,
-                success : function(result){
-                    console.log(result);
-                    $("#stok").show();
-                    $("#stok").html(result);
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Tambah Barang',
-                        text: xhr.responseText
-                    })
-                }
-            }).responseText;
-            if(sub.length == 0){
-                $("#stok").hide();
-                setTimeout(function(){window.location.reload();}, 10);
-            }else{
-                return false;
-            }
-        }else{
-            console.log(index);
-            return false;
-        }
-
-
     }
 </script>
 @endpush
