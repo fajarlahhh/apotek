@@ -27,21 +27,26 @@ class Barang extends Model
         return $this->hasOne('App\Models\Satuan', 'barang_id', 'barang_id')->where('utama', 1);
     }
 
+    public function satuan_lain()
+    {
+        return $this->hasMany('App\Models\Satuan', 'barang_id', 'barang_id')->where('utama', 0);
+    }
+
     public function barang_masuk()
     {
         return $this->hasMany('App\Models\BarangMasuk', 'barang_id', 'barang_id');
     }
 
-    public function penjualan()
+    public function stok_awal()
     {
-        return $this->hasMany('App\Models\PenjualanDetail', 'barang_id', 'barang_id')->with('penjualan', function(){
-            $q->where('deleted_at', NULL);
-        });
+        return $this->hasMany('App\Models\StokAwal', 'barang_id', 'barang_id');
     }
 
-    public function satuan()
+    public function penjualan()
     {
-        return $this->hasMany('App\Models\Satuan', 'barang_id', 'barang_id')->where('utama', 0);
+        return $this->hasMany('App\Models\PenjualanDetail', 'barang_id', 'barang_id')->with('penjualan', function($q){
+            $q->where('deleted_at', NULL);
+        });
     }
 
     public function satuan_semua()

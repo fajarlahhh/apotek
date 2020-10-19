@@ -24,11 +24,6 @@ return [
 		'url' => '/barangmasuk',
 		'id' => 'barangmasuk'
 	],[
-		'icon' => 'fa fa-search',
-		'title' => 'Cek Stok',
-		'url' => '/cekstok',
-		'id' => 'cekstok'
-	],[
 		'icon' => 'fa fa-file',
 		'title' => 'Cetak',
 		'url' => 'javascript:;',

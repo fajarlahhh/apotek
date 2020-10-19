@@ -103,9 +103,6 @@
         </div>
     </form>
 </div>
-@foreach (old('barang_masuk', $barang_masuk) as $index => $item)
-    <div class="barang" data-barang="{{ $item['barang_id'] }}" data-qty="{{ $item['barang_masuk_qty'] }}" data-harga="{{ $item['barang_masuk_harga_barang'] }}" data-batch="{{ $item['barang_masuk_nomor_batch'] }}" data-kadaluarsa="{{ $item['barang_masuk_kadaluarsa'] }}"></div>
-@endforeach
 @include('includes.component.error')
 @endsection
 
@@ -116,6 +113,15 @@
 <script src="/assets/plugins/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 <script>
     var i = 0;
+
+    var barang = @php
+            echo json_encode(old('barang_masuk', $barang_masuk), JSON_NUMERIC_CHECK)
+            @endphp || []
+
+    barang.forEach(barang => {
+        console.log(barang);
+        tambah_barang(barang);
+    });
 
     $('.date').datepicker({
         todayHighlight: true,

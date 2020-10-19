@@ -2,7 +2,7 @@
     <td class="with-btn" >
         <select class="form-control selectpicker barang_id" title="Nama Barang" id="barang{{ $id }}" onchange="satuan({{ $id }})" name="barang[{{ $id }}][barang_id]" data-live-search="true" data-style="btn-aqua" data-size="3" data-width="100%">
             @foreach($barang as $row)
-            <option value="{{ $row->barang_id }}" data-satuan="{{ $row->satuan_semua }}" {{ $data && $data['barang_id'] == $row->barang_id? 'selected': '' }}>{{ $row->barang_nama }}</option>
+            <option value="{{ $row->barang_id }}" data-satuan="{{ $row->satuan_semua }}" {{ $data && $data['barang_id'] == $row->barang_id? 'selected': '' }}>{{ $row->barang_nama }}{{ $row->jenis_barang? ' - '.$row->jenis_barang->jenis_barang_uraian: '' }}</option>
             @endforeach
         </select>
     </td>
@@ -23,6 +23,6 @@
         <input type="text" class="form-control text-right total-harga-barang" name="barang[{{ $id }}][penjualan_detail_total]" id="total{{ $id }}" value="{{ $data? str_replace(',', '', $data['penjualan_detail_total']): 0 }}" readonly/>
     </td>
     <td class="with-btn align-middle">
-        <button class="btn btn-xs btn-red " onclick="hapus_barang({{ $id }})"><i class="fa fa-times fa-xs"></i></button>
+        <a href="#" class="btn btn-xs btn-red " onclick="event.preventDefault(); hapus_barang({{ $id }})"><i class="fa fa-times fa-xs"></i></a>
     </td>
 </tr>

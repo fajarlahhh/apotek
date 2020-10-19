@@ -158,9 +158,6 @@
         </div>
     </form>
 </div>
-@foreach (old('satuan', $satuan) as $index => $item)
-    <div class="satuan" data-nama="{{ $item['satuan_nama'] }}" data-harga="{{ $item['satuan_harga'] }}" data-rasio="{{ $item['satuan_rasio_dari_utama'] }}"></div>
-@endforeach
 @include('includes.component.error')
 @endsection
 
@@ -170,6 +167,14 @@
 <script src="/assets/plugins/autonumeric/autoNumeric.js"></script>
 <script>
     var i = 0;
+
+    var satuan_lain = @php
+            echo json_encode(old('satuan', $data->satuan_lain), JSON_NUMERIC_CHECK)
+            @endphp || []
+
+    satuan_lain.forEach(satuan => {
+        tambah_satuan(satuan);
+    });
 
     AutoNumeric.multiple('.decimal', {
         modifyValueOnWheel : false,
@@ -203,7 +208,7 @@
         });
     }
 
-    function hapus_barang(id) {
+    function hapus_satuan(id) {
         $("#" + id).remove();
     }
 </script>

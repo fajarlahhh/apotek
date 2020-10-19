@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PbfController;
+use App\Http\Controllers\BiayaController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\DokterController;
@@ -36,6 +37,13 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/', [CekstokController::class, 'index'])->name('cekstok');
             Route::get('/tambahbarang/{id}', [CekstokController::class, 'tambah_barang']);
             Route::get('/cek', [CekstokController::class, 'cek'])->middleware(['role:super-admin|user|supervisor'])->name('cekstok.cek');
+        });
+    });
+
+    Route::group(['middleware' => ['role_or_permission:super-admin|biaya']], function () {
+        Route::prefix('biaya')->group(function () {
+            Route::get('/', [BiayaController::class, 'index'])->name('biaya');
+            Route::post('/simpan', [BiayaController::class, 'simpan'])->middleware(['role:super-admin|user|supervisor'])->name('biaya.simpan');
         });
     });
 
@@ -109,8 +117,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['role_or_permission:super-admin|penjualanbebas']], function () {
         Route::prefix('penjualanbebas')->group(function () {
             Route::get('/tambahbarang/{id}', [PenjualanbebasController::class, 'tambah_barang']);
-            Route::post('/cekstok', [PenjualanbebasController::class, 'cek_stok']);
             Route::get('/data', [PenjualanbebasController::class, 'index'])->name('penjualanbebas');
+            Route::get('/penjualanbebas/kwitansi/{id}', [PenjualanbebasController::class, 'index']);
             Route::get('/', [PenjualanbebasController::class, 'tambah']);
             Route::get('/tambah', [PenjualanbebasController::class, 'tambah'])->middleware(['role:super-admin|user|supervisor'])->name('penjualanbebas.tambah');
             Route::post('/simpan', [PenjualanbebasController::class, 'simpan'])->middleware(['role:super-admin|user|supervisor'])->name('penjualanbebas.simpan');
@@ -122,7 +130,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['role_or_permission:super-admin|penjualanresep']], function () {
         Route::prefix('penjualanresep')->group(function () {
             Route::get('/tambahbarang/{id}', [PenjualanresepController::class, 'tambah_barang']);
-            Route::get('/', [PenjualanresepController::class, 'index'])->name('penjualanresep');
+            Route::get('/data', [PenjualanresepController::class, 'index'])->name('penjualanresep');
+            Route::get('/penjualanresep/kwitansi/{id}', [PenjualanresepController::class, 'index']);
+            Route::get('/', [PenjualanresepController::class, 'tambah']);
             Route::get('/tambah', [PenjualanresepController::class, 'tambah'])->middleware(['role:super-admin|user|supervisor'])->name('penjualanresep.tambah');
             Route::post('/simpan', [PenjualanresepController::class, 'simpan'])->middleware(['role:super-admin|user|supervisor'])->name('penjualanresep.simpan');
             Route::delete('/hapus', [PenjualanresepController::class, 'hapus'])->middleware(['role:super-admin|user|supervisor']);

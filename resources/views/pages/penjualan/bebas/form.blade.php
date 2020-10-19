@@ -26,7 +26,7 @@
             <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
         </div>
     </div>
-    <form action="{{ route('penjualanbebas.simpan') }}" method="post" data-parsley-validate="true" target="_blank" onSubmit="return cek_stok()">
+    <form action="{{ route('penjualanbebas.simpan') }}" method="post" data-parsley-validate="true">
         @csrf
         <div class="panel-body">
             <div class="form-group">
@@ -66,8 +66,13 @@
                     </table>
                 </div>
             </div>
-            <div class="alert alert-danger" style="display: none" id="stok">
+            @if (Session::has('stok_kurang'))
+            <div class="alert alert-danger">
+                @foreach (Session::get('stok_kurang') as $item)
+                {!! $item !!}
+                @endforeach
             </div>
+            @endif
             <div class="form-group">
                 <label class="control-label">Bayar</label>
                 <input class="form-control text-right currency" type="text" id="bayar" name="penjualan_bayar" value="{{ old('penjualan_bayar') }}" autocomplete="off" required/>
@@ -79,13 +84,12 @@
         </div>
 
         <div class="panel-footer">
-            <a href="#" onclick="event.preventDefault(); cek_stok()">cek</a>
             @role('user|super-admin|supervisor')
             <input type="submit" value="Simpan" class="btn btn-sm btn-success m-r-3"  />
             @endrole
             <a href="/penjualanbebas/data" class="btn btn-sm btn-primary">Data Penjualan</a>
             <div class="pull-right">
-                This page took {{ (microtime(true) - LARAVEL_START) }} seconds to render
+                This page took {{ (microtime(true) - LARAVEL_START) }} seconds to render {{ Session::get('kwitansi') }}
             </div>
         </div>
     </form>
@@ -98,9 +102,13 @@
 <script src="/assets/plugins/parsleyjs/dist/parsley.js"></script>
 <script src="/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
 <script src="/assets/plugins/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+@if (Session::has('kwitansi'))
+<script>
+    window.open("{{ Session::get('kwitansi') }}", '_blank');
+</script>
+@endif
 <script>
     var i = 0;
-
     AutoNumeric.multiple('.currency', {
                     modifyValueOnWheel : false,
                     minimumValue: "0"
@@ -203,53 +211,6 @@
     function hapus_barang(id) {
         $("#" + id).remove();
         sub_total();
-    }
-
-    function cek_stok(){
-        var index = 0;
-        var penjualan = {};
-
-        $(".selectpicker.barang_id").each(function() {
-            penjualan[index] = $(this).val() + ";" + $(".qty").eq(index).val() + ";" + $(".selectpicker.satuan").eq(index).val();
-            index++;
-        });
-        if (index > 0) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            var sub = $.ajax({
-                url : '/penjualanbebas/cekstok',
-                type : 'POST',
-                data : { 'penjualan' : penjualan },
-                async: false,
-                cache: false,
-                success : function(result){
-                    console.log(result);
-                    $("#stok").show();
-                    $("#stok").html(result);
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Tambah Barang',
-                        text: xhr.responseText
-                    })
-                }
-            }).responseText;
-            if(sub.length == 0){
-                $("#stok").hide();
-                setTimeout(function(){window.location.reload();}, 10);
-            }else{
-                return false;
-            }
-        }else{
-            console.log(index);
-            return false;
-        }
-
-
     }
 </script>
 @endpush

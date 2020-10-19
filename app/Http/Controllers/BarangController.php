@@ -61,7 +61,6 @@ class BarangController extends Controller
 	public function tambah(Request $req)
 	{
         return view('pages.datamaster.barang.form', [
-            'satuan' => [],
             'back' => Str::contains(url()->previous(), ['barang/tambah', 'barang/edit'])? '/barang': url()->previous(),
             'jenis_barang' => JenisBarang::all(),
             'pbf' => Pbf::all(),
@@ -146,10 +145,9 @@ class BarangController extends Controller
 
 	public function edit(Request $req)
 	{
-        $data = Barang::findOrFail($req->get('id'));
+        $data = Barang::with('satuan_lain')->findOrFail($req->get('id'));
         return view('pages.datamaster.barang.form', [
             'data' => $data,
-            'satuan' => $data->satuan,
             'pbf' => Pbf::all(),
             'jenis_barang' => JenisBarang::all(),
             'back' => Str::contains(url()->previous(), ['barang/tambah', 'barang/edit'])? '/barang': url()->previous(),
