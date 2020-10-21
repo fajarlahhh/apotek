@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Pbf;
 use App\Models\Biaya;
 use App\Models\Barang;
+use App\Models\Dokter;
 use App\Models\Penjualan;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -58,13 +59,14 @@ class PenjualanresepController extends Controller
             {
                 return $q->biaya_nama == "Biaya Racikan";
             })->first()->biaya_nilai,
-            'dokter' => $biaya->filter(function ($q)
+            'persen' => $biaya->filter(function ($q)
             {
                 return $q->biaya_nama == "Persentase Dokter";
             })->first()->biaya_nilai,
             'pbf' => Pbf::all(),
             'barang' => [],
             'banyak' => $req->jumlah,
+            'dokter' => Dokter::all(),
             'back' => Str::contains(url()->previous(), ['penjualanresep/tambah', 'penjualanresep/edit'])? '/penjualanresep': url()->previous()
         ]);
     }
@@ -143,7 +145,7 @@ class PenjualanresepController extends Controller
             return redirect()->back()->withInput();
         }
         if (str_replace(',', '', $req->get('penjualan_tagihan')) <= 0) {
-            alert()->error('Simpan Data Gagal', "Subtotal tidak ada");
+            alert()->error('Simpan Data Gagal', "Belum ada barang yang dipilih");
             return redirect()->back()->withInput();
         }
         if (!$req->barang) {
@@ -151,8 +153,6 @@ class PenjualanresepController extends Controller
             return redirect()->back()->withInput();
         }
 
-        $bulan = date('m');
-        $tahun = date('Y');
         $barang_id = [];
         foreach ($req->barang as $row) {
             foreach ($row as $brg) {
@@ -177,20 +177,30 @@ class PenjualanresepController extends Controller
                 $data->penjualan_jenis = "Bebas";
                 $data->penjualan_keterangan = $req->get('penjualan_keterangan');
                 $data->penjualan_tagihan = str_replace(',', '', $req->get('penjualan_tagihan'));
+                $data->penjualan_racikan = str_replace(',', '', $req->get('racikan'));
+                $data->penjualan_admin = str_replace(',', '', $req->get('admin'));
+                $data->penjualan_dokter = str_replace(',', '', $req->get('dokter'));
                 $data->penjualan_bayar = str_replace(',', '', $req->get('penjualan_bayar'));
                 $data->penjualan_sisa = str_replace(',', '', $req->get('penjualan_sisa'));
+                $data->penjualan_biaya_dokter = str_replace(',', '', $req->get('penjualan_biaya_dokter'));
+                $data->dokter_id = $req->get('dokter_id');
                 $data->save();
                 foreach ($req->barang as $index => $barang) {
-                    $satuan = explode(";", $barang["satuan_nama"]);
-                    $detail = new PenjualanDetail();
-                    $detail->penjualan_id = $id;
-                    $detail->barang_id = $barang['barang_id'];
-                    $detail->satuan_nama = $satuan[0];
-                    $detail->satuan_rasio_dari_utama = $satuan[1];
-                    $detail->satuan_harga = str_replace(',', '', $barang['satuan_harga']);
-                    $detail->penjualan_detail_qty = $barang['penjualan_detail_qty'];
-                    $detail->penjualan_detail_diskon = $barang['penjualan_detail_diskon'];
-                    $detail->save();
+                    foreach ($barang as $brg) {
+                        $satuan = explode(";", $brg["satuan_nama"]);
+                        $detail = new PenjualanDetail();
+                        $detail->penjualan_id = $id;
+                        $detail->penjualan_detail_resep = $req->resep[$index];
+                        $detail->penjualan_detail_resep_nama = $req->penjualan_detail_resep_nama[$index];
+                        $detail->barang_id = $brg["barang_id"];
+                        $detail->satuan_nama = $satuan[1];
+                        $detail->satuan_harga = str_replace(',', '', $satuan[0]);
+                        $detail->penjualan_detail_tambahan = str_replace(',', '', $satuan[0]) * str_replace(',', '', $req->get('dokter'))/100;
+                        $detail->satuan_rasio_dari_utama = $satuan[2];
+                        $detail->penjualan_detail_qty = $brg['penjualan_detail_qty'];
+                        $detail->penjualan_detail_diskon = $brg['penjualan_detail_diskon'];
+                        $detail->save();
+                    }
                 }
             });
 
