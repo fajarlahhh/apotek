@@ -115,8 +115,8 @@
                 });
 
     var barang = @php
-            echo json_encode(old('barang'), JSON_NUMERIC_CHECK)
-            @endphp || []
+            echo json_encode(old('barang')? array_values(old('barang')): [], JSON_NUMERIC_CHECK)
+            @endphp;
 
     barang.forEach(brg => {
         tambah_barang(brg);

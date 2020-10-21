@@ -129,7 +129,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['role_or_permission:super-admin|penjualanresep']], function () {
         Route::prefix('penjualanresep')->group(function () {
-            Route::get('/tambahbarang/{id}', [PenjualanresepController::class, 'tambah_barang']);
+            Route::get('/tambahbarang/{resep}/{id}', [PenjualanresepController::class, 'tambah_barang']);
+            Route::get('/tambahresep/{id}', [PenjualanresepController::class, 'tambah_resep']);
             Route::get('/data', [PenjualanresepController::class, 'index'])->name('penjualanresep');
             Route::get('/penjualanresep/kwitansi/{id}', [PenjualanresepController::class, 'index']);
             Route::get('/', [PenjualanresepController::class, 'tambah']);

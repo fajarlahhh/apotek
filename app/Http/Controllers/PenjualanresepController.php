@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Pbf;
+use App\Models\Biaya;
 use App\Models\Barang;
 use App\Models\Penjualan;
 use Illuminate\Support\Str;
@@ -47,7 +48,20 @@ class PenjualanresepController extends Controller
 
 	public function tambah(Request $req)
 	{
+        $biaya = Biaya::all();
         return view('pages.penjualan.resep.form', [
+            'admin' => $biaya->filter(function ($q)
+            {
+                return $q->biaya_nama == "Biaya Admin";
+            })->first()->biaya_nilai,
+            'racikan' => $biaya->filter(function ($q)
+            {
+                return $q->biaya_nama == "Biaya Racikan";
+            })->first()->biaya_nilai,
+            'dokter' => $biaya->filter(function ($q)
+            {
+                return $q->biaya_nama == "Persentase Dokter";
+            })->first()->biaya_nilai,
             'pbf' => Pbf::all(),
             'barang' => [],
             'banyak' => $req->jumlah,
@@ -55,11 +69,22 @@ class PenjualanresepController extends Controller
         ]);
     }
 
-	public function tambah_barang(Request $req, $id)
+	public function tambah_barang(Request $req, $resep, $id)
 	{
         return view('pages.penjualan.resep.barang',[
             'barang' => Barang::with('satuan_semua')->with('jenis_barang')->orderBy('barang_nama')->get(),
             'data' => $req->barang,
+            'resep' => $resep,
+            'id' => $id,
+            'resepid' => $resep.$id
+        ]);
+    }
+
+	public function tambah_resep(Request $req, $id)
+	{
+        return view('pages.penjualan.resep.resep',[
+            'data' => $req->resep,
+            'barang' => $req->barang,
             'id' => $id
         ]);
     }
@@ -126,7 +151,19 @@ class PenjualanresepController extends Controller
             return redirect()->back()->withInput();
         }
 
-        $stok = $this->cek_stok($req->barang);
+        $bulan = date('m');
+        $tahun = date('Y');
+        $barang_id = [];
+        foreach ($req->barang as $row) {
+            foreach ($row as $brg) {
+                array_push($barang_id, [
+                    'barang_id' => $brg['barang_id'],
+                    'satuan_nama' => $brg['satuan_nama'],
+                    'penjualan_detail_qty' => $brg['penjualan_detail_qty']
+                ]);
+            }
+        }
+        $stok = $this->cek_stok($barang_id);
         if ($stok){
             alert()->error('Simpan Data Gagal', "Stok Beberapa Barang Tidak Tersedia");
             return redirect()->back()->withInput()->with(['stok_kurang' => $stok]);
