@@ -115,7 +115,7 @@
                 });
 
     var barang = @php
-            echo json_encode(old('barang')? array_values(old('barang')): array_values($barang), JSON_NUMERIC_CHECK)
+            echo json_encode(old('barang')? array_values(old('barang')): [], JSON_NUMERIC_CHECK)
             @endphp;
 
     barang.forEach(brg => {
@@ -168,7 +168,7 @@
         harga(id);
     }
 
-    function tambah_barang(){
+    function tambah_barang(barang = null){
         $.ajax({
             url : "/penjualanbebas/tambahbarang/" + i,
             type : "GET",
