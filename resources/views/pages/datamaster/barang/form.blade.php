@@ -169,7 +169,7 @@
     var i = 0;
 
     var satuan_lain = @php
-            echo json_encode(old('satuan', $data->satuan_lain), JSON_NUMERIC_CHECK)
+            echo json_encode(old('satuan', ($data? $data->satuan_lain: [])), JSON_NUMERIC_CHECK)
             @endphp || []
 
     satuan_lain.forEach(satuan => {

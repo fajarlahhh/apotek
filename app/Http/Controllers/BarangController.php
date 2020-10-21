@@ -64,6 +64,7 @@ class BarangController extends Controller
             'back' => Str::contains(url()->previous(), ['barang/tambah', 'barang/edit'])? '/barang': url()->previous(),
             'jenis_barang' => JenisBarang::all(),
             'pbf' => Pbf::all(),
+            'data' => [],
             'aksi' => 'Tambah'
         ]);
     }
