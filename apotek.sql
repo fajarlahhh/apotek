@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : Localhost 57
+ Source Server         : localhost
  Source Server Type    : MySQL
  Source Server Version : 50724
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 50724
  File Encoding         : 65001
 
- Date: 21/10/2020 14:46:28
+ Date: 22/10/2020 07:50:14
 */
 
 SET NAMES utf8mb4;
@@ -42,7 +42,7 @@ CREATE TABLE `barang`  (
   CONSTRAINT `barang_jenis_barang_id_foreign` FOREIGN KEY (`jenis_barang_id`) REFERENCES `jenis_barang` (`jenis_barang_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `barang_obat_pengguna_id_foreign` FOREIGN KEY (`pengguna_id`) REFERENCES `pengguna` (`pengguna_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `barang_pbf_id_foreign` FOREIGN KEY (`pbf_id`) REFERENCES `pbf` (`pbf_id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 639 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 640 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of barang
@@ -268,6 +268,7 @@ INSERT INTO `barang` VALUES (635, 'Prove D3 drop', 10, NULL, 135, NULL, 'adminis
 INSERT INTO `barang` VALUES (636, 'Zinc 20 mg Kimia farma', 10, NULL, 136, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Zinc', 'tablet', 1000.00);
 INSERT INTO `barang` VALUES (637, 'L-zinc sirup', 10, NULL, 137, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Zinc sirup', 'botol', 50000.00);
 INSERT INTO `barang` VALUES (638, 'Zinckid Sirup', 10, NULL, 137, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Zinc sirup', 'botol', 41000.00);
+INSERT INTO `barang` VALUES (639, 'asdf', 1, 'asdfasd', NULL, NULL, 'administrator', '2020-10-21 16:58:48', '2020-10-21 16:58:48', NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for barang_masuk
@@ -303,6 +304,8 @@ CREATE TABLE `barang_masuk`  (
 -- Records of barang_masuk
 -- ----------------------------
 INSERT INTO `barang_masuk` VALUES ('202010210210388667030', '2020-10-21', 'asdf', '2020-10-21', NULL, 3, '2020-10-21', 50000, '10000', NULL, 417, 5, 'administrator', '2020-10-21 14:20:38', '2020-10-21 14:20:38', NULL);
+INSERT INTO `barang_masuk` VALUES ('202010210410229009310', '2020-10-21', '10000', '2020-10-21', '-', 1, '2020-10-21', 5000, '0000', NULL, 417, NULL, 'administrator', '2020-10-21 16:22:22', '2020-10-21 16:22:22', NULL);
+INSERT INTO `barang_masuk` VALUES ('202010210410433339070', '2020-10-21', '2222', '2020-10-21', '-', 2, '2020-10-21', 60000, '0', NULL, 417, NULL, 'administrator', '2020-10-21 16:22:43', '2020-10-21 16:22:43', NULL);
 
 -- ----------------------------
 -- Table structure for biaya
@@ -343,7 +346,15 @@ CREATE TABLE `dokter`  (
   PRIMARY KEY (`dokter_id`) USING BTREE,
   INDEX `dokter_obat_pengguna_id_foreign`(`pengguna_id`) USING BTREE,
   CONSTRAINT `dokter_obat_pengguna_id_foreign` FOREIGN KEY (`pengguna_id`) REFERENCES `pengguna` (`pengguna_id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of dokter
+-- ----------------------------
+INSERT INTO `dokter` VALUES (1, 'dr. Nurhandini Eka Dewi SpA', 'dokter Anak', 'administrator', '2020-10-21 16:40:55', '2020-10-21 16:41:10', NULL);
+INSERT INTO `dokter` VALUES (2, 'dr. Andrew C Taufiq SpOG', 'dokter Obgyn', 'administrator', '2020-10-21 16:41:45', '2020-10-21 16:41:45', NULL);
+INSERT INTO `dokter` VALUES (3, 'dr Angelica Vanini W Taufiq SpKK', 'Dokter Kulit', 'administrator', '2020-10-21 16:42:49', '2020-10-21 16:42:49', NULL);
+INSERT INTO `dokter` VALUES (4, 'dr Ancella Soenardi SpKK', 'Kulit', 'administrator', '2020-10-21 16:43:02', '2020-10-21 16:43:02', NULL);
 
 -- ----------------------------
 -- Table structure for failed_jobs
@@ -932,7 +943,6 @@ INSERT INTO `satuan` VALUES (505, 0, 'tube', 43000.00, 1, 1);
 INSERT INTO `satuan` VALUES (506, 0, 'kapsul', 24000.00, 1, 1);
 INSERT INTO `satuan` VALUES (507, 0, 'tablet', 250.00, 1, 1);
 INSERT INTO `satuan` VALUES (508, 0, 'tube', 19000.00, 1, 1);
-INSERT INTO `satuan` VALUES (509, 0, 'tube', 55000.00, 1, 1);
 INSERT INTO `satuan` VALUES (510, 0, 'tube', 5000.00, 1, 1);
 INSERT INTO `satuan` VALUES (511, 0, 'tube', 5000.00, 1, 1);
 INSERT INTO `satuan` VALUES (512, 0, 'botol', 43000.00, 1, 1);
@@ -1051,6 +1061,9 @@ INSERT INTO `satuan` VALUES (636, 0, 'tablet', 1000.00, 1, 1);
 INSERT INTO `satuan` VALUES (637, 0, 'botol', 50000.00, 1, 1);
 INSERT INTO `satuan` VALUES (638, 0, 'botol', 41000.00, 1, 1);
 INSERT INTO `satuan` VALUES (451, 0, 'botol', 62000.00, 1, 1);
+INSERT INTO `satuan` VALUES (639, 0, 'asd', 123123.00, 1, 1);
+INSERT INTO `satuan` VALUES (509, 0, 'tube', 55000.00, 1, 1);
+INSERT INTO `satuan` VALUES (509, 1, 'gr', 1000.00, 3, 0);
 
 -- ----------------------------
 -- Table structure for stok_awal
