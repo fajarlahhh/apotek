@@ -24,35 +24,6 @@ return [
 		'url' => '/barangmasuk',
 		'id' => 'barangmasuk'
 	],[
-		'icon' => 'fa fa-file',
-		'title' => 'Cetak',
-		'url' => 'javascript:;',
-		'caret' => true,
-		'id' => 'cetak',
-		'sub_menu' => [[
-			'url' => '/laporanbarangmasuk',
-			'id' => 'laporanbarangmasuk',
-			'title' => 'Laporan Barang Masuk'
-        ],[
-            'title' => 'Penjualan',
-            'url' => 'javascript:;',
-            'caret' => true,
-            'id' => 'laporanpenjualan',
-            'sub_menu' => [[
-                'url' => '/laporanpenjualanbebas',
-                'id' => 'laporanpenjualanbebas',
-                'title' => 'Laporan Penjualan Bebas'
-            ],[
-                'url' => '/laporanpenjualanresep',
-                'id' => 'laporanpenjualanresep',
-                'title' => 'Laporan Penjualan Resep'
-            ]]
-        ],[
-			'url' => '/laporanstokbarang',
-			'id' => 'laporanstokbarang',
-			'title' => 'Laporan Stok Barang'
-        ]]
-	],[
 		'icon' => 'fa fa-database',
 		'title' => 'Data Master',
 		'url' => 'javascript:;',
@@ -75,6 +46,35 @@ return [
             'id' => 'pbf',
             'title' => 'PBF'
         ],]
+	],[
+		'icon' => 'fa fa-file',
+		'title' => 'Laporan',
+		'url' => 'javascript:;',
+		'caret' => true,
+		'id' => 'laporan',
+		'sub_menu' => [[
+			'url' => '/laporanstokbarang',
+			'id' => 'laporanstokbarang',
+			'title' => 'Laporan Stok Barang'
+        ],[
+            'title' => 'Penerimaan',
+            'url' => 'javascript:;',
+            'caret' => true,
+            'id' => 'penerimaan',
+            'sub_menu' => [[
+                'url' => '/laporanpenerimaanperhari',
+                'id' => 'laporanpenerimaanperhari',
+                'title' => 'Perhari'
+            ],[
+                'url' => '/laporanpenerimaanbulanan',
+                'id' => 'laporanpenerimaanperhari',
+                'title' => 'Perbulan'
+            ],[
+                'url' => '/laporanpeneriaankonsinyasi',
+                'id' => 'laporanpeneriaankonsinyasi',
+                'title' => 'Konsinyasi'
+            ]]
+        ]]
 	],[
 		'icon' => 'fa fa-calculator',
 		'title' => 'Penjualan',
