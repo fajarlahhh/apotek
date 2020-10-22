@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\DokterController;
 use App\Http\Controllers\CekstokController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BarangmasukController;
@@ -151,6 +152,14 @@ Route::group(['middleware' => ['auth']], function () {
             Route::patch('/restore', [PenjualanresepController::class, 'restore'])->middleware(['role:super-admin|user|supervisor']);
         });
     });
+
+    Route::group(['middleware' => ['role_or_permission:super-admin|laporanstokbarang']], function () {
+        Route::prefix('laporanstokbarang')->group(function () {
+            Route::get('/', [LaporanController::class, 'laporanstokbarang'])->name('laporanstokbarang');
+            Route::get('/{cetak}', [LaporanController::class, 'laporanstokbarang'])->name('laporanstokbarang');
+        });
+    });
+
 });
 
 
