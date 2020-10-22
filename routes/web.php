@@ -11,6 +11,7 @@ use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BarangmasukController;
 use App\Http\Controllers\JenisbarangController;
+use App\Http\Controllers\PostingstokController;
 use App\Http\Controllers\PenjualanbebasController;
 use App\Http\Controllers\PenjualanresepController;
 
@@ -31,6 +32,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', [DashboardController::class,'index']);
     Route::get('/gantisandi', [PenggunaController::class, 'ganti_sandi'])->name('gantisandi');
     Route::patch('/gantisandi', [PenggunaController::class, 'do_ganti_sandi'])->name('gantisandi.simpan');
+    Route::get('/barang/cari', [BarangController::class, 'cari']);
 
     Route::group(['middleware' => ['role_or_permission:super-admin|cekstok']], function () {
         Route::prefix('cekstok')->group(function () {
@@ -44,6 +46,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::prefix('biaya')->group(function () {
             Route::get('/', [BiayaController::class, 'index'])->name('biaya');
             Route::post('/simpan', [BiayaController::class, 'simpan'])->middleware(['role:super-admin|user|supervisor'])->name('biaya.simpan');
+        });
+    });
+
+    Route::group(['middleware' => ['role_or_permission:super-admin|postingstok']], function () {
+        Route::prefix('postingstok')->group(function () {
+            Route::get('/', [PostingstokController::class, 'index'])->name('postingstok');
+            Route::post('/', [PostingstokController::class, 'simpan'])->middleware(['role:super-admin|user|supervisor'])->name('postingstok.posting');
         });
     });
 

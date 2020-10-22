@@ -43,4 +43,9 @@ class BarangMasuk extends Model
     {
          return Carbon::parse($value)->isoFormat('LLLL');
     }
+
+    public function getBarangMasukKadaluarsaAttribute($value)
+    {
+         return Carbon::parse($value)->isoFormat('LL');
+    }
 }

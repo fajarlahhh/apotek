@@ -12,4 +12,5 @@ class StokAwal extends Model
     protected $primaryKey = ["barang_id", "stok_awal_tanggal"];
     public $incrementing = false;
     public $timestamps = false;
+    protected $keyType = 'string';
 }

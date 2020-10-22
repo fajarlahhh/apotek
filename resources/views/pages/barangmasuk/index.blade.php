@@ -60,12 +60,15 @@
             <thead>
                 <tr>
                     <th class="width-70">No.</th>
-                    <th>Tanggal</th>
+                    <th>Waktu Input</th>
                     <th>No. Faktur</th>
                     <th>PBF</th>
                     <th>Nama Barang</th>
+                    <th>Harga</th>
+                    <th>Diskon (%)</th>
+                    <th>PPN (%)</th>
                     <th>Qty</th>
-                    <th>Harga Beli</th>
+                    <th>Tanggal Kadaluarsa</th>
                     <th>Keterangan</th>
                     @role('super-admin|supervisor|user')
                     <th class="width-90"></th>
@@ -77,13 +80,16 @@
                 <tr>
                     <td class="align-middle">{{ ++$i }}</td>
                     <td class="align-middle">
-                        <span data-toggle="tooltip" data-container="body" data-placement="right" data-html="true" data-placement="top" title="{!! $row->pengguna->pengguna_nama.", <br><small>".$row->updated_at."</small>" !!}">{{ $row->barang_masuk_tanggal }}</span>
+                        <span data-toggle="tooltip" data-container="body" data-placement="right" data-html="true" data-placement="top" title="{!! $row->pengguna->pengguna_nama.", <br><small>".$row->updated_at."</small>" !!}">{{ $row->updated_at }}</span>
                     </td>
                     <td class="text-nowrap">{{ $row->barang_masuk_faktur }}</td>
                     <td class="text-nowrap">{{ $row->pbf? $row->pbf->pbf_nama: '' }}</td>
                     <td class="text-nowrap">{{ $row->barang? $row->barang->barang_nama: '' }}</td>
-                    <td class="text-nowrap">{{ number_format($row->barang_masuk_qty) }} {{ $row->barang? $row->barang->barang_satuan_1: '' }}</td>
                     <td class="text-nowrap text-right">{{ number_format($row->barang_masuk_harga_barang, 2) }}</td>
+                    <td class="text-nowrap text-right">{{ number_format($row->barang_masuk_diskon, 2) }}</td>
+                    <td class="text-nowrap text-right">{{ number_format($row->barang_masuk_harga_ppn, 2) }}</td>
+                    <td class="text-nowrap text-right">{{ number_format($row->barang_masuk_qty) }}</td>
+                    <td class="text-nowrap">{{ $row->barang_masuk_kadaluarsa }}</td>
                     <td>{{ $row->barang_masuk_keterangan }}</td>
                     @role('super-admin|supervisor|user')
                     <td class="with-btn-group align-middle" nowrap>

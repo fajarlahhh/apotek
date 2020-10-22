@@ -58,6 +58,12 @@ class BarangController extends Controller
         return Barang::with('satuan_semua')->findOrFail($req->get('id'));
     }
 
+    public function cari(Request $req)
+    {
+        return Barang::where('barang_nama', 'like', '%'.$req->cari.'%')->with('satuan_utama')->limit(20
+        )->get();
+    }
+
 	public function tambah(Request $req)
 	{
         return view('pages.datamaster.barang.form', [

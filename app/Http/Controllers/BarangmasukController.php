@@ -84,7 +84,6 @@ class BarangmasukController extends Controller
                 $data->barang_masuk_faktur = $req->get('barang_masuk_faktur');
                 $data->pbf_id = $req->get('pbf_id');
                 $data->barang_masuk_jatuh_tempo = Carbon::parse($req->get('barang_masuk_jatuh_tempo'))->format('Y-m-d');
-                $data->barang_masuk_ppn = $req->get('barang_masuk_ppn');
                 $data->barang_masuk_sales = $req->get('barang_masuk_sales');
                 $data->barang_masuk_keterangan = $req->get('barang_masuk_keterangan');
                 $data->barang_id = $barang_masuk['barang_id'];
@@ -94,6 +93,8 @@ class BarangmasukController extends Controller
                 $data->barang_masuk_qty = $barang_masuk['barang_masuk_qty'];
                 $data->barang_masuk_diskon = $barang_masuk['barang_masuk_diskon'];
                 $data->barang_masuk_kadaluarsa = Carbon::parse($barang_masuk['barang_masuk_kadaluarsa'])->format('Y-m-d');
+                $data->barang_masuk_sub_total_ppn = str_replace(',', '', $req->get('barang_masuk_sub_total_ppn'));
+                $data->barang_masuk_sub_total = str_replace(',', '', $req->get('barang_masuk_sub_total'));
                 $data->save();
             }
 
