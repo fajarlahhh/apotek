@@ -29,11 +29,6 @@ class Penjualan extends Model
         return $this->hasMany('App\Models\PenjualanDetail', 'penjualan_id', 'penjualan_id');
     }
 
-    public function biaya()
-    {
-        return $this->hasMany('App\Models\PenjualanBiaya', 'penjualan_id', 'penjualan_id');
-    }
-
     public function pengguna()
     {
         return $this->belongsTo('App\Models\Pengguna', 'pengguna_id', 'pengguna_id');

@@ -21,7 +21,9 @@ class PenjualanbebasController extends Controller
 		$tgl1 = $req->get('tanggal')? date('Y-m-d', strtotime($tanggal[0])): date('Y-m-01');
 		$tgl2 = $req->get('tanggal')? date('Y-m-d', strtotime($tanggal[1])): date('Y-m-d');
 
-        $data = Penjualan::with('pengguna')->with('detail')->where('penjualan_keterangan', 'like', '%'.$req->cari.'%')->whereBetween('penjualan_tanggal', [$tgl1, $tgl2])->orderBy('created_at', 'desc');
+        $data = Penjualan::with('pengguna')->with('detail')->where('penjualan_jenis', 'Bebas')->whereBetween('penjualan_tanggal', [$tgl1, $tgl2])->where(function($q) use ($req){
+            $q->orWhere('penjualan_keterangan', 'like', '%'.$req->cari.'%');
+        })->orderBy('created_at', 'desc');
 
         switch ($tipe) {
             case '1':
@@ -101,7 +103,7 @@ class PenjualanbebasController extends Controller
                 $sisa = $stok + $masuk - $keluar;
 
                 $satuan = explode(";", $row["satuan_nama"]);
-                $jual = $row['penjualan_detail_qty']/$satuan[1];
+                $jual = $stok_barang['penjualan_detail_qty'] * 1/$satuan[1];
 
                 if($sisa < $jual){
                     if (!in_array("Stok ".$stok_barang['barang_nama']." tersisa ".$sisa."<br>", $pesan)) {
@@ -151,20 +153,29 @@ class PenjualanbebasController extends Controller
                     $detail->penjualan_id = $id;
                     $detail->barang_id = $barang['barang_id'];
                     $detail->satuan_nama = $satuan[0];
-                    $detail->satuan_rasio_dari_utama = $satuan[1];
+                    $detail->satuan_rasio_dari_utama = $satuan[2];
                     $detail->satuan_harga = str_replace(',', '', $barang['satuan_harga']);
                     $detail->penjualan_detail_qty = $barang['penjualan_detail_qty'];
                     $detail->penjualan_detail_diskon = $barang['penjualan_detail_diskon'];
+                    $detail->penjualan_detail_total = str_replace(',', '', $barang['penjualan_detail_total']);
                     $detail->save();
                 }
             });
 
             toast('Berhasil menyimpan data', 'success')->autoClose(2000);
-            return redirect('penjualanbebas')->with(['kwitansi' => '/penjualanbebas/kwitansi/'.$id]);
+            return redirect('penjualanbebas')->with(['kwitansi' => '/penjualanbebas/kwitansi/0/'.$id]);
         }catch(\Exception $e){
             alert()->error('Simpan Data Gagal', $e->getMessage());
             return redirect()->back()->withInput();
         }
+    }
+
+    public function nota($cetak, $id)
+    {
+        return view('pages.penjualan.bebas.kwitansi', [
+            'data' => Penjualan::with('detail.barang')->findOrFail($id),
+            'cetak' => $cetak
+        ]);
     }
 
 	public function hapus(Request $req)

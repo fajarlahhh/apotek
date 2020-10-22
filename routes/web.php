@@ -125,6 +125,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['role_or_permission:super-admin|penjualanbebas']], function () {
         Route::prefix('penjualanbebas')->group(function () {
+            Route::get('/kwitansi/{cetak}/{id}', [PenjualanbebasController::class, 'nota']);
             Route::get('/tambahbarang/{id}', [PenjualanbebasController::class, 'tambah_barang']);
             Route::get('/data', [PenjualanbebasController::class, 'index'])->name('penjualanbebas');
             Route::get('/penjualanbebas/kwitansi/{id}', [PenjualanbebasController::class, 'index']);
@@ -138,6 +139,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['role_or_permission:super-admin|penjualanresep']], function () {
         Route::prefix('penjualanresep')->group(function () {
+            Route::get('/kwitansi/{cetak}/{id}', [PenjualanresepController::class, 'nota']);
             Route::get('/tambahbarang/{resep}/{id}', [PenjualanresepController::class, 'tambah_barang']);
             Route::get('/tambahresep/{id}', [PenjualanresepController::class, 'tambah_resep']);
             Route::get('/data', [PenjualanresepController::class, 'index'])->name('penjualanresep');

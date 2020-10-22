@@ -61,7 +61,9 @@
                 <tr>
                     <th class="width-70">No.</th>
                     <th>Tanggal</th>
-                    <th>Total</th>
+                    <th>Total Harga Barang</th>
+                    <th>Admin</th>
+                    <th>Servis</th>
                     <th>Barang</th>
                     <th>Keterangan</th>
                     @role('super-admin|supervisor|user')
@@ -77,6 +79,8 @@
                         <span data-toggle="tooltip" data-container="body" data-placement="right" data-html="true" data-placement="top" title="{!! $row->pengguna->pengguna_nama.", <br><small>".$row->updated_at."</small>" !!}">{{ $row->penjualan_tanggal }}</span>
                     </td>
                     <td class="text-nowrap text-right align-middle">{{ number_format($row->penjualan_tagihan, 2) }}</td>
+                    <td class="text-nowrap text-right align-middle">{{ number_format($row->penjualan_admin, 2) }}</td>
+                    <td class="text-nowrap text-right align-middle">{{ number_format($row->penjualan_racikan, 2) }}</td>
                     <td class="align-middle">
                         <table class="table table-bordered m-b-0">
                             <thead>
@@ -106,13 +110,16 @@
                     <td class="align-middle">{{ $row->penjualan_keterangan }}</td>
                     @role('super-admin|supervisor|user')
                     <td class="with-btn-group align-middle" nowrap>
-                        @if ($row->trashed())
-                        @role('super-admin|supervisor')
-                        <a href="javascript:;" data-id="{{ $row->penjualan_id }}" data-no="{{ $i }}" class="btn-restore btn-sm btn btn-success" > Restore</a>
-                        @endrole
-                        @else
-                        <a href="javascript:;" data-id="{{ $row->penjualan_id }}" data-no="{{ $i }}" class="btn-hapus btn-sm btn btn-danger" > Hapus</a>
-                        @endif
+                        <div class="btn-group">
+                            @if ($row->trashed())
+                            @role('super-admin|supervisor')
+                            <a href="javascript:;" data-id="{{ $row->penjualan_id }}" data-no="{{ $i }}" class="btn-restore btn-sm btn btn-success" > Restore</a>
+                            @endrole
+                            @else
+                            <a href="/penjualanresep/kwitansi/1/{{ $row->penjualan_id }}" target="_blank" class="btn-sm btn btn-aqua" >Cetak</a>
+                            <a href="javascript:;" data-id="{{ $row->penjualan_id }}" data-no="{{ $i }}" class="btn-hapus btn-sm btn btn-danger" > Hapus</a>
+                            @endif
+                        </div>
                     </td>
                     @endrole
                 </tr>
