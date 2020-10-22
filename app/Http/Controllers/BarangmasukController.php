@@ -62,7 +62,7 @@ class BarangmasukController extends Controller
 	public function tambah_barang(Request $req, $id)
 	{
         return view('pages.barangmasuk.barang',[
-            'barang' => Barang::all(),
+            'barang' => Barang::with('satuan_utama')->get(),
             'data' => $req->barang,
             'id' => $id
         ]);
@@ -82,13 +82,17 @@ class BarangmasukController extends Controller
                 $data->barang_masuk_id = Carbon::now()->format('Ymdhmsu').$index;
                 $data->barang_masuk_tanggal = Carbon::parse($req->get('barang_masuk_tanggal'))->format('Y-m-d');
                 $data->barang_masuk_faktur = $req->get('barang_masuk_faktur');
-                $data->barang_masuk_jatuh_tempo = Carbon::parse($req->get('barang_masuk_jatuh_tempo'))->format('Y-m-d');
-                $data->barang_masuk_sales = $req->get('barang_masuk_sales');
                 $data->pbf_id = $req->get('pbf_id');
+                $data->barang_masuk_jatuh_tempo = Carbon::parse($req->get('barang_masuk_jatuh_tempo'))->format('Y-m-d');
+                $data->barang_masuk_ppn = $req->get('barang_masuk_ppn');
+                $data->barang_masuk_sales = $req->get('barang_masuk_sales');
+                $data->barang_masuk_keterangan = $req->get('barang_masuk_keterangan');
                 $data->barang_id = $barang_masuk['barang_id'];
-                $data->barang_masuk_qty = $barang_masuk['barang_masuk_qty'];
-                $data->barang_masuk_harga_barang = str_replace(',', '', $barang_masuk['barang_masuk_harga_barang']);
                 $data->barang_masuk_nomor_batch = $barang_masuk['barang_masuk_nomor_batch'];
+                $data->barang_masuk_harga_barang = str_replace(',', '', $barang_masuk['barang_masuk_harga_barang']);
+                $data->barang_masuk_harga_ppn = str_replace(',', '', $barang_masuk['barang_masuk_harga_ppn']);
+                $data->barang_masuk_qty = $barang_masuk['barang_masuk_qty'];
+                $data->barang_masuk_diskon = $barang_masuk['barang_masuk_diskon'];
                 $data->barang_masuk_kadaluarsa = Carbon::parse($barang_masuk['barang_masuk_kadaluarsa'])->format('Y-m-d');
                 $data->save();
             }

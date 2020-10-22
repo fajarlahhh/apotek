@@ -51,6 +51,10 @@
                 <input type="text" readonly class="form-control date" id="barang_masuk_jatuh_tempo" name="barang_masuk_jatuh_tempo" value="{{ date('d F Y', strtotime(old('barang_masuk_jatuh_tempo', now()))) }}" required/>
             </div>
             <div class="form-group">
+                <label class="control-label">PPN per Barang (%)</label>
+                <input class="form-control" type="number" id="ppn" step="any" name="barang_masuk_ppn" value="{{ old('barang_masuk_ppn', 10) }}" autocomplete="off" min="1" required/>
+            </div>
+            <div class="form-group">
                 <label class="control-label">Nama Sales</label>
                 <input class="form-control" type="text" name="barang_masuk_sales" value="{{ old('barang_masuk_sales') }}" autocomplete="off"/>
             </div>
@@ -64,9 +68,13 @@
                         <thead>
                             <tr>
                                 <th>Nama Barang</th>
-                                <th>Qty</th>
-                                <th>Harga</th>
+                                <th>Satuan</th>
                                 <th>No. Batch</th>
+                                <th>Harga</th>
+                                <th>PPN</th>
+                                <th>Qty</th>
+                                <th>Diskon</th>
+                                <th>Total</th>
                                 <th>Tanggal Kadaluarsa</th>
                                 <th></th>
                             </tr>
@@ -75,7 +83,17 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="6" class="text-center">
+                                <th colspan="4" class="text-right">Sub Total PPN : </th>
+                                <td colspan="1" class="with-btn">
+                                    <input type="text" class="form-control text-right currency" id="sub-total-ppn" name="penjualan_tagihan" value="0" autocomplete="off" readonly/>
+                                </td>
+                                <th colspan="2" class="text-right">Sub Total : </th>
+                                <td colspan="1" class="with-btn">
+                                    <input type="text" class="form-control text-right currency" id="sub-total-harga" name="penjualan_tagihan" value="0" autocomplete="off" readonly/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="8" class="text-center">
                                     <button class="btn btn-sm btn-primary" onclick="event.preventDefault(); tambah_barang()" id="tambah-barang">Tambah Barang</button>
                                 </td>
                             </tr>
@@ -115,7 +133,7 @@
     var i = 0;
 
     var barang = @php
-            echo json_encode(old('barang_masuk', $barang_masuk), JSON_NUMERIC_CHECK)
+            echo json_encode(array_values(old('barang_masuk', [])), JSON_NUMERIC_CHECK)
             @endphp || []
 
     barang.forEach(barang => {
@@ -123,14 +141,55 @@
         tambah_barang(barang);
     });
 
+    AutoNumeric.multiple('.currency', {
+                    modifyValueOnWheel : false,
+                    minimumValue: "0"
+                });
+
+    function satuan(id) {
+        var satuan = $("#barang" + id + " option:selected").data('satuan');
+        $("#satuan" + id).val(satuan);
+    }
+
+    function pajak(id) {
+        var harga = parseFloat($("#harga" + id).val().split(',').join('') || 0);
+        var nilai = parseFloat($("#ppn").val().split(',').join('') || 0);
+
+        AutoNumeric.getAutoNumericElement('#ppn' + id).set(harga * nilai/100);
+        total_harga_barang(id);
+    }
+
+    function total_harga_barang(id) {
+        var qty = $("#qty" + id).val() || 0;
+        var harga = parseFloat($("#harga" + id).val().split(',').join('') || 0);
+        var ppn = parseFloat($("#ppn" + id).val().split(',').join('') || 0);
+        var diskon = parseFloat($("#diskon" + id).val().split(',').join('') || 0);
+
+        AutoNumeric.getAutoNumericElement('#total' + id).set((harga + ppn - (harga * diskon/100)) * qty);
+        sub_total();
+    }
+
+    function sub_total(){
+        var sub_total = 0;
+        $('.total-harga-barang').each(function(i, obj) {
+            console.log(this.value);
+            if(this.value)
+                sub_total += parseFloat(this.value.split(',').join('') || 0);
+        });
+        AutoNumeric.getAutoNumericElement('#sub-total-harga').set(sub_total);
+
+        var sub_total_ppn = 0;
+        $('.ppn').each(function(i, obj) {
+            if(this.value)
+                sub_total_ppn += parseFloat(this.value.split(',').join('') || 0);
+        });
+        AutoNumeric.getAutoNumericElement('#sub-total-ppn').set(sub_total_ppn);
+    }
+
     $('.date').datepicker({
         todayHighlight: true,
         format: 'dd MM yyyy',
         autoclose: true
-    });
-
-    $(".barang").each(function(button){
-        tambah_barang($(this).data());
     });
 
     function tambah_barang(barang = null){
@@ -144,7 +203,15 @@
 
                 $('.selectpicker').selectpicker('refresh');
 
-                new AutoNumeric('#harga' + i++, {
+                new AutoNumeric('#harga' + i, {
+                    modifyValueOnWheel : false,
+                    minimumValue: "0"
+                });
+                new AutoNumeric('#ppn' + i, {
+                    modifyValueOnWheel : false,
+                    minimumValue: "0"
+                });
+                new AutoNumeric('#total' + i++, {
                     modifyValueOnWheel : false,
                     minimumValue: "0"
                 });
@@ -167,6 +234,7 @@
 
     function hapus_barang(id) {
         $("#" + id).remove();
+        sub_total();
     }
 </script>
 @endpush

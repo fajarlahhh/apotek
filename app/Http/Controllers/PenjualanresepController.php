@@ -53,11 +53,11 @@ class PenjualanresepController extends Controller
         return view('pages.penjualan.resep.form', [
             'admin' => $biaya->filter(function ($q)
             {
-                return $q->biaya_nama == "Biaya Admin";
+                return $q->biaya_nama == "Biaya Listrik";
             })->first()->biaya_nilai,
             'racikan' => $biaya->filter(function ($q)
             {
-                return $q->biaya_nama == "Biaya Racikan";
+                return $q->biaya_nama == "Biaya Servis";
             })->first()->biaya_nilai,
             'persen' => $biaya->filter(function ($q)
             {
@@ -114,24 +114,26 @@ class PenjualanresepController extends Controller
                 return $q->barang_id == $row['barang_id'];
             })->first();
 
-            if ($stok_barang->stok_awal->count() > 0) {
-                $stok = $stok_barang->stok_awal->first()->barang_qty;
-            }
-            if ($stok_barang->barang_masuk->count() > 0) {
-                $masuk = $stok_barang->barang_masuk->first()->masuk;
-            }
-            if ($stok_barang->penjualan->count() > 0) {
-                $keluar = $stok_barang->penjualan->first()->keluar;
-            }
+            if (!$stok_barang->pbf_id) {
+                if ($stok_barang->stok_awal->count() > 0) {
+                    $stok = $stok_barang->stok_awal->first()->barang_qty;
+                }
+                if ($stok_barang->barang_masuk->count() > 0) {
+                    $masuk = $stok_barang->barang_masuk->first()->masuk;
+                }
+                if ($stok_barang->penjualan->count() > 0) {
+                    $keluar = $stok_barang->penjualan->first()->keluar;
+                }
 
-            $sisa = $stok + $masuk - $keluar;
+                $sisa = $stok + $masuk - $keluar;
 
-            $satuan = explode(";", $row["satuan_nama"]);
-            $jual = $row['penjualan_detail_qty']/$satuan[1];
+                $satuan = explode(";", $row["satuan_nama"]);
+                $jual = $row['penjualan_detail_qty']/$satuan[1];
 
-            if($sisa < $jual){
-                if (!in_array("Stok ".$stok_barang['barang_nama']." tersisa ".$sisa."<br>", $pesan)) {
-                    array_push($pesan, "Stok ".$stok_barang['barang_nama']." tersisa ".$sisa."<br>");
+                if($sisa < $jual){
+                    if (!in_array("Stok ".$stok_barang['barang_nama']." tersisa ".$sisa."<br>", $pesan)) {
+                        array_push($pesan, "Stok ".$stok_barang['barang_nama']." tersisa ".$sisa."<br>");
+                    }
                 }
             }
         }

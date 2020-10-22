@@ -36,17 +36,12 @@
             <div class="form-group">
                 <label class="control-label">Dokter</label>
                 <select class="form-control selectpicker" name="dokter_id" id="dokter_id" data-live-search="true" data-style="btn-warning" data-width="100%" >
+                    <option value="">-- Pilih Dokter --</option>
                     @foreach($dokter as $row)
                     @php
                         $selected = '';
-                        if($aksi == 'Edit'){
-                            if ($data->dokter_id == $row->dokter_id) {
-                                $selected =  'selected';
-                            }
-                        }else{
-                            if(old('dokter_id') == $row->dokter_id){
-                                $selected =  'selected';
-                            }
+                        if(old('dokter_id') == $row->dokter_id){
+                            $selected =  'selected';
                         }
                     @endphp
                     <option value="{{ $row->dokter_id }}" {{ $selected }}>{{ $row->dokter_nama }} - {{ $row->dokter_bidang }}</option>
@@ -80,14 +75,14 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Biaya Racikan</td>
+                                    <td>Biaya Servis</td>
                                     <td class="with-btn">
                                         <input class="form-control text-right currency" type="text" id="racikan" name="racikan" value="{{ old('racikan', 0) }}" autocomplete="off" required readonly/>
                                         <input type="hidden" id="dokter" name="dokter" value="{{ old('dokter', $persen) }}" autocomplete="off" required/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Biaya Admin</td>
+                                    <td>Biaya Listrik</td>
                                     <td class="with-btn">
                                         <input class="form-control text-right currency" type="text" id="admin" name="admin" value="{{ old('admin', $admin) }}" autocomplete="off" required readonly/>
                                     </td>
