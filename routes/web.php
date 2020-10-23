@@ -156,10 +156,23 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['role_or_permission:super-admin|laporanstokbarang']], function () {
         Route::prefix('laporanstokbarang')->group(function () {
             Route::get('/', [LaporanController::class, 'laporanstokbarang'])->name('laporanstokbarang');
-            Route::get('/{cetak}', [LaporanController::class, 'laporanstokbarang'])->name('laporanstokbarang');
+            Route::get('/{cetak}', [LaporanController::class, 'laporanstokbarang'])->name('laporanstokbarang.cetak');
         });
     });
 
+    Route::group(['middleware' => ['role_or_permission:super-admin|laporanpenerimaanperhari']], function () {
+        Route::prefix('laporanpenerimaanperhari')->group(function () {
+            Route::get('/', [LaporanController::class, 'laporanpenerimaanperhari'])->name('laporanpenerimaanperhari');
+            Route::get('/{cetak}', [LaporanController::class, 'laporanpenerimaanperhari'])->name('laporanpenerimaanperhari.cetak');
+        });
+    });
+
+    Route::group(['middleware' => ['role_or_permission:super-admin|laporanpenerimaanbulanan']], function () {
+        Route::prefix('laporanpenerimaanbulanan')->group(function () {
+            Route::get('/', [LaporanController::class, 'laporanpenerimaanbulanan'])->name('laporanpenerimaanbulanan');
+            Route::get('/{cetak}', [LaporanController::class, 'laporanpenerimaanbulanan'])->name('laporanpenerimaanbulanan.cetak');
+        });
+    });
 });
 
 

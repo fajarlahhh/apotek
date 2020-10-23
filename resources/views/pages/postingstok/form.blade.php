@@ -1,17 +1,17 @@
 @extends('pages.main')
 
-@section('title', ' | Posting Stok')
+@section('title', ' | Posting Stok Akhir')
 
 @push('css')
 <link href="/assets/plugins/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
 @endpush
 
 @section('page')
-	<li class="breadcrumb-item active">Posting Stok</li>
+	<li class="breadcrumb-item active">Posting Stok Akhir</li>
 @endsection
 
 @section('header')
-    <h1 class="page-header">Posting Stok</h1>
+    <h1 class="page-header">Posting Stok Akhir</h1>
 @endsection
 
 @section('subcontent')

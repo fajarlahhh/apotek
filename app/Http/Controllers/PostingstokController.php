@@ -29,6 +29,7 @@ class PostingstokController extends Controller
         try{
             $bulan = $req->get('bulan');
             $tahun = $req->get('tahun');
+            $periode = Carbon::create($tahun, $bulan, 1, 0)->addMonths(1)->format('Y-m-01');
             StokAwal::whereRaw('month(stok_awal_tanggal)='.$bulan)->whereRaw('year(stok_awal_tanggal)='.$tahun)->delete();
 
             $barang = Barang::with(['stok_awal' => function($q) use ($bulan, $tahun){
@@ -59,7 +60,7 @@ class PostingstokController extends Controller
 
                 $sisa = $stok + $masuk - $keluar;
                 array_push($data, [
-                    'stok_awal_tanggal' => $tahun.'-'.$bulan.'-01',
+                    'stok_awal_tanggal' => $periode,
                     'barang_id' => $row->barang_id,
                     'barang_qty' => $sisa
                 ]);

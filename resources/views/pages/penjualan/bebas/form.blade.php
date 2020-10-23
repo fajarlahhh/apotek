@@ -89,7 +89,7 @@
             @endrole
             <a href="/penjualanbebas/data" class="btn btn-sm btn-primary">Data Penjualan</a>
             <div class="pull-right">
-                This page took {{ (microtime(true) - LARAVEL_START) }} seconds to render {{ Session::get('kwitansi') }}
+                This page took {{ (microtime(true) - LARAVEL_START) }} seconds to render
             </div>
         </div>
     </form>
@@ -175,7 +175,7 @@
         $("#satuan" + id + " option").remove();
         satuan.forEach(row => {
             var select = slct == row['satuan_nama']? "selected": "";
-            $("#satuan" + id).append('<option value="'+row['satuan_nama']+';'+row['satuan_rasio_dari_utama']+'" data-harga="'+row['satuan_harga']+'" data-rasio="'+row['satuan_rasio_dari_utama']+'" '+select+'>'+row['satuan_nama']+'</option>');
+            $("#satuan" + id).append('<option value="'+row['satuan_harga']+';'+row['satuan_nama']+';'+row['satuan_rasio_dari_utama']+'" data-harga="'+row['satuan_harga']+'" data-rasio="'+row['satuan_rasio_dari_utama']+'" '+select+'>'+row['satuan_nama']+'</option>');
         });
         $("#satuan" + id).selectpicker('refresh');
         harga(id);

@@ -44,7 +44,7 @@ class Barang extends Model
 
     public function penjualan()
     {
-        return $this->hasMany('App\Models\PenjualanDetail', 'barang_id', 'barang_id')->with('penjualan', function($q){
+        return $this->hasMany('App\Models\PenjualanDetail', 'barang_id', 'barang_id')->whereHas('penjualan', function($q){
             $q->where('deleted_at', NULL);
         });
     }

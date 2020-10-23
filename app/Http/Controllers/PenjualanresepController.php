@@ -117,15 +117,9 @@ class PenjualanresepController extends Controller
             })->first();
 
             if (!$stok_barang->pbf_id) {
-                if ($stok_barang->stok_awal->count() > 0) {
-                    $stok = $stok_barang->stok_awal->first()->barang_qty;
-                }
-                if ($stok_barang->barang_masuk->count() > 0) {
-                    $masuk = $stok_barang->barang_masuk->first()->masuk;
-                }
-                if ($stok_barang->penjualan->count() > 0) {
-                    $keluar = $stok_barang->penjualan->first()->keluar;
-                }
+                $stok = $stok_barang->stok_awal->count() > 0? $stok_barang->stok_awal->sum('barang_qty'): 0;
+                $masuk = $stok_barang->barang_masuk->count() > 0? $stok_barang->barang_masuk->sum('masuk'): 0;
+                $keluar = $stok_barang->penjualan->count() > 0? $stok_barang->penjualan->sum('keluar'): 0;
 
                 $sisa = $stok + $masuk - $keluar;
 
@@ -167,19 +161,19 @@ class PenjualanresepController extends Controller
                 ]);
             }
         }
-        $stok = $this->cek_stok($barang_id);
-        if ($stok){
-            alert()->error('Simpan Data Gagal', "Stok Beberapa Barang Tidak Tersedia");
-            return redirect()->back()->withInput()->with(['stok_kurang' => $stok]);
-        }
         try{
+            $stok = $this->cek_stok($barang_id);
+            if ($stok){
+                alert()->error('Simpan Data Gagal', "Stok Beberapa Barang Tidak Tersedia");
+                return redirect()->back()->withInput()->with(['stok_kurang' => $stok]);
+            }
             $id = Carbon::now()->format('Ymdhmsu');
             DB::transaction(function () use ($req, $id) {
                 $data = new Penjualan();
                 $data->penjualan_id = $id;
                 $data->penjualan_tanggal = Carbon::now()->format('Y-m-d');
                 $data->penjualan_jenis = "Resep";
-                $data->penjualan_keterangan = $req->get('penjualan_keterangan');
+                $data->penjualan_keterangan = $req->get('penjualan_keterangan') || '';
                 $data->penjualan_tagihan = str_replace(',', '', $req->get('penjualan_tagihan'));
                 $data->penjualan_racikan = str_replace(',', '', $req->get('racikan'));
                 $data->penjualan_admin = str_replace(',', '', $req->get('admin'));
@@ -189,21 +183,24 @@ class PenjualanresepController extends Controller
                 $data->penjualan_biaya_dokter = str_replace(',', '', $req->get('penjualan_biaya_dokter'));
                 $data->dokter_id = $req->get('dokter_id');
                 $data->save();
-                foreach ($req->barang as $index => $barang) {
-                    foreach ($barang as $brg) {
+                foreach ($req->barang as $index => $detail) {
+                    foreach ($detail as $brg) {
                         $satuan = explode(";", $brg["satuan_nama"]);
+                        $barang = explode(";", $brg["barang_id"]);
+
                         $detail = new PenjualanDetail();
                         $detail->penjualan_id = $id;
                         $detail->penjualan_detail_resep = $req->resep[$index];
                         $detail->penjualan_detail_resep_nama = $req->penjualan_detail_resep_nama[$index];
-                        $detail->barang_id = $brg["barang_id"];
+                        $detail->barang_id = $barang[0];
                         $detail->satuan_nama = $satuan[1];
                         $detail->satuan_harga = str_replace(',', '', $satuan[0]);
-                        $detail->penjualan_detail_tambahan = str_replace(',', '', $satuan[0]) * str_replace(',', '', $req->get('dokter'))/100;
+                        $detail->penjualan_detail_tambahan = $req->get('dokter_id')? str_replace(',', '', $satuan[0]) * str_replace(',', '', $req->get('dokter'))/100: 0;
                         $detail->satuan_rasio_dari_utama = $satuan[2];
                         $detail->penjualan_detail_qty = $brg['penjualan_detail_qty'];
                         $detail->penjualan_detail_diskon = $brg['penjualan_detail_diskon'];
                         $detail->penjualan_detail_total = str_replace(',', '', $brg['penjualan_detail_total']);
+                        $detail->pbf_id = $barang[1];
                         $detail->save();
                     }
                 }

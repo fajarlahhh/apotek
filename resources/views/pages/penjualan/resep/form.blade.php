@@ -122,7 +122,7 @@
             @endrole
             <a href="/penjualanresep/data" class="btn btn-sm btn-primary">Data Penjualan</a>
             <div class="pull-right">
-                This page took {{ (microtime(true) - LARAVEL_START) }} seconds to render {{ Session::get('kwitansi') }}
+                This page took {{ (microtime(true) - LARAVEL_START) }} seconds to render
             </div>
         </div>
     </form>

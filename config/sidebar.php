@@ -53,10 +53,6 @@ return [
 		'caret' => true,
 		'id' => 'laporan',
 		'sub_menu' => [[
-			'url' => '/laporanstokbarang',
-			'id' => 'laporanstokbarang',
-			'title' => 'Laporan Stok Barang'
-        ],[
             'title' => 'Penerimaan',
             'url' => 'javascript:;',
             'caret' => true,
@@ -74,7 +70,11 @@ return [
                 'id' => 'laporanpeneriaankonsinyasi',
                 'title' => 'Konsinyasi'
             ]]
-        ]]
+            ],[
+                'url' => '/laporanstokbarang',
+                'id' => 'laporanstokbarang',
+                'title' => 'Stok Barang'
+            ]]
 	],[
 		'icon' => 'fa fa-calculator',
 		'title' => 'Penjualan',
@@ -92,7 +92,7 @@ return [
         ]]
 	],[
 		'icon' => 'fa fa-gavel',
-		'title' => 'Posting Stok',
+		'title' => 'Posting Stok Akhir',
 		'url' => '/postingstok',
 		'id' => 'postingstok'
 	],[
