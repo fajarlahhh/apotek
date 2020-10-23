@@ -35,28 +35,32 @@
                 </td>
             </tr>
             @endforeach
+            <tr>
+                <th colspan="3" class="text-right">Biaya Admin :</th>
+                <td class="text-right">
+                    {{ number_format($data->penjualan_admin, 2) }}
+                </td>
+            </tr>
+            <tr>
+                <th colspan="3" class="text-right">Biaya Servis :</th>
+                <td class="text-right">
+                    {{ number_format($data->penjualan_racikan, 2) }}
+                </td>
+            </tr>
+            <tr>
+                <th colspan="3" class="text-right">Biaya Dokter :</th>
+                <td class="text-right">
+                    {{ number_format($data->penjualan_biaya_dokter, 2) }}
+                </td>
+            </tr>
+            <tr>
+                <th colspan="3" class="text-right">Total :</th>
+                <td class="text-right">
+                    {{ number_format($data->penjualan_admin + $data->penjualan_racikan + $data->detail->sum('penjualan_detail_total'), 2) }}
+                </th>
+            </tr>
         </table>
     </div>
-    <table class="table table-borderless width-200 float-right">
-        <tr>
-            <th>Biaya Admin :</th>
-            <td>
-                {{ number_format($data->penjualan_admin, 2) }}
-            </td>
-        </tr>
-        <tr>
-            <th>Biaya Servis :</th>
-            <td>
-                {{ number_format($data->penjualan_racikan, 2) }}
-            </td>
-        </tr>
-        <tr>
-            <th>Total :</th>
-            <th>
-                {{ number_format($data->penjualan_admin + $data->penjualan_racikan + $data->detail->sum('penjualan_detail_total'), 2) }}
-            </th>
-        </tr>
-    </table>
 </div>
 @if ($cetak == 1)
         <script>
@@ -68,6 +72,6 @@
 @if ($cetak == 0)
 <div class="modal-footer">
     <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Tutup</a>
-    <a href="/penjualanbebas/kwitansi/1/{{ $data->penjualan_id }}" class="btn btn-success" target="_blank"><i class="fas fa-print"></i> Cetak</a>
+    <a href="/penjualanresep/kwitansi/1/{{ $data->penjualan_id }}" class="btn btn-success" target="_blank"><i class="fas fa-print"></i> Cetak</a>
 </div>
 @endif

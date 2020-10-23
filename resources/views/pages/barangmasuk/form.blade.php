@@ -94,7 +94,7 @@
                             </tr>
                             <tr>
                                 <td colspan="8" class="text-center">
-                                    <button class="btn btn-sm btn-primary" onclick="event.preventDefault(); tambah_barang()" id="tambah-barang">Tambah Barang</button>
+                                    <a href="javascript:;" class="btn btn-sm btn-primary" onclick="event.preventDefault(); tambah_barang()" id="tambah-barang">Tambah Barang</a>
                                 </td>
                             </tr>
                         </tfoot>

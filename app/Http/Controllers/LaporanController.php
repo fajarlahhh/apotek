@@ -47,6 +47,7 @@ class LaporanController extends Controller
                     return $r->satuan_harga * $r->penjualan_detail_qty;
                 }),
                 'servis' => $q->penjualan_racikan,
+                'biaya_dokter' => $q->penjualan_biaya_dokter,
                 'persen' => $q->detail->sum(function ($r) {
                     return $r->penjualan_detail_tambahan * $r->penjualan_detail_qty;
                 }),
@@ -76,7 +77,7 @@ class LaporanController extends Controller
         $bulan = $req->bulan?:date('m');
         $tahun = $req->tahun?:date('Y');
 
-        $data = Penjualan::with('detail.barang')->whereRaw('month(penjualan_tanggal)='.$bulan)->whereRaw('year(penjualan_tanggal)='.$tahun)->get()->map(function($q){
+        $data = Penjualan::with('detail.barang')->orderBy('penjualan_tanggal')->whereRaw('month(penjualan_tanggal)='.$bulan)->whereRaw('year(penjualan_tanggal)='.$tahun)->get()->map(function($q){
             return [
                 'jenis' => $q->penjualan_jenis,
                 'dokter' => $q->dokter_id,
@@ -86,6 +87,7 @@ class LaporanController extends Controller
                 }),
                 'servis' => $q->penjualan_racikan,
                 'persen' => [
+                    'biaya_dokter' => $q->penjualan_biaya_dokter,
                     'dokter' => $q->dokter_id,
                     'nilai' => $q->detail->sum(function ($r) {
                         return $r->penjualan_detail_tambahan * $r->penjualan_detail_qty;
@@ -112,6 +114,7 @@ class LaporanController extends Controller
                 })->groupBy('dokter')->map(function($r){
                     return [
                         'dokter' => $r->first()['dokter'],
+                        'biaya_dokter' => $r->first()['biaya_dokter'],
                         'nilai' => $r->first()['nilai']
                     ];
                 })->toArray())

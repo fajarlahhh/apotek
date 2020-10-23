@@ -200,7 +200,7 @@ class PenjualanresepController extends Controller
                         $detail->penjualan_detail_qty = $brg['penjualan_detail_qty'];
                         $detail->penjualan_detail_diskon = $brg['penjualan_detail_diskon'];
                         $detail->penjualan_detail_total = str_replace(',', '', $brg['penjualan_detail_total']);
-                        $detail->pbf_id = $barang[1];
+                        $detail->pbf_id = $barang[1]?:null;
                         $detail->save();
                     }
                 }

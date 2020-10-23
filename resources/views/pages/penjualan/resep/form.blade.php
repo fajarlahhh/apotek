@@ -128,6 +128,17 @@
     </form>
 </div>
 @include('includes.component.error')
+<div class="modal fade" id="modal-kwitansi">
+	<div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Nota Pembelian</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div id="modal-detail"></div>
+        </div>
+	</div>
+</div>
 @endsection
 
 @push('scripts')
@@ -137,7 +148,8 @@
 <script src="/assets/plugins/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 @if (Session::has('kwitansi'))
 <script>
-    window.open("{{ Session::get('kwitansi') }}", '_blank');
+    $("#modal-detail").load("{{ Session::get('kwitansi') }}");
+    $('#modal-kwitansi').modal('show');
 </script>
 @endif
 <script>

@@ -1,7 +1,7 @@
 
 @extends($cetak != 'cetak'? 'pages.laporan.main': 'pages.laporan.cetak')
 
-@section('title', ' | Per Hari')
+@section('title', ' | Per Bulan')
 
 @push('css')
 <link href="/assets/plugins/parsleyjs/src/parsley.css" rel="stylesheet" />
@@ -9,11 +9,11 @@
 @endpush
 
 @section('page')
-	<li class="breadcrumb-item active">Per Hari</li>
+	<li class="breadcrumb-item active">Per Bulan</li>
 @endsection
 
 @section('header')
-    <h1 class="page-header">Per Hari</h1>
+    <h1 class="page-header">Per Bulan</h1>
 @endsection
 
 @section('subcontent')
@@ -70,16 +70,18 @@
             <tbody>
                 @foreach ($data as $index => $row)
                 @php
+                    $semua_persen = collect($row['persen']);
                     $harga_belum_ppn += ($row['harga_belum_ppn']? $row['harga_belum_ppn']: 0) - ($row['konsinyasi']? $row['konsinyasi']: 0);
                     $servis += $row['servis']? $row['servis']: 0;
                     $listrik += $row['listrik']? $row['listrik']: 0;
                     $konsinyasi += $row['konsinyasi']? $row['konsinyasi']: 0;
-                    // foreach ($dokter as $dok) {
-                    //     $persen[] = [
-                    //         'dokter' => $dok->dokter_id,
-                    //         'persen' => $row['dokter'] == $dok->dokter_id? ($row['persen']? $row['persen']: 0): 0
-                    //     ];
-                    // }
+                    foreach ($dokter as $dok) {
+                        $nilai = $semua_persen->where('dokter', $dok->dokter_id);
+                        $persen[] = [
+                            'dokter' => $dok->dokter_id,
+                            'persen' => $nilai->sum('nilai') + $nilai->sum('biaya_dokter')
+                        ];
+                    }
                 @endphp
                 <tr>
                     <td>{{ ++$index }}</td>
@@ -89,14 +91,19 @@
                     <td class="text-nowrap text-right">{{ number_format($row['servis']? $row['servis']: 0, 2) }}</td>
                     @foreach ($dokter as $dok)
                     <td class="text-nowrap text-right">
+                    @php
+                        $nilai = $semua_persen->where('dokter', $dok->dokter_id);
+                        echo number_format( $nilai->sum('nilai') + $nilai->sum('biaya_dokter'), 2);
+                    @endphp
                         {{-- {{ number_format($row['dokter'] == $dok->dokter_id? ($row['persen']? $row['persen']: 0): 0, 2) }} --}}
                     </td>
                     @endforeach
                     <td class="text-nowrap text-right">{{ number_format($row['listrik']? $row['listrik']: 0, 2)  }}</td>
                     <td class="text-nowrap text-right">{{ number_format($row['konsinyasi']? $row['konsinyasi']: 0, 2)  }}</td>
                     <td class="text-nowrap text-right">{{ number_format(
-                        (($row['harga_belum_ppn']? $row['harga_belum_ppn']: 0) - ($row['konsinyasi']? $row['konsinyasi']: 0)) +
+                        (($row['harga_belum_ppn']? $row['harga_belum_ppn']: 0) - ($row['konsinyasi']? $row['konsinyasi']: 0) ) +
                         ($row['servis']? $row['servis']: 0) +
+                        ($semua_persen->sum('nilai') + $semua_persen->sum('biaya_dokter')) +
                         ($row['listrik']? $row['listrik']: 0) +
                         ($row['konsinyasi']? $row['konsinyasi']: 0), 2)
                         }}</td>
@@ -108,12 +115,12 @@
                     <th class="text-nowrap text-right">{{ number_format($servis, 2) }}</th>
                     @foreach ($dokter as $dok)
                     <th class="text-nowrap text-right">
-                        {{-- {{ number_format(collect($persen)->where('dokter', $dok->dokter_id)->sum('persen'), 2) }} --}}
+                        {{ number_format(collect($persen)->where('dokter', $dok->dokter_id)->sum('persen'), 2) }}
                     </th>
                     @endforeach
                     <th class="text-nowrap text-right">{{ number_format($listrik, 2) }}</th>
                     <th class="text-nowrap text-right">{{ number_format($konsinyasi, 2) }}</th>
-                    <th class="text-nowrap text-right">{{ number_format($harga_belum_ppn + $servis + $listrik + $konsinyasi, 2) }}</th>
+                    <th class="text-nowrap text-right">{{ number_format($harga_belum_ppn + $servis + $listrik + $konsinyasi + collect($persen)->sum('persen'), 2) }}</th>
                 </tr>
             </tbody>
         </table>

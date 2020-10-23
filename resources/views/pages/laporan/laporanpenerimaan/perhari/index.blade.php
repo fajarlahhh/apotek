@@ -66,7 +66,7 @@
                     foreach ($dokter as $dok) {
                         $persen[] = [
                             'dokter' => $dok->dokter_id,
-                            'persen' => $row['dokter'] == $dok->dokter_id? ($row['persen']? $row['persen']: 0): 0
+                            'persen' => $row['dokter'] == $dok->dokter_id? ($row['persen']? $row['persen'] + $row['biaya_dokter']: 0): 0
                         ];
                     }
                 @endphp
@@ -77,14 +77,14 @@
                     <td class="text-nowrap text-right">{{ number_format($row['konsinyasi']? 0: $row['harga_belum_ppn'], 2) }}</td>
                     <td class="text-nowrap text-right">{{ number_format($row['servis']? $row['servis']: 0, 2) }}</td>
                     @foreach ($dokter as $dok)
-                    <td class="text-nowrap text-right">{{ number_format($row['dokter'] == $dok->dokter_id? ($row['persen']? $row['persen']: 0): 0, 2) }}</td>
+                    <td class="text-nowrap text-right">{{ number_format($row['dokter'] == $dok->dokter_id? ($row['persen']? $row['persen'] + $row['biaya_dokter']: 0): 0, 2) }}</td>
                     @endforeach
                     <td class="text-nowrap text-right">{{ number_format($row['listrik']? $row['listrik']: 0, 2)  }}</td>
                     <td class="text-nowrap text-right">{{ number_format($row['konsinyasi']? $row['konsinyasi']: 0, 2)  }}</td>
                     <td class="text-nowrap text-right">{{ number_format(
                         ($row['konsinyasi']? 0: $row['harga_belum_ppn']) +
                         ($row['servis']? $row['servis']: 0) +
-                        ($row['persen']? $row['persen']: 0) +
+                        ($row['persen']? $row['persen'] + $row['biaya_dokter']: 0) +
                         ($row['listrik']? $row['listrik']: 0) +
                         ($row['konsinyasi']? $row['konsinyasi']: 0), 2)
                         }}</td>
