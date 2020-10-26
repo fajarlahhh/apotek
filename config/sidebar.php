@@ -53,6 +53,20 @@ return [
 		'caret' => true,
 		'id' => 'laporan',
 		'sub_menu' => [[
+            'title' => 'Konsinyasi',
+            'url' => 'javascript:;',
+            'caret' => true,
+            'id' => 'konsinyasi',
+            'sub_menu' => [[
+                'url' => '/laporankonsinyasiperhari',
+                'id' => 'laporankonsinyasiperhari',
+                'title' => 'Perhari'
+            ],[
+                'url' => '/laporankonsinyasibulanan',
+                'id' => 'laporankonsinyasibulanan',
+                'title' => 'Perbulan'
+            ]]
+        ],[
             'title' => 'Penerimaan',
             'url' => 'javascript:;',
             'caret' => true,
@@ -63,18 +77,14 @@ return [
                 'title' => 'Perhari'
             ],[
                 'url' => '/laporanpenerimaanbulanan',
-                'id' => 'laporanpenerimaanperhari',
+                'id' => 'laporanpenerimaanbulanan',
                 'title' => 'Perbulan'
-            ],[
-                'url' => '/laporanpeneriaankonsinyasi',
-                'id' => 'laporanpeneriaankonsinyasi',
-                'title' => 'Konsinyasi'
             ]]
-            ],[
-                'url' => '/laporanstokbarang',
-                'id' => 'laporanstokbarang',
-                'title' => 'Stok Barang'
-            ]]
+        ],[
+            'url' => '/laporanstokbarang',
+            'id' => 'laporanstokbarang',
+            'title' => 'Stok Barang'
+        ]]
 	],[
 		'icon' => 'fa fa-calculator',
 		'title' => 'Penjualan',

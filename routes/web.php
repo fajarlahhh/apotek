@@ -174,10 +174,17 @@ Route::group(['middleware' => ['auth']], function () {
         });
     });
 
-    Route::group(['middleware' => ['role_or_permission:super-admin|laporanpeneriaankonsinyasi']], function () {
-        Route::prefix('laporanpeneriaankonsinyasi')->group(function () {
-            Route::get('/', [LaporanController::class, 'laporanpeneriaankonsinyasi'])->name('laporanpeneriaankonsinyasi');
-            Route::get('/{cetak}', [LaporanController::class, 'laporanpeneriaankonsinyasi'])->name('laporanpeneriaankonsinyasi.cetak');
+    Route::group(['middleware' => ['role_or_permission:super-admin|laporankonsinyasiperhari']], function () {
+        Route::prefix('laporankonsinyasiperhari')->group(function () {
+            Route::get('/', [LaporanController::class, 'laporankonsinyasiperhari'])->name('laporankonsinyasiperhari');
+            Route::get('/{cetak}', [LaporanController::class, 'laporankonsinyasiperhari'])->name('laporankonsinyasiperhari.cetak');
+        });
+    });
+
+    Route::group(['middleware' => ['role_or_permission:super-admin|laporankonsinyasibulanan']], function () {
+        Route::prefix('laporankonsinyasibulanan')->group(function () {
+            Route::get('/', [LaporanController::class, 'laporankonsinyasibulanan'])->name('laporankonsinyasibulanan');
+            Route::get('/{cetak}', [LaporanController::class, 'laporankonsinyasibulanan'])->name('laporankonsinyasibulanan.cetak');
         });
     });
 });

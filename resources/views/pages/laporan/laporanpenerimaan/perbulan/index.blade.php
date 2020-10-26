@@ -9,7 +9,8 @@
 @endpush
 
 @section('page')
-	<li class="breadcrumb-item active">Per Bulan</li>
+<li class="breadcrumb-item">Penerimaan</li>
+<li class="breadcrumb-item active">Per Bulan</li>
 @endsection
 
 @section('header')

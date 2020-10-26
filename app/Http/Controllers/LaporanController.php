@@ -44,7 +44,7 @@ class LaporanController extends Controller
                 'dokter' => $q->dokter_id,
                 'tanggal' => $q->penjualan_tanggal,
                 'harga_belum_ppn' => $q->detail->sum(function ($r) {
-                    return $r->satuan_harga * $r->penjualan_detail_qty;
+                    return ($r->satuan_harga - ($r->satuan_harga * $r->penjualan_detail_diskon/100)) * $r->penjualan_detail_qty;
                 }),
                 'servis' => $q->penjualan_racikan,
                 'biaya_dokter' => $q->penjualan_biaya_dokter,
@@ -55,7 +55,7 @@ class LaporanController extends Controller
                 'konsinyasi' => $q->detail->filter(function($r){
                     return $r->pbf_id != null;
                 })->sum(function ($r) {
-                    return $r->satuan_harga * $r->penjualan_detail_qty;
+                    return ($r->satuan_harga - ($r->satuan_harga * $r->penjualan_detail_diskon/100)) * $r->penjualan_detail_qty;
                 }),
             ];
         });
@@ -83,7 +83,7 @@ class LaporanController extends Controller
                 'dokter' => $q->dokter_id,
                 'tanggal' => $q->penjualan_tanggal,
                 'harga_belum_ppn' => $q->detail->sum(function ($r) {
-                    return $r->satuan_harga * $r->penjualan_detail_qty;
+                    return ($r->satuan_harga - ($r->satuan_harga * $r->penjualan_detail_diskon/100)) * $r->penjualan_detail_qty;
                 }),
                 'servis' => $q->penjualan_racikan,
                 'persen' => [
@@ -97,7 +97,7 @@ class LaporanController extends Controller
                 'konsinyasi' => $q->detail->filter(function($r){
                     return $r->pbf_id != null;
                 })->sum(function ($r) {
-                    return $r->satuan_harga * $r->penjualan_detail_qty;
+                    return ($r->satuan_harga - ($r->satuan_harga * $r->penjualan_detail_diskon/100)) * $r->penjualan_detail_qty;
                 }),
             ];
         })->groupBy('tanggal')->map(function($q){
@@ -131,6 +131,54 @@ class LaporanController extends Controller
             'persen' => [],
             'listrik' => 0,
             'konsinyasi' => 0
+        ]);
+    }
+
+    public function laporankonsinyasiperhari(Request $req, $cetak = null)
+    {
+        $tanggal = $req->tanggal? date('Y-m-d', strtotime($req->tanggal)):date('Y-m-d');
+
+        $data = PenjualanDetail::select('penjualan_id', 'barang_id', 'pbf_id', DB::raw('sum(penjualan_detail_qty) qty'), DB::raw('sum(satuan_harga - (satuan_harga * penjualan_detail_diskon/100)) harga'), DB::raw('sum((satuan_harga - (satuan_harga * penjualan_detail_diskon/100)) * penjualan_detail_qty) total'))->with('pbf')->with('barang')->with('penjualan')->whereHas('penjualan', function ($q) use ($tanggal){
+            return $q->where('penjualan_tanggal', $tanggal);
+        })->whereNotNull('pbf_id')->groupBy(['penjualan_id', 'barang_id', 'pbf_id'])->get();
+        return view('pages.laporan.laporankonsinyasi.perhari.index', [
+            'data' => $data,
+            'cetak' => $cetak,
+            'tanggal' => $tanggal
+        ]);
+    }
+
+    public function laporankonsinyasibulanan(Request $req, $cetak = null)
+    {
+        $bulan = $req->bulan?:date('m');
+        $tahun = $req->tahun?:date('Y');
+
+
+        $data = PenjualanDetail::select('penjualan_id', 'barang_id', 'pbf_id', DB::raw('sum(penjualan_detail_qty) qty'), DB::raw('sum(satuan_harga - (satuan_harga * penjualan_detail_diskon/100)) harga'), DB::raw('sum((satuan_harga - (satuan_harga * penjualan_detail_diskon/100)) * penjualan_detail_qty) total'))->with('pbf')->with('barang')->with('penjualan')->whereHas('penjualan', function ($q) use ($bulan, $tahun){
+            return $q->whereRaw('month(penjualan_tanggal)='.$bulan)->whereRaw('year(penjualan_tanggal)='.$tahun);
+        })->whereNotNull('pbf_id')->groupBy(['penjualan_id', 'barang_id', 'pbf_id'])->get()->groupBy(function($q){
+            return [$q->penjualan->penjualan_tanggal];
+        })->map(function($q){
+            return [
+                'tanggal' => $q->first()->penjualan->penjualan_tanggal,
+                'barang' => array_values($q->groupBy('barang_id')->map(function($r){
+                    return [
+                        'nama' => $r->first()->barang->barang_nama,
+                        'pbf' => $r->first()->pbf->pbf_nama,
+                        'harga' => $r->first()->harga,
+                        'qty' => $r->sum('qty'),
+                        'total' => $r->sum('total'),
+                    ];
+                })->toArray())
+            ];
+        })->sortBy('tanggal')->toArray();
+        return view('pages.laporan.laporankonsinyasi.perbulan.index', [
+            'data' => collect(array_values($data)),
+            'cetak' => $cetak,
+            'bulan' => $bulan,
+            'tahun' => $tahun,
+            'total' => 0,
+            'no' => 0
         ]);
     }
 }

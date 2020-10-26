@@ -18,6 +18,11 @@ class PenjualanDetail extends Model
         return $this->belongsTo('App\Models\Barang', 'barang_id', 'barang_id');
     }
 
+    public function pbf()
+    {
+        return $this->belongsTo('App\Models\Pbf', 'pbf_id', 'pbf_id');
+    }
+
     public function penjualan()
     {
         return $this->belongsTo('App\Models\Penjualan', 'penjualan_id', 'penjualan_id');
