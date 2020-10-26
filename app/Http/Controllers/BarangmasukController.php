@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Pbf;
 use App\Models\Barang;
+use App\Models\JatuhTempo;
 use App\Models\BarangMasuk;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BarangmasukController extends Controller
 {
@@ -72,31 +74,43 @@ class BarangmasukController extends Controller
 	{
         $req->validate([
             'barang_masuk_faktur' => 'required',
-            'barang_masuk_jatuh_tempo' => 'required',
             'barang_masuk_tanggal' => 'required'
         ]);
 
         try{
-            foreach ($req->barang_masuk as $index => $barang_masuk) {
-                $data = new BarangMasuk();
-                $data->barang_masuk_id = Carbon::now()->format('Ymdhmsu').$index;
-                $data->barang_masuk_tanggal = Carbon::parse($req->get('barang_masuk_tanggal'))->format('Y-m-d');
-                $data->barang_masuk_faktur = $req->get('barang_masuk_faktur');
-                $data->pbf_id = $req->get('pbf_id');
-                $data->barang_masuk_jatuh_tempo = Carbon::parse($req->get('barang_masuk_jatuh_tempo'))->format('Y-m-d');
-                $data->barang_masuk_sales = $req->get('barang_masuk_sales');
-                $data->barang_masuk_keterangan = $req->get('barang_masuk_keterangan');
-                $data->barang_id = $barang_masuk['barang_id'];
-                $data->barang_masuk_nomor_batch = $barang_masuk['barang_masuk_nomor_batch'];
-                $data->barang_masuk_harga_barang = str_replace(',', '', $barang_masuk['barang_masuk_harga_barang']);
-                $data->barang_masuk_harga_ppn = str_replace(',', '', $barang_masuk['barang_masuk_harga_ppn']);
-                $data->barang_masuk_qty = $barang_masuk['barang_masuk_qty'];
-                $data->barang_masuk_diskon = $barang_masuk['barang_masuk_diskon'];
-                $data->barang_masuk_kadaluarsa = Carbon::parse($barang_masuk['barang_masuk_kadaluarsa'])->format('Y-m-d');
-                $data->barang_masuk_sub_total_ppn = str_replace(',', '', $req->get('barang_masuk_sub_total_ppn'));
-                $data->barang_masuk_sub_total = str_replace(',', '', $req->get('barang_masuk_sub_total'));
-                $data->save();
+            if (BarangMasuk::where('barang_masuk_faktur', $req->barang_masuk_faktur)->where('barang_masuk_jatuh_tempo', $req->barang_masuk_jatuh_tempo)->count() > 0) {
+                alert()->error('Gagal Menyimpan Data','Nomor faktur sudah diinputkan');
+                return redirect()->back()->withInput();
             }
+            DB::transaction(function () {
+                if($req->get('barang_masuk_jatuh_tempo')){
+                    $jt =  new JatuhTempo();
+                    $jt->barang_masuk_faktur = $req->get('barang_masuk_faktur');
+                    $jt->barang_masuk_jatuh_tempo =Carbon::parse($req->get('barang_masuk_jatuh_tempo'))->format('Y-m-d');
+                    $jt->save();
+                }
+
+                foreach ($req->barang_masuk as $index => $barang_masuk) {
+                    $data = new BarangMasuk();
+                    $data->barang_masuk_id = Carbon::now()->format('Ymdhmsu').$index;
+                    $data->barang_masuk_tanggal = Carbon::parse($req->get('barang_masuk_tanggal'))->format('Y-m-d');
+                    $data->barang_masuk_faktur = $req->get('barang_masuk_faktur');
+                    $data->pbf_id = $req->get('pbf_id');
+                    $data->barang_masuk_jatuh_tempo = $req->get('barang_masuk_jatuh_tempo')? Carbon::parse($req->get('barang_masuk_jatuh_tempo'))->format('Y-m-d'): null;
+                    $data->barang_masuk_sales = $req->get('barang_masuk_sales');
+                    $data->barang_masuk_keterangan = $req->get('barang_masuk_keterangan');
+                    $data->barang_id = $barang_masuk['barang_id'];
+                    $data->barang_masuk_nomor_batch = $barang_masuk['barang_masuk_nomor_batch'];
+                    $data->barang_masuk_harga_barang = str_replace(',', '', $barang_masuk['barang_masuk_harga_barang']);
+                    $data->barang_masuk_harga_ppn = str_replace(',', '', $barang_masuk['barang_masuk_harga_ppn']);
+                    $data->barang_masuk_qty = $barang_masuk['barang_masuk_qty'];
+                    $data->barang_masuk_diskon = $barang_masuk['barang_masuk_diskon'];
+                    $data->barang_masuk_kadaluarsa = Carbon::parse($barang_masuk['barang_masuk_kadaluarsa'])->format('Y-m-d');
+                    $data->barang_masuk_sub_total_ppn = str_replace(',', '', $req->get('barang_masuk_sub_total_ppn'));
+                    $data->barang_masuk_sub_total = str_replace(',', '', $req->get('barang_masuk_sub_total'));
+                    $data->save();
+                }
+            });
 
             toast('Berhasil menambah data', 'success')->autoClose(2000);
             if($req->banyak == 1)

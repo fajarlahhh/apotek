@@ -13,5 +13,106 @@
 @endsection
 
 @section('subcontent')
+<div class="row">
+    <div class="col-lg-6 col-xl-4 col-md-6 m-t-15">
+        <div class="widget-todolist widget-todolist-rounded " data-id="widget">
+            <!-- begin widget-todolist-header -->
+            <div class="widget-todolist-header bg-warning">
+                <div class="widget-todolist-header-left">
+                    <h4 class="widget-todolist-header-title f-s-16">Faktur Jatuh Tempo</h4>
+                </div>
+                <div class="widget-todolist-header-right">
+                    <div class="widget-todolist-header-total"><span>{{ $jatuh_tempo->count() }}</span><small>Faktur</small></div>
+                </div>
+            </div>
+            <div class="widget-todolist-body overflow-auto height-300">
+                @foreach ($jatuh_tempo as $row)
+                <div class="widget-todolist-item">
+                    <div class="widget-todolist-content">
+                        <h4 class="widget-todolist-title">{{ \Carbon\Carbon::parse($row->barang_masuk_jatuh_tempo)->isoFormat('LL') }}</h4>
+                        <p class="widget-todolist-desc">{{ $row->barang_masuk_faktur }}</p>
+                    </div>
+                    <div class="widget-todolist-icon">
+                        <a href="#" class="btn-jatuh-tempo" data-tanggal="{{ $row->barang_masuk_jatuh_tempo }}" data-faktur="{{ $row->barang_masuk_faktur }}"><span class="badge badge-warning">Detail</span> </a>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            <!-- end widget-todolist-body -->
+        </div>
+    </div>
+    <div class="col-lg-6 col-xl-4 col-md-6 m-t-15">
+        <div class="widget-todolist widget-todolist-rounded " data-id="widget">
+            <!-- begin widget-todolist-header -->
+            <div class="widget-todolist-header bg-danger">
+                <div class="widget-todolist-header-left">
+                    <h4 class="widget-todolist-header-title f-s-16">Barang Kadaluarsa</h4>
+                </div>
+                <div class="widget-todolist-header-right">
+                    <div class="widget-todolist-header-total"><span>{{ $barang_masuk->count() }}</span><small>Barang</small></div>
+                </div>
+            </div>
+            <div class="widget-todolist-body overflow-auto height-300">
+                @foreach ($barang_masuk as $row)
+                <div class="widget-todolist-item">
+                    <div class="widget-todolist-content">
+                        <h4 class="widget-todolist-title">{{ $row->barang_masuk_kadaluarsa }}</h4>
+                        <p class="widget-todolist-desc">{{ $row->barang->barang_nama." (".$row->barang_masuk_qty." ".$row->barang->satuan_utama->satuan_nama.")" }}</p>
+                    </div>
+                    <div class="widget-todolist-icon">
+                        @role('super-admin|supervisor')
+                            <form action="/dashboard/kadaluarsa" method="POST">
+                                @csrf
+                                <input type="hidden" value="{{ $row->barang_id }}" name="barang">
+                                <input type="hidden" value="{{ $row->barang_masuk_id }}" name="id">
+                                <input type="submit" value="OK" class="btn btn-sm btn-danger" />
+                            </form>
+                        @endrole
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            <!-- end widget-todolist-body -->
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-jatuh-tempo">
+	<div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Detail Faktur</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div id="modal-detail"></div>
+        </div>
+	</div>
+</div>
 @endsection
 
+@push('scripts')
+<script>
+    $(".btn-jatuh-tempo").on('click', function () {
+        $.ajax({
+            url : "/dashboard/faktur",
+            type : "GET",
+            async : false,
+            data : {
+                "faktur" : $(this).data('faktur'),
+                "tanggal" : $(this).data('tanggal')
+             },
+            success: function(data){
+                $("#modal-detail").empty();
+                $("#modal-detail").append(data);
+                $('#modal-jatuh-tempo').modal('show');
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Tambah Barang',
+                    text: xhr.responseJSON.message
+                })
+            }
+        });
+    })
+</script>
+@endpush

@@ -30,6 +30,9 @@ use App\Http\Controllers\PenjualanresepController;
 Route::post('login', [LoginController::class, 'authenticate']);
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', [DashboardController::class,'index']);
+    Route::get('/dashboard/faktur', [DashboardController::class,'faktur']);
+    Route::post('/dashboard/kadaluarsa', [DashboardController::class,'kadaluarsa']);
+    Route::post('/dashboard/lunas', [DashboardController::class,'lunas']);
     Route::get('/dashboard', [DashboardController::class,'index']);
     Route::get('/gantisandi', [PenggunaController::class, 'ganti_sandi'])->name('gantisandi');
     Route::patch('/gantisandi', [PenggunaController::class, 'do_ganti_sandi'])->name('gantisandi.simpan');

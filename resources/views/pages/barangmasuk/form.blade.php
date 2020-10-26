@@ -48,7 +48,14 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Tanggal Jatuh Tempo</label>
-                <input type="text" readonly class="form-control date" id="barang_masuk_jatuh_tempo" name="barang_masuk_jatuh_tempo" value="{{ date('d M Y', strtotime(old('barang_masuk_jatuh_tempo', now()))) }}" required/>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <input type="checkbox" aria-label="Checkbox for following text input" id="jatuh_tempo" value="1">
+                        </div>
+                    </div>
+                    <input type="text" readonly class="form-control date" id="barang_masuk_jatuh_tempo" name="barang_masuk_jatuh_tempo" value="{{ date('d M Y', strtotime(old('barang_masuk_jatuh_tempo', now()))) }}" required disabled/>
+                </div>
             </div>
             <div class="form-group">
                 <label class="control-label">Nama Sales</label>
@@ -139,6 +146,11 @@
     barang.forEach(barang => {
         tambah_barang(barang);
     });
+
+    $("#jatuh_tempo").on('change', function name() {
+        $("#barang_masuk_jatuh_tempo").prop('disabled', !$(this).is(':checked'));
+    })
+
     AutoNumeric.multiple('.currency', {
                     modifyValueOnWheel : false,
                     minimumValue: "0"
