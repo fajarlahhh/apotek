@@ -61,12 +61,7 @@
                     </div>
                     <div class="widget-todolist-icon">
                         @role('super-admin|supervisor')
-                            <form action="/dashboard/kadaluarsa" method="POST">
-                                @csrf
-                                <input type="hidden" value="{{ $row->barang_id }}" name="barang">
-                                <input type="hidden" value="{{ $row->barang_masuk_id }}" name="id">
-                                <input type="submit" value="OK" class="btn btn-sm btn-danger" />
-                            </form>
+                            <a href="javascript:;" class="btn btn-sm btn-danger btn-ok" data-nama="{{ $row->barang->barang_nama }}" data-tanggal="{{ $row->barang_masuk_kadaluarsa }}" data-barang="{{ $row->barang_id }}" data-id="{{ $row->barang_masuk_id }}"/>OK</a>
                         @endrole
                     </div>
                 </div>
@@ -113,6 +108,49 @@
                 })
             }
         });
-    })
+    });
+
+    $(".btn-ok").on('click', function () {
+        var id = $(this).data('id');
+        var barang = $(this).data('barang');
+        var nama = $(this).data('nama');
+        var tanggal = $(this).data('tanggal');
+        Swal.fire({
+            title: 'Cek Stok',
+            text: 'Barang ' + nama + ' kadaluarsa tanggal ' + tanggal + ' sudah dicek stok?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.value == true) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: "/dashboard/kadaluarsa",
+                    type: "POST",
+                    data: {
+                        "id" : id,
+                        "barang" : barang
+                    },
+                    success: function(data){
+                        location.reload(true);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Restore data',
+                            text: xhr.responseJSON.message
+                        })
+                    }
+                });
+            }
+        });
+    });
 </script>
 @endpush
