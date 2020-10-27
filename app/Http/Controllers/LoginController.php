@@ -24,7 +24,7 @@ class LoginController extends Controller
                 'gritter_gambar' => '../assets/img/user/user.png'
                 ]);
         }
-        alert()->error('Login Gagal','NIK atau Kata Sandi salah');
+        alert()->error('Login Gagal','ID atau Kata Sandi salah');
         return redirect()->back()->withInput();
     }
 
