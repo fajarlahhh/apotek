@@ -82,7 +82,7 @@ class BarangmasukController extends Controller
                 alert()->error('Gagal Menyimpan Data','Nomor faktur sudah diinputkan');
                 return redirect()->back()->withInput();
             }
-            DB::transaction(function () {
+            DB::transaction(function () use ($req) {
                 if($req->get('barang_masuk_jatuh_tempo')){
                     $jt =  new JatuhTempo();
                     $jt->barang_masuk_faktur = $req->get('barang_masuk_faktur');
