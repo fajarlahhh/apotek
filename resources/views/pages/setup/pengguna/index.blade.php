@@ -22,7 +22,7 @@
     <div class="panel-heading">
         <div class="row width-full">
             <div class="col-xl-3 col-sm-6">
-                @role('user|super-admin|supervisor')
+                @role('super-admin|user')
                 <div class="form-inline">
                     <a href="{{ route('pengguna.tambah') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</a>
                 </div>
@@ -69,7 +69,7 @@
                         <td>{{ $row->pengguna_id }}</td>
                         <td class="text-nowrap">{{ $row->pengguna_nama }}</td>
                         <td>{{ ucFirst($row->getRoleNames()[0]) }}</td>
-                        @role('super-admin|supervisor|user')
+                        @role('super-admin|user')
                         <td class="with-btn-group align-middle" nowrap>
                             @if ($row->pengguna_id != 'administrator')
                             <div class="btn-group">

@@ -70,7 +70,7 @@
             </div>
         </div>
         <div class="panel-footer">
-            @role('supervisor|super-admin|supervisor')
+            @role('super-admin|user')
             <input type="submit" value="Simpan" class="btn btn-sm btn-success m-r-3"  />
             @endrole
             <a href="{{ $back }}" class="btn btn-sm btn-danger">Batal</a>

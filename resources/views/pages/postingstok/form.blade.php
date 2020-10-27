@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="panel-footer">
-            @role('super-admin|supervisor')
+            @role('super-admin|user')
             <input type="submit" id="btn-posting" class="btn btn-sm btn-success" value="Posting" />
             @endrole
             <div class="pull-right">

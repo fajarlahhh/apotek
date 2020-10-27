@@ -117,7 +117,7 @@
         </div>
 
         <div class="panel-footer">
-            @role('user|super-admin|supervisor')
+            @role('user|super-admin')
             <input type="submit" value="Simpan" class="btn btn-sm btn-success m-r-3"  />
             @endrole
             <a href="/penjualanresep/data" class="btn btn-sm btn-primary">Data Penjualan</a>

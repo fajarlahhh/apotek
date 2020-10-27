@@ -84,7 +84,7 @@
         </div>
 
         <div class="panel-footer">
-            @role('user|super-admin|supervisor')
+            @role('super-admin|user')
             <input type="submit" value="Simpan" class="btn btn-sm btn-success m-r-3"  />
             @endrole
             <a href="/penjualanbebas/data" class="btn btn-sm btn-primary">Data Penjualan</a>

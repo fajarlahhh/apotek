@@ -55,7 +55,7 @@
                     <th class="width-80">No.</th>
                     <th>Nama</th>
                     <th>Bidang</th>
-                    @role('super-admin|supervisor|user')
+                    @role('super-admin|user')
                     <th class="width-90"></th>
                     @endif
                 </tr>
@@ -68,7 +68,7 @@
                         <span data-toggle="tooltip" data-container="body" data-placement="right" data-html="true" data-placement="top" title="{!! $row->pengguna->pengguna_nama.", <br><small>".$row->updated_at."</small>" !!}">{{ $row->dokter_nama }}</span>
                     </td>
                     <td class="align-middle">{{ $row->dokter_bidang }}</td>
-                    @role('super-admin|supervisor|user')
+                    @role('super-admin|user')
                     <td class="with-btn-group align-middle" nowrap>
                         <div class="btn-group">
                             @if ($row->trashed())

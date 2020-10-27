@@ -11,7 +11,7 @@
  Target Server Version : 50724
  File Encoding         : 65001
 
- Date: 23/10/2020 15:43:05
+ Date: 27/10/2020 08:05:05
 */
 
 SET NAMES utf8mb4;
@@ -32,9 +32,6 @@ CREATE TABLE `barang`  (
   `created_at` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
   `updated_at` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `deleted_at` timestamp(0) NULL DEFAULT NULL,
-  `jenis` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `satuan` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `harga` decimal(15, 2) NULL DEFAULT NULL,
   PRIMARY KEY (`barang_id`) USING BTREE,
   INDEX `barang_jenis_barang_id_foreign`(`jenis_barang_id`) USING BTREE,
   INDEX `barang_obat_pengguna_id_foreign`(`pengguna_id`) USING BTREE,
@@ -47,227 +44,227 @@ CREATE TABLE `barang`  (
 -- ----------------------------
 -- Records of barang
 -- ----------------------------
-INSERT INTO `barang` VALUES (417, 'Aspilet chewable', 10, NULL, 1, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:55:49', NULL, 'Acetylsalicilyc 100 mg', 'tablet', 1000.00);
-INSERT INTO `barang` VALUES (418, 'Mini aspi tablet', 10, NULL, 2, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:20:03', NULL, 'acetylsalicilyc 80 mg', NULL, NULL);
-INSERT INTO `barang` VALUES (419, 'Acyclovir generik', 10, NULL, 3, 53, 'administrator', '2020-10-19 12:16:04', '2020-10-23 09:32:55', NULL, 'Acyclovir 400 mg', 'tablet', 1500.00);
-INSERT INTO `barang` VALUES (420, 'Lagesil sirup', 10, NULL, 4, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL, 'al hidroksida, simeticon', 'botol', 36000.00);
-INSERT INTO `barang` VALUES (421, 'Alkohol 70% 100 ml botol', 10, NULL, 5, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:20:05', NULL, 'Alkohol 70%', NULL, NULL);
-INSERT INTO `barang` VALUES (422, 'Alkohol 70% 300 ml botol', 10, NULL, 5, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL, 'Alkohol 70%', 'botol', 17500.00);
-INSERT INTO `barang` VALUES (423, 'Nobor ', 10, NULL, 6, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL, 'Allylestrenol ', 'tablet', 6000.00);
-INSERT INTO `barang` VALUES (424, 'Multigyn active gel ', 10, NULL, 7, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL, 'Aloe vera ', 'botol', 267000.00);
-INSERT INTO `barang` VALUES (425, 'Epexol tablet', 10, NULL, 8, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL, 'Ambroxol', 'tablet', 1500.00);
-INSERT INTO `barang` VALUES (426, 'Epexol sirup', 10, NULL, 8, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL, 'Ambroxol', 'botol', 26000.00);
-INSERT INTO `barang` VALUES (427, 'Epexol drop ', 10, NULL, 8, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL, 'Ambroxol', 'botol', 56000.00);
-INSERT INTO `barang` VALUES (428, 'Amlodipine 10 mg ', 10, NULL, 9, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL, 'Amlodipine 10 mg', 'tablet', 1500.00);
-INSERT INTO `barang` VALUES (429, 'Cardipin 10 mg', 10, NULL, 9, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL, 'Amlodipine 10 mg', 'tablet', 1000.00);
-INSERT INTO `barang` VALUES (430, 'Amoxan 500 mg', 10, NULL, 10, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL, 'Amoxicilin 500 mg', 'kapsul', 5000.00);
-INSERT INTO `barang` VALUES (431, 'Leomoxyl 500 mg', 10, NULL, 10, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL, 'Amoxicilin 500 mg', 'kapsul', 5000.00);
-INSERT INTO `barang` VALUES (432, 'Amoxan drop ', 10, NULL, 11, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL, 'Amoxicillin 100 mg', 'botol', 34000.00);
-INSERT INTO `barang` VALUES (433, 'Amoxan sirup ', 10, NULL, 12, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL, 'Amoxicillin 125 mg', 'botol', 34000.00);
-INSERT INTO `barang` VALUES (434, 'Amoxan Forte sirup', 10, NULL, 13, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL, 'Amoxicillin 250 mg', 'botol', 48000.00);
-INSERT INTO `barang` VALUES (435, 'Antasida DOEN tablet', 10, NULL, 14, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL, 'Antasida', 'tablet', 300.00);
-INSERT INTO `barang` VALUES (437, 'Lagesil sirup', 10, NULL, 15, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'antasida sirup', 'botol', 37000.00);
-INSERT INTO `barang` VALUES (438, 'Anelat', 10, NULL, 16, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'asam folat 1 mg', 'tablet', 500.00);
-INSERT INTO `barang` VALUES (439, 'Mefenamic Acid ', 10, NULL, 17, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Asam mefenamat 500 mg', 'tablet', 500.00);
-INSERT INTO `barang` VALUES (440, 'Plasminex', 10, NULL, 18, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Asam tranexamat', 'tablet', 4000.00);
-INSERT INTO `barang` VALUES (441, 'Depakene sirup', 10, NULL, 19, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Asam valproat', 'botol', 235000.00);
-INSERT INTO `barang` VALUES (442, 'Xidane', 10, NULL, 20, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Astaxanthin', 'kapsul', 11500.00);
-INSERT INTO `barang` VALUES (443, 'Dermia cream 15 gr', 10, NULL, 21, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Astaxanthine', 'tube', 63000.00);
-INSERT INTO `barang` VALUES (444, 'Xidane gel', 10, NULL, 22, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'astaxanthine gel', 'tube', 110000.00);
-INSERT INTO `barang` VALUES (445, 'Azitromisin Nulab', 10, NULL, 23, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Azitromisin 500 mg', 'tablet', 15000.00);
-INSERT INTO `barang` VALUES (446, 'Batugin Elixir 300 ml', 10, NULL, 24, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Batugin', 'botol', 52000.00);
-INSERT INTO `barang` VALUES (447, 'Paratusin tablet', 10, NULL, 25, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Batuk pilek', 'strip', 15000.00);
-INSERT INTO `barang` VALUES (448, 'Decolsin tablet', 10, NULL, 25, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Batuk pilek', 'strip', 4000.00);
-INSERT INTO `barang` VALUES (449, 'Flucadex', 10, NULL, 25, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Batuk pilek', 'kaplet', 1000.00);
-INSERT INTO `barang` VALUES (450, 'Dextral tablet ', 10, NULL, 25, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'batuk pilek ', 'tablet', 1000.00);
-INSERT INTO `barang` VALUES (451, 'Actifed merah Batuk pilek sirup4', 10, NULL, 27, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:54:02', NULL, 'Batuk pilek sirup', 'botol', 62000.00);
-INSERT INTO `barang` VALUES (452, 'OBH combi dewasa jahe ', 10, NULL, 27, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Batuk pilek sirup', 'botol', 14000.00);
-INSERT INTO `barang` VALUES (453, 'Skinbright Lightening CC cream Beige', 10, NULL, 28, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Bedak', 'tube', 90000.00);
-INSERT INTO `barang` VALUES (454, 'Skinbright Lightening CC cream Normal', 10, NULL, 28, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Bedak', 'tube', 90000.00);
-INSERT INTO `barang` VALUES (455, 'Betadine sol 5 ml', 10, NULL, 29, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'betadine', 'botol', 7000.00);
-INSERT INTO `barang` VALUES (456, 'Betason krim 5 gr', 10, NULL, 30, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Betametason', 'tube', 12000.00);
-INSERT INTO `barang` VALUES (457, 'Betason N krim 5 gr ', 10, NULL, 31, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'betametason neomisin', 'tube', 20000.00);
-INSERT INTO `barang` VALUES (458, 'Mucohexin sirup', 10, NULL, 32, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Bromhexine', 'botol', 25000.00);
-INSERT INTO `barang` VALUES (459, 'Miravon', 10, NULL, 32, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Bromhexine', 'tablet', 500.00);
-INSERT INTO `barang` VALUES (460, 'Na Cl 0,9% 1 Liter', 10, NULL, 33, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Cairan infus', 'botol', 10000.00);
-INSERT INTO `barang` VALUES (461, 'Qcef sirup ', 10, NULL, 34, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Cefadroxil 125 mg', 'botol', 73000.00);
-INSERT INTO `barang` VALUES (462, 'Cefadroxil generik', 10, NULL, 35, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Cefadroxil 500 mg', 'kapsul', 3000.00);
-INSERT INTO `barang` VALUES (463, 'Qcef 500 mg', 10, NULL, 35, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Cefadroxil 500 mg', 'kapsul', 15000.00);
-INSERT INTO `barang` VALUES (464, 'Cefat 500 mg', 10, NULL, 35, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Cefadroxil 500 mg', 'kapsul', 15000.00);
-INSERT INTO `barang` VALUES (465, 'Cefco ', 10, NULL, 36, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:20:09', NULL, 'Cefixime 100 mg', NULL, NULL);
-INSERT INTO `barang` VALUES (466, 'Cefixime 100 mg Hexa', 10, NULL, 36, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Cefixime 100 mg', 'kapsul', 2000.00);
-INSERT INTO `barang` VALUES (467, 'Cefixime 100 mg KF', 10, NULL, 36, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Cefixime 100 mg', 'kapsul', 2000.00);
-INSERT INTO `barang` VALUES (468, 'Cefixime 100 mg Nulab ', 10, NULL, 36, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Cefixime 100 mg', 'kapsul', 3200.00);
-INSERT INTO `barang` VALUES (469, 'Helixim 100 mg', 10, NULL, 36, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Cefixime 100 mg', 'kaplet', 2000.00);
-INSERT INTO `barang` VALUES (470, 'Sporetik 100 mg', 10, NULL, 36, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Cefixime 100 mg', 'kapsul', 29000.00);
-INSERT INTO `barang` VALUES (471, 'Inbacef 200 mg ', 10, NULL, 37, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Cefixime 200 mg ', 'kaplet', 29000.00);
-INSERT INTO `barang` VALUES (472, 'tekasol oint ', 10, NULL, 38, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Centella asiatica', 'tube', 55000.00);
-INSERT INTO `barang` VALUES (473, 'Cetirizine Hexa', 10, NULL, 39, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Cetirizin', 'tablet', 500.00);
-INSERT INTO `barang` VALUES (474, 'Cetirizine Nulab', 10, NULL, 39, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Cetirizin', 'tablet', 500.00);
-INSERT INTO `barang` VALUES (475, 'Cerini tablet', 10, NULL, 39, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Cetirizin', 'kapsul', 5000.00);
-INSERT INTO `barang` VALUES (476, 'Cerini drop ', 10, NULL, 39, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Cetirizin', 'botol', 94000.00);
-INSERT INTO `barang` VALUES (477, 'Alerzin sirup', 10, NULL, 40, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Cetirizin sirup', 'botol', 8000.00);
-INSERT INTO `barang` VALUES (478, 'Erlamycetin salep mata', 10, NULL, 41, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Chlorampenicol', 'tube', 10000.00);
-INSERT INTO `barang` VALUES (479, 'Erlamycetin tetes telinga ', 10, NULL, 41, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'chlorampenicol', 'botol', 11000.00);
-INSERT INTO `barang` VALUES (480, 'Alleron ', 10, NULL, 42, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Chlorpheniramine maleat', 'kapsul', 300.00);
-INSERT INTO `barang` VALUES (481, 'Ciprofloxacin generik', 10, NULL, 43, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Ciprofloxacin', 'tablet', 500.00);
-INSERT INTO `barang` VALUES (482, 'Clinoma', 10, NULL, 44, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Clindamisin', 'Kapsul', 2000.00);
-INSERT INTO `barang` VALUES (483, 'Indanox 300 mg', 10, NULL, 45, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Clindamisin 300 mg ', 'kapsul', 10000.00);
-INSERT INTO `barang` VALUES (484, 'Mediklin gel 15 gr ', 10, NULL, 46, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Clindamisin krim', 'tube', 35000.00);
-INSERT INTO `barang` VALUES (485, 'Provula', 10, NULL, 47, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Clomifene citrate', 'tablet', 23000.00);
-INSERT INTO `barang` VALUES (486, 'Dexyclav', 10, NULL, 48, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Coamoxiclav', 'kaplet', 18000.00);
-INSERT INTO `barang` VALUES (487, 'Dexyclav sirup', 10, NULL, 49, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Coamoxiclav 125 mg', 'botol', 82000.00);
-INSERT INTO `barang` VALUES (488, 'Sanprima', 10, NULL, 50, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Cotrimoxazole', 'tablet', 1500.00);
-INSERT INTO `barang` VALUES (489, 'Sanprima sirup', 10, NULL, 50, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Cotrimoxazole', 'botol', 38000.00);
-INSERT INTO `barang` VALUES (490, 'Heptasan', 10, NULL, 51, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:20:14', NULL, 'Cyproheptadine', NULL, NULL);
-INSERT INTO `barang` VALUES (491, 'Pronicy', 10, NULL, 51, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Cyproheptadine', 'kaplet', 400.00);
-INSERT INTO `barang` VALUES (492, 'Inerson krim 15 gr ', 10, NULL, 52, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'desoksimetasone', 'tube', 108000.00);
-INSERT INTO `barang` VALUES (493, 'Nupeson krim 10 gr ', 10, NULL, 52, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'desoksimetasone', 'tube', 33000.00);
-INSERT INTO `barang` VALUES (494, 'Dextamine', 10, NULL, 53, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Dexametasone + CTM', 'kaplet', 2500.00);
-INSERT INTO `barang` VALUES (495, 'Polofar plus', 10, NULL, 53, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Dexametasone + CTM', 'kaplet', 300.00);
-INSERT INTO `barang` VALUES (496, 'BDM sirup', 10, NULL, 53, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Dexametasone + CTM', 'botol', 40000.00);
-INSERT INTO `barang` VALUES (497, 'Cortidex', 10, NULL, 54, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Dexametasone 0,5 mg', 'tablet', 1000.00);
-INSERT INTO `barang` VALUES (498, 'Confortin cream 20 gr tube', 10, NULL, 55, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Diaper krim ', 'tube', 40000.00);
-INSERT INTO `barang` VALUES (499, 'Doksisiklin 100 mg', 10, NULL, 56, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Doksisiklin 100 mg', 'kapsul', 1000.00);
-INSERT INTO `barang` VALUES (500, 'Vosedon sirup', 10, NULL, 57, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Domperidone', 'botol', 40000.00);
-INSERT INTO `barang` VALUES (501, 'Vometa drop', 10, NULL, 57, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Domperidone', 'botol', 56500.00);
-INSERT INTO `barang` VALUES (502, 'Duphaston', 10, NULL, 58, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'dydrogesterone 10 mg', 'tablet', 24000.00);
-INSERT INTO `barang` VALUES (503, 'Erysanbe 500 mg', 10, NULL, 59, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Eritromisin ', 'kaplet', 4000.00);
-INSERT INTO `barang` VALUES (504, 'Erysanbe sirup', 10, NULL, 60, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Eritromisin 200 mg', 'botol', 33000.00);
-INSERT INTO `barang` VALUES (505, 'Erymed krim 20 gr', 10, NULL, 61, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'eritromisin krim', 'tube', 43000.00);
-INSERT INTO `barang` VALUES (506, 'Fluconazole 150 mg generik', 10, NULL, 62, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Fluconazole 150 mg', 'kapsul', 24000.00);
-INSERT INTO `barang` VALUES (507, 'Furosemide generik', 10, NULL, 63, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Furosemide 40 mg', 'tablet', 250.00);
-INSERT INTO `barang` VALUES (508, 'Sagestam 10  gr salep kulit', 10, NULL, 64, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'gentamisin cream', 'tube', 19000.00);
-INSERT INTO `barang` VALUES (509, 'Sagestam salep mata 3,5 gr', 10, NULL, 64, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'gentamisin cream', 'tube', 55000.00);
-INSERT INTO `barang` VALUES (510, 'Gentalex Cream', 10, NULL, 64, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'gentamisin cream', 'tube', 5000.00);
-INSERT INTO `barang` VALUES (511, 'Genalten cream', 10, NULL, 64, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'gentamisin cream', 'tube', 5000.00);
-INSERT INTO `barang` VALUES (512, 'Sagestam tetes mata/telinga', 10, NULL, 65, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'gentamisin drop', 'botol', 43000.00);
-INSERT INTO `barang` VALUES (513, 'Griseofulvin 500 mg ', 10, NULL, 66, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Griseofulvin', 'tablet', 2500.00);
-INSERT INTO `barang` VALUES (514, 'Bufect sirup 100 mg', 10, NULL, 67, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Ibuprofen sirup', 'botol', 22000.00);
-INSERT INTO `barang` VALUES (515, 'Bufect forte sirup 200 mg', 10, NULL, 67, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL, 'Ibuprofen sirup', 'botol', 31000.00);
-INSERT INTO `barang` VALUES (516, 'Kassa steril Husada', 10, NULL, 68, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:46', NULL, 'kassa', 'box', 10000.00);
-INSERT INTO `barang` VALUES (517, 'Ketoconazole tab generik', 10, NULL, 69, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:46', NULL, 'Ketoconazole', 'box', 2000.00);
-INSERT INTO `barang` VALUES (518, 'Fungasol', 10, NULL, 69, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:46', NULL, 'Ketoconazole', 'tablet', 7500.00);
-INSERT INTO `barang` VALUES (519, 'Mycoral ', 10, NULL, 69, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:46', NULL, 'Ketoconazole', 'tablet', 6000.00);
-INSERT INTO `barang` VALUES (520, 'Formyco krim 10 gr', 10, NULL, 70, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:46', NULL, 'Ketoconazole cream', 'tube', 28000.00);
-INSERT INTO `barang` VALUES (521, 'Fungasol krim 10 gr', 10, NULL, 70, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:46', NULL, 'Ketoconazole cream', 'tube', 40000.00);
-INSERT INTO `barang` VALUES (522, 'Fungasol SS 2%', 10, NULL, 71, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:46', NULL, 'Ketoconazole shampoo', 'botol', 115000.00);
-INSERT INTO `barang` VALUES (523, 'Kloderma 10 gr krim', 10, NULL, 72, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Klobetasol propionat', 'tube', 47000.00);
-INSERT INTO `barang` VALUES (524, 'Kondom sutra', 10, NULL, 73, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:18', NULL, 'kondom', NULL, NULL);
-INSERT INTO `barang` VALUES (525, 'Interlac drop', 10, NULL, 74, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'lactoB', 'botol', 350000.00);
-INSERT INTO `barang` VALUES (526, 'L-Bio', 10, NULL, 75, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Lactobacillus', 'sachet', 11000.00);
-INSERT INTO `barang` VALUES (527, 'Dulcolactol sirup', 10, NULL, 76, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Lactulose', 'botol', 88000.00);
-INSERT INTO `barang` VALUES (528, 'Dobrizol', 10, NULL, 77, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Lanzoprasole', 'tablet', 3000.00);
-INSERT INTO `barang` VALUES (529, 'Lodia', 10, NULL, 78, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Loperamide', 'tablet', 1500.00);
-INSERT INTO `barang` VALUES (530, 'Loran', 10, NULL, 79, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Loratadin', 'tablet', 8000.00);
-INSERT INTO `barang` VALUES (531, 'Loratadine generik', 10, NULL, 79, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Loratadin', 'tablet', 500.00);
-INSERT INTO `barang` VALUES (532, 'Alloris tablet', 10, NULL, 79, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Loratadin', 'tablet', 7000.00);
-INSERT INTO `barang` VALUES (533, 'Sanoskin Melladerm Plus', 10, NULL, 80, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Luka bakar', 'botol', 258000.00);
-INSERT INTO `barang` VALUES (534, 'Interhistin', 10, NULL, 81, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Mebhidrolin', 'tablet', 1500.00);
-INSERT INTO `barang` VALUES (535, 'Spasminal', 10, NULL, 82, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Metampiron belladona', 'tablet', 1000.00);
-INSERT INTO `barang` VALUES (536, 'Eraphage', 10, NULL, 83, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Metformin 500 mg', 'tablet', 3000.00);
-INSERT INTO `barang` VALUES (537, 'Metformin generik', 10, NULL, 83, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Metformin 500 mg', 'tablet', 300.00);
-INSERT INTO `barang` VALUES (538, 'Stenirol 16mg', 10, NULL, 84, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Metil Prednisolon 16 mg', 'tablet', 11500.00);
-INSERT INTO `barang` VALUES (539, 'Metil Prednisolon 16 mg', 10, NULL, 84, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Metil Prednisolon 16 mg', 'tablet', 1500.00);
-INSERT INTO `barang` VALUES (540, 'Metil Prednisolon 4 mg', 10, NULL, 85, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Metil Prednisolon 4 mg', 'tablet', 600.00);
-INSERT INTO `barang` VALUES (541, 'Metil Prednisolon 8 mg ', 10, NULL, 86, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Metil Prednisolon 8 mg', 'tablet', 800.00);
-INSERT INTO `barang` VALUES (542, 'Damaben drop', 10, NULL, 87, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Metoclopramide', 'botol', 21000.00);
-INSERT INTO `barang` VALUES (543, 'Damaben sirup', 10, NULL, 87, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Metoclopramide', 'botol', 15000.00);
-INSERT INTO `barang` VALUES (544, 'Rheu-trex 2,5 mg', 10, NULL, 88, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Metotreksat', 'tablet', 8500.00);
-INSERT INTO `barang` VALUES (545, 'Metronidazole 500 mg KF', 10, NULL, 89, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Metronidazole 500 mg', 'tablet', 500.00);
-INSERT INTO `barang` VALUES (546, 'Metronidazole 500 mg Novapharin', 10, NULL, 89, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Metronidazole 500 mg', 'tablet', 500.00);
-INSERT INTO `barang` VALUES (547, 'Miconazole krim generik 5 gr', 10, NULL, 90, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'miconazole', 'tube', 5000.00);
-INSERT INTO `barang` VALUES (548, 'Microlax gel', 10, NULL, 91, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'microlax', 'tube', 28000.00);
-INSERT INTO `barang` VALUES (549, 'Mycrogest 200 mg ', 10, NULL, 92, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Micronised Progesteron', 'kapsul', 33000.00);
-INSERT INTO `barang` VALUES (550, 'Mycrogest 100 mg ', 10, NULL, 92, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Micronised Progesteron', 'kapsul', 18000.00);
-INSERT INTO `barang` VALUES (551, 'Minyak kayu putih caplang 60 ml', 10, NULL, 93, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'minyak kayu putih', 'botol', 27000.00);
-INSERT INTO `barang` VALUES (552, 'Minyak kayu putih caplang 120 ml', 10, NULL, 93, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'minyak kayu putih', 'botol', 50000.00);
-INSERT INTO `barang` VALUES (553, 'Loksin 10 gr', 10, NULL, 94, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'mometason furoate cream', 'tube', 100000.00);
-INSERT INTO `barang` VALUES (554, 'Elox krim 5 gr', 10, NULL, 94, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'mometason furoate cream', 'tube', 68000.00);
-INSERT INTO `barang` VALUES (555, 'H2 fair skin', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Multivitamin', 'tablet', 9000.00);
-INSERT INTO `barang` VALUES (556, 'Nulacta', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Multivitamin', 'kapsul', 7000.00);
-INSERT INTO `barang` VALUES (557, 'Caviplex', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Multivitamin', 'tablet', 700.00);
-INSERT INTO `barang` VALUES (558, 'Obdhamin', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Multivitamin', 'tablet', 6500.00);
-INSERT INTO `barang` VALUES (559, 'Folamil Genio', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Multivitamin', 'kapsul', 5500.00);
-INSERT INTO `barang` VALUES (560, 'Inlacin 100 mg', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Multivitamin', 'kapsul', 7500.00);
-INSERT INTO `barang` VALUES (561, 'Sanvita B sirup ', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Multivitamin', 'botol', 20000.00);
-INSERT INTO `barang` VALUES (562, 'Muveron drop ', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Multivitamin', 'botol', 43000.00);
-INSERT INTO `barang` VALUES (563, 'Apialis sirup', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Multivitamin', 'botol', 49000.00);
-INSERT INTO `barang` VALUES (564, 'Apialis drop', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Multivitamin', 'botol', 60000.00);
-INSERT INTO `barang` VALUES (565, 'Muveron sirup', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Multivitamin', 'botol', 63000.00);
-INSERT INTO `barang` VALUES (566, 'San B Plex drop', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Multivitamin', 'botol', 25000.00);
-INSERT INTO `barang` VALUES (567, 'Zamel sirup', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Multivitamin', 'botol', 56000.00);
-INSERT INTO `barang` VALUES (568, 'Dhavit Sirup ', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Multivitamin', 'tablet', 48000.00);
-INSERT INTO `barang` VALUES (569, 'Elkana sirup', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Multivitamin', 'botol', 35000.00);
-INSERT INTO `barang` VALUES (570, 'Pirotop 5 gr ', 10, NULL, 96, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Mupirocin cream', 'tube', 57000.00);
-INSERT INTO `barang` VALUES (571, 'Pirotop 10 gr', 10, NULL, 96, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Mupirocin cream', 'tube', 89000.00);
-INSERT INTO `barang` VALUES (572, 'Natrium diklofenak 50 mg', 10, NULL, 97, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Natrium diklofenak', 'tablet', 2000.00);
-INSERT INTO `barang` VALUES (573, 'Nymiko drop', 10, NULL, 98, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Nistatin', 'botol', 50000.00);
-INSERT INTO `barang` VALUES (574, 'Norestil 2', 10, NULL, 99, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Norethisterone ', 'tablet', 6000.00);
-INSERT INTO `barang` VALUES (575, 'Enterostop', 10, NULL, 100, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'obat diare', 'strip ', 45000.00);
-INSERT INTO `barang` VALUES (576, 'Lokev', 10, NULL, 101, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Omeprazole 20 mg', 'tablet', 1000.00);
-INSERT INTO `barang` VALUES (577, 'Omeprazole 20 mg', 10, NULL, 101, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Omeprazole 20 mg', 'kapsul', 1000.00);
-INSERT INTO `barang` VALUES (578, 'Ondansentron Generik', 10, NULL, 102, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Ondansentron', 'tablet', 2000.00);
-INSERT INTO `barang` VALUES (579, 'Dehidralit', 10, NULL, 103, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Oralit', 'botol', 23000.00);
-INSERT INTO `barang` VALUES (580, 'Renalite', 10, NULL, 103, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Oralit', 'botol', 23000.00);
-INSERT INTO `barang` VALUES (581, 'Sanmol tablet', 10, NULL, 104, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Paracetamol', 'tablet', 500.00);
-INSERT INTO `barang` VALUES (582, 'Paracetamol 500 mg generik', 10, NULL, 104, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Paracetamol', 'tablet', 400.00);
-INSERT INTO `barang` VALUES (583, 'Nufadol', 10, NULL, 104, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Paracetamol', 'kaplet', 500.00);
-INSERT INTO `barang` VALUES (584, 'Pamol 125 mg supp', 10, NULL, 104, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Paracetamol', 'supp', 20000.00);
-INSERT INTO `barang` VALUES (585, 'Pamol 250 mg supp', 10, NULL, 104, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Paracetamol', 'supp', 29000.00);
-INSERT INTO `barang` VALUES (586, 'Sanmol sirup 120 mg', 10, NULL, 104, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Paracetamol', 'botol', 18000.00);
-INSERT INTO `barang` VALUES (587, 'Sanmol drop 60 mg', 10, NULL, 105, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Paracetamol sirup', 'botol', 24000.00);
-INSERT INTO `barang` VALUES (588, 'Kamolas Forte 250 mg sirup', 10, NULL, 105, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Paracetamol sirup', 'botol', 39000.00);
-INSERT INTO `barang` VALUES (589, 'Paracetamol sirup 120 mg', 10, NULL, 105, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Paracetamol sirup', 'botol', 35000.00);
-INSERT INTO `barang` VALUES (590, 'QV cream ', 10, NULL, 106, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Pelembab', 'botol', 197000.00);
-INSERT INTO `barang` VALUES (591, 'Medscab', 10, NULL, 107, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Permethrin 5%', 'tube', 98000.00);
-INSERT INTO `barang` VALUES (592, 'Scacid cream 10 gr', 10, NULL, 107, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Permethrin 5%', 'tube', 57000.00);
-INSERT INTO `barang` VALUES (593, 'Combantrin sirup', 10, NULL, 108, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Pirantel pamoat sirup', 'botol', 21000.00);
-INSERT INTO `barang` VALUES (594, 'Combantrin 125 mg tablet', 10, NULL, 109, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Pirantel pamoat tablet', 'strip', 17000.00);
-INSERT INTO `barang` VALUES (595, 'Combantrin 250 mg tablet', 10, NULL, 109, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:23', NULL, 'Pirantel pamoat tablet', NULL, NULL);
-INSERT INTO `barang` VALUES (596, 'Piroxicam 10 mg generik', 10, NULL, 110, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:24', NULL, 'Piroxicam 10 mg', NULL, NULL);
-INSERT INTO `barang` VALUES (597, 'Miradene 20 mg', 10, NULL, 111, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Piroxicam 20 mg', 'kapsul', 1000.00);
-INSERT INTO `barang` VALUES (598, 'Novaxicam', 10, NULL, 111, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:25', NULL, 'Piroxicam 20 mg', NULL, NULL);
-INSERT INTO `barang` VALUES (599, 'Bioplacenton 15 gr', 10, NULL, 112, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Placenta ekstrak', 'tube', 23000.00);
-INSERT INTO `barang` VALUES (600, 'chilli plast plester coklat', 10, NULL, 113, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:26', NULL, 'plester', NULL, NULL);
-INSERT INTO `barang` VALUES (601, 'Hansaplast', 10, NULL, 113, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'plester', 'lembar', 500.00);
-INSERT INTO `barang` VALUES (602, 'Hansaplast rol kain', 10, NULL, 113, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:26', NULL, 'plester', NULL, NULL);
-INSERT INTO `barang` VALUES (603, 'Meptin mini', 10, NULL, 114, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Procaterol HCl', 'tablet', 4000.00);
-INSERT INTO `barang` VALUES (604, 'Ranitidine Hcl', 10, NULL, 115, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Ranitidine', 'tablet', 300.00);
-INSERT INTO `barang` VALUES (605, 'Topicare Cleanser', 10, NULL, 116, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Sabun cuci muka', 'botol', 90000.00);
-INSERT INTO `barang` VALUES (606, 'Salbutamol 2 mg generik', 10, NULL, 117, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:28', NULL, 'Salbutamol', NULL, NULL);
-INSERT INTO `barang` VALUES (607, 'Salbutamol 2 mg generik', 10, NULL, 117, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Salbutamol', 'tablet', 150.00);
-INSERT INTO `barang` VALUES (608, 'Salbutamol 4 mg generik', 10, NULL, 117, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:29', NULL, 'Salbutamol', NULL, NULL);
-INSERT INTO `barang` VALUES (609, 'Salbutamol 4 mg generik', 10, NULL, 117, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:22:05', NULL, 'Salbutamol', NULL, NULL);
-INSERT INTO `barang` VALUES (610, 'Ventolin nebul', 10, NULL, 117, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Salbutamol', 'unit', 14000.00);
-INSERT INTO `barang` VALUES (611, 'Velutine inhalation sol', 10, NULL, 117, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:30', NULL, 'Salbutamol', NULL, NULL);
-INSERT INTO `barang` VALUES (612, 'Teosal', 10, NULL, 118, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Salbutamol + teofilin', 'tablet', 400.00);
-INSERT INTO `barang` VALUES (613, 'Gramax 100 mg', 10, NULL, 119, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Sildenafil citrate', 'kapsul', 71000.00);
-INSERT INTO `barang` VALUES (614, 'Bye-bye fever anak ', 10, NULL, 120, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'tempel panas ', 'strip', 12000.00);
-INSERT INTO `barang` VALUES (615, 'Bye-bye fever bayi', 10, NULL, 120, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'tempel panas ', 'strip', 9000.00);
-INSERT INTO `barang` VALUES (616, 'Tes hamil Onemed', 10, NULL, 121, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'tes kehamilan', 'piece', 5000.00);
-INSERT INTO `barang` VALUES (617, 'Tes hamil Quick & sure', 10, NULL, 121, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:34', NULL, 'tes kehamilan', NULL, NULL);
-INSERT INTO `barang` VALUES (618, 'Tes hamil Steril', 10, NULL, 121, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:35', NULL, 'tes kehamilan', NULL, NULL);
-INSERT INTO `barang` VALUES (619, 'Cendoxitrol Tetes Mata', 10, NULL, 122, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Tetes mata', 'botol', 41000.00);
-INSERT INTO `barang` VALUES (620, 'Thiamycin 1000', 10, NULL, 123, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Thiampenicol', 'kaplet', 12000.00);
-INSERT INTO `barang` VALUES (621, 'Thiamycin 500', 10, NULL, 123, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Thiampenicol', 'kaplet', 7000.00);
-INSERT INTO `barang` VALUES (622, 'Vitacid 0,1%', 10, NULL, 124, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Tretinoin acid 0,1%', 'tube', 66000.00);
-INSERT INTO `barang` VALUES (623, 'Rafacort tab', 10, NULL, 125, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Triamcinolone acetonide', 'tablet', 5000.00);
-INSERT INTO `barang` VALUES (624, 'Bufacomb cream in ora base', 10, NULL, 125, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Triamcinolone acetonide', 'tube', 25000.00);
-INSERT INTO `barang` VALUES (625, 'Carmed 10% krim 40 gr', 10, NULL, 126, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'urea 10%', 'tube', 44000.00);
-INSERT INTO `barang` VALUES (626, 'Carmed 20% krim 40 gr', 10, NULL, 127, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'urea 20%', 'tube', 56000.00);
-INSERT INTO `barang` VALUES (627, 'Nuce ', 10, NULL, 128, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Vit C 500 + Collagen ', 'kapsul', 5000.00);
-INSERT INTO `barang` VALUES (628, 'Vomil B6', 10, NULL, 129, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Vitamin B6 ', 'tablet', 4000.00);
-INSERT INTO `barang` VALUES (629, 'Vit B complex IPI', 10, NULL, 130, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Vitamin Bkompleks', 'botol', 6000.00);
-INSERT INTO `barang` VALUES (630, 'Vit C IPI ', 10, NULL, 131, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'vitamin C', 'botol', 6000.00);
-INSERT INTO `barang` VALUES (631, 'Vitamin C 250 mg ', 10, NULL, 132, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Vitamin C 250 mg', 'tablet', 500.00);
-INSERT INTO `barang` VALUES (632, 'Vitamin C 50 mg', 10, NULL, 133, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:41', NULL, 'Vitamin C 50 mg', 'tablet', 500.00);
-INSERT INTO `barang` VALUES (633, 'Sanbe C 500 mg', 10, NULL, 134, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Vitamin C 500 mg', 'tablet', 1000.00);
-INSERT INTO `barang` VALUES (634, 'Prove D3 tablet', 10, NULL, 135, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Vitamin D 1000 IU ', 'kaplet', 4000.00);
-INSERT INTO `barang` VALUES (635, 'Prove D3 drop', 10, NULL, 135, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Vitamin D 1000 IU ', 'botol', 297000.00);
-INSERT INTO `barang` VALUES (636, 'Zinc 20 mg Kimia farma', 10, NULL, 136, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Zinc', 'tablet', 1000.00);
-INSERT INTO `barang` VALUES (637, 'L-zinc sirup', 10, NULL, 137, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Zinc sirup', 'botol', 50000.00);
-INSERT INTO `barang` VALUES (638, 'Zinckid Sirup', 10, NULL, 137, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL, 'Zinc sirup', 'botol', 41000.00);
+INSERT INTO `barang` VALUES (417, 'Aspilet chewable', 10, NULL, 1, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:55:49', NULL);
+INSERT INTO `barang` VALUES (418, 'Mini aspi tablet', 10, NULL, 2, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:20:03', NULL);
+INSERT INTO `barang` VALUES (419, 'Acyclovir generik', 10, NULL, 3, 53, 'administrator', '2020-10-19 12:16:04', '2020-10-23 09:32:55', NULL);
+INSERT INTO `barang` VALUES (420, 'Lagesil sirup', 10, NULL, 4, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (421, 'Alkohol 70% 100 ml botol', 10, NULL, 5, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:20:05', NULL);
+INSERT INTO `barang` VALUES (422, 'Alkohol 70% 300 ml botol', 10, NULL, 5, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (423, 'Nobor ', 10, NULL, 6, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (424, 'Multigyn active gel ', 10, NULL, 7, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (425, 'Epexol tablet', 10, NULL, 8, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (426, 'Epexol sirup', 10, NULL, 8, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (427, 'Epexol drop ', 10, NULL, 8, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (428, 'Amlodipine 10 mg ', 10, NULL, 9, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (429, 'Cardipin 10 mg', 10, NULL, 9, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (430, 'Amoxan 500 mg', 10, NULL, 10, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (431, 'Leomoxyl 500 mg', 10, NULL, 10, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (432, 'Amoxan drop ', 10, NULL, 11, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (433, 'Amoxan sirup ', 10, NULL, 12, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (434, 'Amoxan Forte sirup', 10, NULL, 13, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (435, 'Antasida DOEN tablet', 10, NULL, 14, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (437, 'Lagesil sirup', 10, NULL, 15, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (438, 'Anelat', 10, NULL, 16, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (439, 'Mefenamic Acid ', 10, NULL, 17, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (440, 'Plasminex', 10, NULL, 18, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (441, 'Depakene sirup', 10, NULL, 19, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (442, 'Xidane', 10, NULL, 20, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (443, 'Dermia cream 15 gr', 10, NULL, 21, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (444, 'Xidane gel', 10, NULL, 22, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (445, 'Azitromisin Nulab', 10, NULL, 23, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (446, 'Batugin Elixir 300 ml', 10, NULL, 24, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (447, 'Paratusin tablet', 10, NULL, 25, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (448, 'Decolsin tablet', 10, NULL, 25, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (449, 'Flucadex', 10, NULL, 25, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (450, 'Dextral tablet ', 10, NULL, 25, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (451, 'Actifed merah Batuk pilek sirup4', 10, NULL, 27, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:54:02', NULL);
+INSERT INTO `barang` VALUES (452, 'OBH combi dewasa jahe ', 10, NULL, 27, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (453, 'Skinbright Lightening CC cream Beige', 10, NULL, 28, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (454, 'Skinbright Lightening CC cream Normal', 10, NULL, 28, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (455, 'Betadine sol 5 ml', 10, NULL, 29, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (456, 'Betason krim 5 gr', 10, NULL, 30, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (457, 'Betason N krim 5 gr ', 10, NULL, 31, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (458, 'Mucohexin sirup', 10, NULL, 32, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (459, 'Miravon', 10, NULL, 32, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (460, 'Na Cl 0,9% 1 Liter', 10, NULL, 33, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (461, 'Qcef sirup ', 10, NULL, 34, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (462, 'Cefadroxil generik', 10, NULL, 35, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (463, 'Qcef 500 mg', 10, NULL, 35, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (464, 'Cefat 500 mg', 10, NULL, 35, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (465, 'Cefco ', 10, NULL, 36, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:20:09', NULL);
+INSERT INTO `barang` VALUES (466, 'Cefixime 100 mg Hexa', 10, NULL, 36, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (467, 'Cefixime 100 mg KF', 10, NULL, 36, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (468, 'Cefixime 100 mg Nulab ', 10, NULL, 36, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (469, 'Helixim 100 mg', 10, NULL, 36, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (470, 'Sporetik 100 mg', 10, NULL, 36, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (471, 'Inbacef 200 mg ', 10, NULL, 37, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (472, 'tekasol oint ', 10, NULL, 38, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (473, 'Cetirizine Hexa', 10, NULL, 39, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (474, 'Cetirizine Nulab', 10, NULL, 39, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (475, 'Cerini tablet', 10, NULL, 39, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (476, 'Cerini drop ', 10, NULL, 39, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (477, 'Alerzin sirup', 10, NULL, 40, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (478, 'Erlamycetin salep mata', 10, NULL, 41, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (479, 'Erlamycetin tetes telinga ', 10, NULL, 41, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (480, 'Alleron ', 10, NULL, 42, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (481, 'Ciprofloxacin generik', 10, NULL, 43, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (482, 'Clinoma', 10, NULL, 44, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (483, 'Indanox 300 mg', 10, NULL, 45, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (484, 'Mediklin gel 15 gr ', 10, NULL, 46, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (485, 'Provula', 10, NULL, 47, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (486, 'Dexyclav', 10, NULL, 48, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (487, 'Dexyclav sirup', 10, NULL, 49, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (488, 'Sanprima', 10, NULL, 50, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (489, 'Sanprima sirup', 10, NULL, 50, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (490, 'Heptasan', 10, NULL, 51, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:20:14', NULL);
+INSERT INTO `barang` VALUES (491, 'Pronicy', 10, NULL, 51, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (492, 'Inerson krim 15 gr ', 10, NULL, 52, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (493, 'Nupeson krim 10 gr ', 10, NULL, 52, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (494, 'Dextamine', 10, NULL, 53, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (495, 'Polofar plus', 10, NULL, 53, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (496, 'BDM sirup', 10, NULL, 53, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (497, 'Cortidex', 10, NULL, 54, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (498, 'Confortin cream 20 gr tube', 10, NULL, 55, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (499, 'Doksisiklin 100 mg', 10, NULL, 56, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (500, 'Vosedon sirup', 10, NULL, 57, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (501, 'Vometa drop', 10, NULL, 57, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (502, 'Duphaston', 10, NULL, 58, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (503, 'Erysanbe 500 mg', 10, NULL, 59, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (504, 'Erysanbe sirup', 10, NULL, 60, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (505, 'Erymed krim 20 gr', 10, NULL, 61, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (506, 'Fluconazole 150 mg generik', 10, NULL, 62, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (507, 'Furosemide generik', 10, NULL, 63, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (508, 'Sagestam 10  gr salep kulit', 10, NULL, 64, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (509, 'Sagestam salep mata 3,5 gr', 10, NULL, 64, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (510, 'Gentalex Cream', 10, NULL, 64, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (511, 'Genalten cream', 10, NULL, 64, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (512, 'Sagestam tetes mata/telinga', 10, NULL, 65, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (513, 'Griseofulvin 500 mg ', 10, NULL, 66, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (514, 'Bufect sirup 100 mg', 10, NULL, 67, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (515, 'Bufect forte sirup 200 mg', 10, NULL, 67, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:45', NULL);
+INSERT INTO `barang` VALUES (516, 'Kassa steril Husada', 10, NULL, 68, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (517, 'Ketoconazole tab generik', 10, NULL, 69, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (518, 'Fungasol', 10, NULL, 69, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (519, 'Mycoral ', 10, NULL, 69, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (520, 'Formyco krim 10 gr', 10, NULL, 70, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (521, 'Fungasol krim 10 gr', 10, NULL, 70, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (522, 'Fungasol SS 2%', 10, NULL, 71, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (523, 'Kloderma 10 gr krim', 10, NULL, 72, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (524, 'Kondom sutra', 10, NULL, 73, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:18', NULL);
+INSERT INTO `barang` VALUES (525, 'Interlac drop', 10, NULL, 74, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (526, 'L-Bio', 10, NULL, 75, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (527, 'Dulcolactol sirup', 10, NULL, 76, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (528, 'Dobrizol', 10, NULL, 77, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (529, 'Lodia', 10, NULL, 78, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (530, 'Loran', 10, NULL, 79, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (531, 'Loratadine generik', 10, NULL, 79, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (532, 'Alloris tablet', 10, NULL, 79, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (533, 'Sanoskin Melladerm Plus', 10, NULL, 80, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (534, 'Interhistin', 10, NULL, 81, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (535, 'Spasminal', 10, NULL, 82, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (536, 'Eraphage', 10, NULL, 83, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (537, 'Metformin generik', 10, NULL, 83, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (538, 'Stenirol 16mg', 10, NULL, 84, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (539, 'Metil Prednisolon 16 mg', 10, NULL, 84, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (540, 'Metil Prednisolon 4 mg', 10, NULL, 85, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (541, 'Metil Prednisolon 8 mg ', 10, NULL, 86, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (542, 'Damaben drop', 10, NULL, 87, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (543, 'Damaben sirup', 10, NULL, 87, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (544, 'Rheu-trex 2,5 mg', 10, NULL, 88, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (545, 'Metronidazole 500 mg KF', 10, NULL, 89, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (546, 'Metronidazole 500 mg Novapharin', 10, NULL, 89, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (547, 'Miconazole krim generik 5 gr', 10, NULL, 90, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (548, 'Microlax gel', 10, NULL, 91, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (549, 'Mycrogest 200 mg ', 10, NULL, 92, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (550, 'Mycrogest 100 mg ', 10, NULL, 92, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (551, 'Minyak kayu putih caplang 60 ml', 10, NULL, 93, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (552, 'Minyak kayu putih caplang 120 ml', 10, NULL, 93, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (553, 'Loksin 10 gr', 10, NULL, 94, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (554, 'Elox krim 5 gr', 10, NULL, 94, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (555, 'H2 fair skin', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (556, 'Nulacta', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (557, 'Caviplex', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (558, 'Obdhamin', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (559, 'Folamil Genio', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (560, 'Inlacin 100 mg', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (561, 'Sanvita B sirup ', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (562, 'Muveron drop ', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (563, 'Apialis sirup', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (564, 'Apialis drop', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (565, 'Muveron sirup', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (566, 'San B Plex drop', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (567, 'Zamel sirup', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (568, 'Dhavit Sirup ', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (569, 'Elkana sirup', 10, NULL, 95, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (570, 'Pirotop 5 gr ', 10, NULL, 96, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (571, 'Pirotop 10 gr', 10, NULL, 96, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (572, 'Natrium diklofenak 50 mg', 10, NULL, 97, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (573, 'Nymiko drop', 10, NULL, 98, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (574, 'Norestil 2', 10, NULL, 99, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (575, 'Enterostop', 10, NULL, 100, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (576, 'Lokev', 10, NULL, 101, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (577, 'Omeprazole 20 mg', 10, NULL, 101, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (578, 'Ondansentron Generik', 10, NULL, 102, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (579, 'Dehidralit', 10, NULL, 103, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (580, 'Renalite', 10, NULL, 103, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (581, 'Sanmol tablet', 10, NULL, 104, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (582, 'Paracetamol 500 mg generik', 10, NULL, 104, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (583, 'Nufadol', 10, NULL, 104, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (584, 'Pamol 125 mg supp', 10, NULL, 104, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (585, 'Pamol 250 mg supp', 10, NULL, 104, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (586, 'Sanmol sirup 120 mg', 10, NULL, 104, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (587, 'Sanmol drop 60 mg', 10, NULL, 105, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (588, 'Kamolas Forte 250 mg sirup', 10, NULL, 105, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (589, 'Paracetamol sirup 120 mg', 10, NULL, 105, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (590, 'QV cream ', 10, NULL, 106, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (591, 'Medscab', 10, NULL, 107, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (592, 'Scacid cream 10 gr', 10, NULL, 107, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (593, 'Combantrin sirup', 10, NULL, 108, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (594, 'Combantrin 125 mg tablet', 10, NULL, 109, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (595, 'Combantrin 250 mg tablet', 10, NULL, 109, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:23', NULL);
+INSERT INTO `barang` VALUES (596, 'Piroxicam 10 mg generik', 10, NULL, 110, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:24', NULL);
+INSERT INTO `barang` VALUES (597, 'Miradene 20 mg', 10, NULL, 111, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (598, 'Novaxicam', 10, NULL, 111, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:25', NULL);
+INSERT INTO `barang` VALUES (599, 'Bioplacenton 15 gr', 10, NULL, 112, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (600, 'chilli plast plester coklat', 10, NULL, 113, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:26', NULL);
+INSERT INTO `barang` VALUES (601, 'Hansaplast', 10, NULL, 113, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (602, 'Hansaplast rol kain', 10, NULL, 113, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:26', NULL);
+INSERT INTO `barang` VALUES (603, 'Meptin mini', 10, NULL, 114, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (604, 'Ranitidine Hcl', 10, NULL, 115, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (605, 'Topicare Cleanser', 10, NULL, 116, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (606, 'Salbutamol 2 mg generik', 10, NULL, 117, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:28', NULL);
+INSERT INTO `barang` VALUES (607, 'Salbutamol 2 mg generik', 10, NULL, 117, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (608, 'Salbutamol 4 mg generik', 10, NULL, 117, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:29', NULL);
+INSERT INTO `barang` VALUES (609, 'Salbutamol 4 mg generik', 10, NULL, 117, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:22:05', NULL);
+INSERT INTO `barang` VALUES (610, 'Ventolin nebul', 10, NULL, 117, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (611, 'Velutine inhalation sol', 10, NULL, 117, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:30', NULL);
+INSERT INTO `barang` VALUES (612, 'Teosal', 10, NULL, 118, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (613, 'Gramax 100 mg', 10, NULL, 119, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (614, 'Bye-bye fever anak ', 10, NULL, 120, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (615, 'Bye-bye fever bayi', 10, NULL, 120, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (616, 'Tes hamil Onemed', 10, NULL, 121, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (617, 'Tes hamil Quick & sure', 10, NULL, 121, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:34', NULL);
+INSERT INTO `barang` VALUES (618, 'Tes hamil Steril', 10, NULL, 121, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:35', NULL);
+INSERT INTO `barang` VALUES (619, 'Cendoxitrol Tetes Mata', 10, NULL, 122, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (620, 'Thiamycin 1000', 10, NULL, 123, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (621, 'Thiamycin 500', 10, NULL, 123, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (622, 'Vitacid 0,1%', 10, NULL, 124, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (623, 'Rafacort tab', 10, NULL, 125, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (624, 'Bufacomb cream in ora base', 10, NULL, 125, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (625, 'Carmed 10% krim 40 gr', 10, NULL, 126, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (626, 'Carmed 20% krim 40 gr', 10, NULL, 127, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (627, 'Nuce ', 10, NULL, 128, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (628, 'Vomil B6', 10, NULL, 129, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (629, 'Vit B complex IPI', 10, NULL, 130, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (630, 'Vit C IPI ', 10, NULL, 131, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (631, 'Vitamin C 250 mg ', 10, NULL, 132, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (632, 'Vitamin C 50 mg', 10, NULL, 133, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:20:41', NULL);
+INSERT INTO `barang` VALUES (633, 'Sanbe C 500 mg', 10, NULL, 134, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (634, 'Prove D3 tablet', 10, NULL, 135, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (635, 'Prove D3 drop', 10, NULL, 135, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (636, 'Zinc 20 mg Kimia farma', 10, NULL, 136, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (637, 'L-zinc sirup', 10, NULL, 137, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
+INSERT INTO `barang` VALUES (638, 'Zinckid Sirup', 10, NULL, 137, NULL, 'administrator', '2020-10-19 12:16:33', '2020-10-19 13:19:46', NULL);
 
 -- ----------------------------
 -- Table structure for barang_masuk
@@ -294,6 +291,7 @@ CREATE TABLE `barang_masuk`  (
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   `deleted_at` timestamp(0) NULL DEFAULT NULL,
+  `check` tinyint(255) NOT NULL DEFAULT 0,
   PRIMARY KEY (`barang_masuk_id`) USING BTREE,
   INDEX `barang_masuk_pengguna_id_foreign`(`pengguna_id`) USING BTREE,
   INDEX `barang_masuk_pbf_id_foreign`(`pbf_id`) USING BTREE,
@@ -306,9 +304,11 @@ CREATE TABLE `barang_masuk`  (
 -- ----------------------------
 -- Records of barang_masuk
 -- ----------------------------
-INSERT INTO `barang_masuk` VALUES ('202010221210397957260', '2020-10-22', '3423', NULL, '2020-10-22', 'asdf', NULL, 417, NULL, 5000, 10, 50, 10, '2020-10-22', 12500, 137500.00, 'administrator', '2020-10-22 12:49:39', '2020-10-22 12:49:39', NULL);
-INSERT INTO `barang_masuk` VALUES ('202010221210398007421', '2020-10-22', '3423', NULL, '2020-10-22', 'asdf', NULL, 419, NULL, 10000, 10, 0, 10, '2020-10-22', 12500, 137500.00, 'administrator', '2020-10-22 12:49:39', '2020-10-22 12:49:39', NULL);
-INSERT INTO `barang_masuk` VALUES ('202010230210008154230', '2020-10-23', '445\\\\\\', NULL, '2020-10-23', NULL, NULL, 417, NULL, 5000, 10, 0, 10, '2020-10-23', 5000, 55000.00, 'administrator', '2020-10-23 14:51:00', '2020-10-23 14:51:00', NULL);
+INSERT INTO `barang_masuk` VALUES ('202010221210397957260', '2020-10-22', '3423', NULL, '2020-10-22', 'asdf', NULL, 417, '344', 5000, 10, 50, 10, '2020-10-22', 12500, 137500.00, 'administrator', '2020-10-22 12:49:39', '2020-10-26 14:43:43', NULL, 1);
+INSERT INTO `barang_masuk` VALUES ('202010221210398007421', '2020-10-22', '3423', NULL, '2020-10-22', 'asdf', NULL, 419, '234', 10000, 10, 0, 10, '2020-10-22', 12500, 137500.00, 'administrator', '2020-10-22 12:49:39', '2020-10-26 14:43:44', NULL, 1);
+INSERT INTO `barang_masuk` VALUES ('202010230210008154230', '2020-10-23', '445\\\\\\', NULL, '2020-10-23', NULL, NULL, 417, '34234', 5000, 10, 0, 10, '2020-10-23', 5000, 55000.00, 'administrator', '2020-10-23 14:51:00', '2020-10-27 08:04:04', NULL, 1);
+INSERT INTO `barang_masuk` VALUES ('202010260110429856320', '2020-10-26', 'gjhkfg', NULL, NULL, NULL, NULL, 419, '12313', 6000, 10, 0, 70, '2020-10-26', 42000, 462000.00, 'administrator', '2020-10-26 13:32:42', '2020-10-26 13:32:42', NULL, 0);
+INSERT INTO `barang_masuk` VALUES ('202010260110514011310', '2020-10-26', '2sfasd', NULL, '2020-10-26', NULL, NULL, 417, '324', 34, 10, 2, 30, '2020-10-26', 99.96, 1099.56, 'administrator', '2020-10-26 13:31:51', '2020-10-26 13:31:51', NULL, 0);
 
 -- ----------------------------
 -- Table structure for biaya
@@ -374,6 +374,28 @@ CREATE TABLE `failed_jobs`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `failed_jobs_uuid_unique`(`uuid`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for jatuh_tempo
+-- ----------------------------
+DROP TABLE IF EXISTS `jatuh_tempo`;
+CREATE TABLE `jatuh_tempo`  (
+  `jatuh_tempo_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `barang_masuk_faktur` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `barang_masuk_jatuh_tempo` date NULL DEFAULT NULL,
+  `created_at` timestamp(0) NULL DEFAULT NULL,
+  `updated_at` timestamp(0) NULL DEFAULT NULL,
+  `deleted_at` timestamp(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`jatuh_tempo_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of jatuh_tempo
+-- ----------------------------
+INSERT INTO `jatuh_tempo` VALUES (1, '3423', '2020-10-22', NULL, '2020-10-26 14:27:28', '2020-10-26 14:27:28');
+INSERT INTO `jatuh_tempo` VALUES (2, '3423', '2020-10-22', NULL, '2020-10-26 14:27:28', '2020-10-26 14:27:28');
+INSERT INTO `jatuh_tempo` VALUES (3, '445\\\\\\', '2020-10-23', NULL, '2020-10-26 14:27:31', '2020-10-26 14:27:31');
+INSERT INTO `jatuh_tempo` VALUES (4, '2sfasd', '2020-10-26', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for jenis_barang
@@ -762,8 +784,8 @@ CREATE TABLE `penjualan_detail`  (
   `barang_id` bigint(20) NOT NULL,
   `satuan_nama` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `satuan_harga` decimal(15, 2) NOT NULL,
-  `penjualan_detail_tambahan` decimal(15, 2) NULL DEFAULT NULL,
   `satuan_rasio_dari_utama` double NOT NULL,
+  `penjualan_detail_tambahan` decimal(15, 2) NULL DEFAULT NULL,
   `penjualan_detail_qty` double NOT NULL,
   `penjualan_detail_diskon` double NULL DEFAULT NULL,
   `penjualan_detail_total` decimal(15, 2) NULL DEFAULT NULL,
@@ -777,19 +799,19 @@ CREATE TABLE `penjualan_detail`  (
 -- ----------------------------
 -- Records of penjualan_detail
 -- ----------------------------
-INSERT INTO `penjualan_detail` VALUES ('20201023081017696592', 0, 'a', 419, 'tablet', 1500.00, 150.00, 1, 2, 0, 3300.00, NULL);
-INSERT INTO `penjualan_detail` VALUES ('20201023091007296629', NULL, NULL, 419, 'tablet', 1500.00, NULL, 1, 2, 0, 3000.00, NULL);
-INSERT INTO `penjualan_detail` VALUES ('20201023091007296629', NULL, NULL, 417, 'tablet', 1000.00, NULL, 1, 3, 0, 3000.00, NULL);
-INSERT INTO `penjualan_detail` VALUES ('20201023091045162396', 0, NULL, 419, 'tablet', 1500.00, NULL, 1, 1, 0, 1650.00, NULL);
-INSERT INTO `penjualan_detail` VALUES ('20201023091045162396', 1, NULL, 417, 'tablet', 1000.00, NULL, 1, 7, 0, 7700.00, NULL);
-INSERT INTO `penjualan_detail` VALUES ('20201023091018720238', NULL, NULL, 419, 'tablet', 1500.00, NULL, 1, 1, 0, 1500.00, 53);
-INSERT INTO `penjualan_detail` VALUES ('20201023101035401134', 0, NULL, 419, 'tablet', 1500.00, 150.00, 1, 2, 0, 3300.00, 53);
-INSERT INTO `penjualan_detail` VALUES ('20201023111042729346', 0, NULL, 419, 'tablet', 1500.00, 150.00, 1, 1, 0, 1650.00, 53);
-INSERT INTO `penjualan_detail` VALUES ('20201023021007409046', 0, NULL, 419, 'tablet', 1500.00, 0.00, 1, 1, 0, 1650.00, 53);
-INSERT INTO `penjualan_detail` VALUES ('20201023031008059381', 0, NULL, 417, 'tablet', 1000.00, 0.00, 1, 1, 0, 1100.00, NULL);
-INSERT INTO `penjualan_detail` VALUES ('20201023031029877994', 0, NULL, 417, 'tablet', 1000.00, 0.00, 1, 1, 0, 1100.00, NULL);
-INSERT INTO `penjualan_detail` VALUES ('20201023031056113530', 0, NULL, 417, 'tablet', 1000.00, 0.00, 1, 1, 0, 1100.00, NULL);
-INSERT INTO `penjualan_detail` VALUES ('20201023031008212597', 0, NULL, 417, 'tablet', 1000.00, 0.00, 1, 1, 0, 1100.00, NULL);
+INSERT INTO `penjualan_detail` VALUES ('20201023081017696592', 0, 'a', 419, 'tablet', 1500.00, 1, 150.00, 2, 0, 3300.00, NULL);
+INSERT INTO `penjualan_detail` VALUES ('20201023091007296629', NULL, NULL, 419, 'tablet', 1500.00, 1, NULL, 2, 0, 3000.00, NULL);
+INSERT INTO `penjualan_detail` VALUES ('20201023091007296629', NULL, NULL, 417, 'tablet', 1000.00, 1, NULL, 3, 0, 3000.00, NULL);
+INSERT INTO `penjualan_detail` VALUES ('20201023091045162396', 0, NULL, 419, 'tablet', 1500.00, 1, NULL, 1, 0, 1650.00, NULL);
+INSERT INTO `penjualan_detail` VALUES ('20201023091045162396', 1, NULL, 417, 'tablet', 1000.00, 1, NULL, 7, 0, 7700.00, NULL);
+INSERT INTO `penjualan_detail` VALUES ('20201023091018720238', NULL, NULL, 419, 'tablet', 1500.00, 1, NULL, 1, 0, 1500.00, 53);
+INSERT INTO `penjualan_detail` VALUES ('20201023101035401134', 0, NULL, 419, 'tablet', 1500.00, 1, 150.00, 2, 0, 3300.00, 53);
+INSERT INTO `penjualan_detail` VALUES ('20201023111042729346', 0, NULL, 419, 'tablet', 1500.00, 1, 150.00, 1, 0, 1650.00, 53);
+INSERT INTO `penjualan_detail` VALUES ('20201023021007409046', 0, NULL, 419, 'tablet', 1500.00, 1, 0.00, 1, 0, 1650.00, 53);
+INSERT INTO `penjualan_detail` VALUES ('20201023031008059381', 0, NULL, 417, 'tablet', 1000.00, 1, 0.00, 1, 0, 1100.00, NULL);
+INSERT INTO `penjualan_detail` VALUES ('20201023031029877994', 0, NULL, 417, 'tablet', 1000.00, 1, 0.00, 1, 0, 1100.00, NULL);
+INSERT INTO `penjualan_detail` VALUES ('20201023031056113530', 0, NULL, 417, 'tablet', 1000.00, 1, 0.00, 1, 0, 1100.00, NULL);
+INSERT INTO `penjualan_detail` VALUES ('20201023031008212597', 0, NULL, 417, 'tablet', 1000.00, 1, 0.00, 1, 0, 1100.00, NULL);
 
 -- ----------------------------
 -- Table structure for permissions
