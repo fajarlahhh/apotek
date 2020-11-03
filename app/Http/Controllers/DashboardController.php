@@ -12,7 +12,7 @@ class DashboardController extends Controller
 
     public function index(Request $req)
     {
-        $jatuh_tempo = JatuhTempo::where('barang_masuk_jatuh_tempo', '<=', date('Y-m-d'))->orderBy('barang_masuk_jatuh_tempo')->get();
+        $jatuh_tempo = JatuhTempo::orderBy('barang_masuk_jatuh_tempo')->get();
         $barang_masuk = BarangMasuk::where('barang_masuk_kadaluarsa', '<=', date('Y-m-d'))->where('check', 0)->orderBy('barang_masuk_kadaluarsa')->get();
 
         return view('pages.dashboard.index',[

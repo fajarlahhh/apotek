@@ -99,7 +99,7 @@ class PenjualanbebasController extends Controller
                 $satuan = explode(";", $row["satuan_nama"]);
                 $jual = $stok_barang['penjualan_detail_qty'] * 1/$satuan[2];
 
-                if($sisa < $jual){
+                if($sisa < $jual || $sisa == 0){
                     if (!in_array("Stok ".$stok_barang['barang_nama']." tersisa ".$sisa."<br>", $pesan)) {
                         array_push($pesan, "Stok ".$stok_barang['barang_nama']." tersisa ".$sisa."<br>");
                     }
@@ -142,20 +142,22 @@ class PenjualanbebasController extends Controller
                 $data->penjualan_sisa = str_replace(',', '', $req->get('penjualan_sisa'));
                 $data->save();
                 foreach ($req->barang as $index => $brg) {
-                    $satuan = explode(";", $brg["satuan_nama"]);
-                    $barang = explode(";", $brg["barang_id"]);
+                    if ($brg["satuan_nama"]) {
+                        $satuan = explode(";", $brg["satuan_nama"]);
+                        $barang = explode(";", $brg["barang_id"]);
 
-                    $detail = new PenjualanDetail();
-                    $detail->penjualan_id = $id;
-                    $detail->barang_id = $barang[0];
-                    $detail->satuan_nama = $satuan[1];
-                    $detail->satuan_harga = str_replace(',', '', $satuan[0]);
-                    $detail->satuan_rasio_dari_utama = $satuan[2];
-                    $detail->penjualan_detail_qty = $brg['penjualan_detail_qty'];
-                    $detail->penjualan_detail_diskon = $brg['penjualan_detail_diskon'];
-                    $detail->penjualan_detail_total = str_replace(',', '', $brg['penjualan_detail_total']);
-                    $detail->pbf_id = $barang[1]?:null;
-                    $detail->save();
+                        $detail = new PenjualanDetail();
+                        $detail->penjualan_id = $id;
+                        $detail->barang_id = $barang[0];
+                        $detail->satuan_nama = $satuan[1];
+                        $detail->satuan_harga = str_replace(',', '', $satuan[0]);
+                        $detail->satuan_rasio_dari_utama = $satuan[2];
+                        $detail->penjualan_detail_qty = $brg['penjualan_detail_qty'];
+                        $detail->penjualan_detail_diskon = $brg['penjualan_detail_diskon'];
+                        $detail->penjualan_detail_total = str_replace(',', '', $brg['penjualan_detail_total']);
+                        $detail->pbf_id = $barang[1]?:null;
+                        $detail->save();
+                    }
                 }
             });
 

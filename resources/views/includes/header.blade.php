@@ -9,7 +9,7 @@
 	<!-- begin navbar-header -->
 	<div class="navbar-header">
 	    <a href="/" class="navbar-brand">
-	      	<b>{{ config("app.name") }}</b> {{ env('APP_COMPANY') }}
+	      	<b>{{ config("app.name") }}</b> Sejahtera
 	    </a>
 	    <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
 			<span class="icon-bar"></span>
@@ -29,7 +29,10 @@
 			<div class="dropdown-menu dropdown-menu-right">
 				<a href="#modal-katasandi" id="btn-password" class="dropdown-item" data-toggle="modal">Ganti Kata Sandi</a>
 				<div class="dropdown-divider"></div>
-				<a href="{{ route('logout') }}" class="dropdown-item" >{{ __('Log Out') }}</a>
+				<a href="javascript:;" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Log Out') }}</a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                </form>
 
 			</div>
 		</li>

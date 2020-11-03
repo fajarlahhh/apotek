@@ -126,7 +126,7 @@ class PenjualanresepController extends Controller
                 $satuan = explode(";", $row["satuan_nama"]);
                 $jual = $row['penjualan_detail_qty']/$satuan[2];
 
-                if($sisa < $jual){
+                if($sisa < $jual || $sisa == 0){
                     if (!in_array("Stok ".$stok_barang['barang_nama']." tersisa ".$sisa."<br>", $pesan)) {
                         array_push($pesan, "Stok ".$stok_barang['barang_nama']." tersisa ".$sisa."<br>");
                     }

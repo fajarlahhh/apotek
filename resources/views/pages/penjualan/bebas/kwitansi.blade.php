@@ -41,6 +41,12 @@
                 </td>
             </tr>
             @endforeach
+            <tr>
+                <th colspan="3" class="text-right">Total :</th>
+                <td class="text-right">
+                    {{ number_format($data->detail->sum('penjualan_detail_total'), 2) }}
+                </th>
+            </tr>
         </table>
     </div>
 </div>
