@@ -11,7 +11,13 @@
 <body>
 @endif
 <div class="modal-body">
+    <div class="text-center">
+        <h2>APOTEK SEJAHTERA</h2>
+        <p>Jl. Diponegoro No. 40 Praya - Lombok Tengah <br>
+        Telp. (0370) 653649</p>
+    </div>
     <div class="table-responsive">
+        Tgl. Nota : {{ $data->penjualan_tanggal }}
         <table class="table">
             <tr>
                 <th>No.</th>
