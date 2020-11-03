@@ -22,7 +22,7 @@ class PenjualanbebasController extends Controller
 		$tgl2 = $req->get('tanggal')? date('Y-m-d', strtotime($tanggal[1])): date('Y-m-d');
 
         $data = Penjualan::with('pengguna')->with('detail')->where('penjualan_jenis', 'Bebas')->whereBetween('penjualan_tanggal', [$tgl1, $tgl2])->where(function($q) use ($req){
-            $q->orWhere('penjualan_keterangan', 'like', '%'.$req->cari.'%');
+            $q->orWhere('penjualan_keterangan', 'like', '%'.$req->cari.'%')->orWhere('penjualan_id', 'like', '%'.$req->cari.'%')->orWhere('pengguna_id', 'like', '%'.$req->cari.'%');
         })->orderBy('created_at', 'desc');
 
         switch ($tipe) {

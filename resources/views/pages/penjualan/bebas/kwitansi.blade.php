@@ -16,14 +16,17 @@
         <p>Jl. Diponegoro No. 40 Praya - Lombok Tengah <br>
         Telp. (0370) 653649</p>
     </div>
+    <br>
+    <br>
     <div class="table-responsive">
-        Tgl. Nota : {{ $data->penjualan_tanggal }}
+        ID : {{ $data->penjualan_id }}
+        <div class="float-right">{{ $data->penjualan_tanggal }}</div>
         <table class="table">
             <tr>
-                <th>No.</th>
+                <th class="width-70">No.</th>
                 <th>Barang</th>
-                <th>Qty</th>
-                <th>Harga</th>
+                <th class="width-70">Qty</th>
+                <th class="width-150">Harga</th>
             </tr>
             @foreach ($data->detail as $index => $row)
             <tr>

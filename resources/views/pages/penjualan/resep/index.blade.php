@@ -60,10 +60,12 @@
             <thead>
                 <tr>
                     <th class="width-70">No.</th>
+                    <th>ID</th>
                     <th>Tanggal</th>
                     <th>Total Harga Barang</th>
                     <th>Admin</th>
                     <th>Servis</th>
+                    <th>Kasir</th>
                     <th>Barang</th>
                     <th>Keterangan</th>
                     @role('super-admin|supervisor|user')
@@ -75,12 +77,14 @@
                 @foreach ($data as $index => $row)
                 <tr>
                     <td class="align-middle">{{ ++$i }}</td>
+                    <td class="text-nowrap align-middle">{{ $row->penjualan_id }}</td>
                     <td class="align-middle">
                         <span data-toggle="tooltip" data-container="body" data-placement="right" data-html="true" data-placement="top" title="{!! $row->pengguna->pengguna_nama.", <br><small>".$row->updated_at."</small>" !!}">{{ $row->penjualan_tanggal }}</span>
                     </td>
                     <td class="text-nowrap text-right align-middle">{{ number_format($row->penjualan_tagihan, 2) }}</td>
                     <td class="text-nowrap text-right align-middle">{{ number_format($row->penjualan_admin, 2) }}</td>
                     <td class="text-nowrap text-right align-middle">{{ number_format($row->penjualan_racikan, 2) }}</td>
+                    <td class="text-nowrap align-middle">{{ $row->pengguna_id }}</td>
                     <td class="align-middle">
                         <table class="table table-bordered m-b-0">
                             <thead>

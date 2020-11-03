@@ -11,7 +11,7 @@
  Target Server Version : 50724
  File Encoding         : 65001
 
- Date: 27/10/2020 08:14:28
+ Date: 03/11/2020 09:00:39
 */
 
 SET NAMES utf8mb4;
@@ -39,12 +39,12 @@ CREATE TABLE `barang`  (
   CONSTRAINT `barang_jenis_barang_id_foreign` FOREIGN KEY (`jenis_barang_id`) REFERENCES `jenis_barang` (`jenis_barang_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `barang_obat_pengguna_id_foreign` FOREIGN KEY (`pengguna_id`) REFERENCES `pengguna` (`pengguna_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `barang_pbf_id_foreign` FOREIGN KEY (`pbf_id`) REFERENCES `pbf` (`pbf_id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 639 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 222 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of barang
 -- ----------------------------
-INSERT INTO `barang` VALUES (1, 'Actifed merah Batuk pilek sirup4', 10, NULL, 27, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-27 08:12:02', NULL);
+INSERT INTO `barang` VALUES (1, 'Actifed merah Batuk pilek sirup', 10, NULL, 27, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-27 08:56:38', NULL);
 INSERT INTO `barang` VALUES (2, 'Acyclovir generik', 10, NULL, 3, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-27 08:12:02', NULL);
 INSERT INTO `barang` VALUES (3, 'Alerzin sirup', 10, NULL, 40, NULL, 'administrator', '2020-10-19 12:16:32', '2020-10-27 08:12:02', NULL);
 INSERT INTO `barang` VALUES (4, 'Alkohol 70% 100 ml botol', 10, NULL, 5, NULL, 'administrator', '2020-10-19 12:16:04', '2020-10-27 08:12:02', NULL);
@@ -378,7 +378,7 @@ CREATE TABLE `jatuh_tempo`  (
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   `deleted_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`jatuh_tempo_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for jenis_barang
@@ -573,13 +573,10 @@ CREATE TABLE `model_has_permissions`  (
 -- ----------------------------
 -- Records of model_has_permissions
 -- ----------------------------
-INSERT INTO `model_has_permissions` VALUES (1, 'App\\Models\\Pengguna', 'testes');
-INSERT INTO `model_has_permissions` VALUES (2, 'App\\Models\\Pengguna', 'testes');
-INSERT INTO `model_has_permissions` VALUES (3, 'App\\Models\\Pengguna', 'testes');
-INSERT INTO `model_has_permissions` VALUES (4, 'App\\Models\\Pengguna', 'testes');
-INSERT INTO `model_has_permissions` VALUES (16, 'App\\Models\\Pengguna', 'testes');
-INSERT INTO `model_has_permissions` VALUES (17, 'App\\Models\\Pengguna', 'testes');
-INSERT INTO `model_has_permissions` VALUES (18, 'App\\Models\\Pengguna', 'testes');
+INSERT INTO `model_has_permissions` VALUES (1, 'App\\Models\\Pengguna', 'tes');
+INSERT INTO `model_has_permissions` VALUES (16, 'App\\Models\\Pengguna', 'tes');
+INSERT INTO `model_has_permissions` VALUES (17, 'App\\Models\\Pengguna', 'tes');
+INSERT INTO `model_has_permissions` VALUES (18, 'App\\Models\\Pengguna', 'tes');
 
 -- ----------------------------
 -- Table structure for model_has_roles
@@ -600,6 +597,7 @@ CREATE TABLE `model_has_roles`  (
 -- Records of model_has_roles
 -- ----------------------------
 INSERT INTO `model_has_roles` VALUES (1, 'App\\Models\\Pengguna', 'administrator');
+INSERT INTO `model_has_roles` VALUES (2, 'App\\Models\\Pengguna', 'tes');
 INSERT INTO `model_has_roles` VALUES (2, 'App\\Models\\Pengguna', 'testes');
 
 -- ----------------------------
@@ -713,7 +711,8 @@ CREATE TABLE `pengguna`  (
 -- Records of pengguna
 -- ----------------------------
 INSERT INTO `pengguna` VALUES ('administrator', '$2y$10$0ZURkfJ//vDTUNz0auKYLusJZR8or3ns3v2ILVOwZ6m4voC.A2qAu', 'Administrator', NULL, NULL, '2020-10-22 13:31:28', NULL);
-INSERT INTO `pengguna` VALUES ('testes', '$2y$10$iqPP5p7DcavMJAtqHhSTsOn9qV8qHcHoOtGfVMGdNn6yPb8uj3D0u', 'testes', NULL, '2020-10-10 10:22:09', '2020-10-10 10:22:09', NULL);
+INSERT INTO `pengguna` VALUES ('tes', '$2y$10$umQwt1CkMgwEjUFfl5UN7u4fIZ9.LcOJoNx5r8Cj6g80WHiK999Ry', 'tes', NULL, '2020-11-03 08:30:23', '2020-11-03 08:30:23', NULL);
+INSERT INTO `pengguna` VALUES ('testes', '$2y$10$iqPP5p7DcavMJAtqHhSTsOn9qV8qHcHoOtGfVMGdNn6yPb8uj3D0u', 'testes', NULL, '2020-10-10 10:22:09', '2020-11-03 08:28:14', '2020-11-03 08:28:14');
 
 -- ----------------------------
 -- Table structure for penjualan
@@ -776,32 +775,33 @@ CREATE TABLE `permissions`  (
   `updated_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `permissions_name_unique`(`name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of permissions
 -- ----------------------------
-INSERT INTO `permissions` VALUES (1, 'dashboard', 'web', '2020-10-10 10:20:21', '2020-10-10 10:20:21');
-INSERT INTO `permissions` VALUES (2, 'administrator', 'web', '2020-10-10 10:20:21', '2020-10-10 10:20:21');
-INSERT INTO `permissions` VALUES (3, 'postingsstok', 'web', '2020-10-10 10:20:21', '2020-10-10 10:20:21');
-INSERT INTO `permissions` VALUES (4, 'barangmasuk', 'web', '2020-10-10 10:20:21', '2020-10-10 10:20:21');
-INSERT INTO `permissions` VALUES (5, 'cetak', 'web', '2020-10-10 10:20:21', '2020-10-10 10:20:21');
-INSERT INTO `permissions` VALUES (6, 'laporanbarangmasuk', 'web', '2020-10-10 10:20:21', '2020-10-10 10:20:21');
-INSERT INTO `permissions` VALUES (7, 'laporanpenjualan', 'web', '2020-10-10 10:20:21', '2020-10-10 10:20:21');
-INSERT INTO `permissions` VALUES (8, 'laporanpenjualanbebas', 'web', '2020-10-10 10:20:21', '2020-10-10 10:20:21');
-INSERT INTO `permissions` VALUES (9, 'laporanpenjualanresep', 'web', '2020-10-10 10:20:21', '2020-10-10 10:20:21');
-INSERT INTO `permissions` VALUES (10, 'laporanstokbarang', 'web', '2020-10-10 10:20:22', '2020-10-10 10:20:22');
-INSERT INTO `permissions` VALUES (11, 'datamaster', 'web', '2020-10-10 10:20:22', '2020-10-10 10:20:22');
-INSERT INTO `permissions` VALUES (12, 'barang', 'web', '2020-10-10 10:20:22', '2020-10-10 10:20:22');
-INSERT INTO `permissions` VALUES (13, 'dokter', 'web', '2020-10-10 10:20:22', '2020-10-10 10:20:22');
-INSERT INTO `permissions` VALUES (14, 'jenisbarang', 'web', '2020-10-10 10:20:22', '2020-10-10 10:20:22');
-INSERT INTO `permissions` VALUES (15, 'pbf', 'web', '2020-10-10 10:20:22', '2020-10-10 10:20:22');
-INSERT INTO `permissions` VALUES (16, 'penjualan', 'web', '2020-10-10 10:20:22', '2020-10-10 10:20:22');
-INSERT INTO `permissions` VALUES (17, 'bebas', 'web', '2020-10-10 10:20:22', '2020-10-10 10:20:22');
-INSERT INTO `permissions` VALUES (18, 'resep', 'web', '2020-10-10 10:20:22', '2020-10-10 10:20:22');
-INSERT INTO `permissions` VALUES (19, 'setup', 'web', '2020-10-10 10:20:22', '2020-10-10 10:20:22');
-INSERT INTO `permissions` VALUES (20, 'biaya', 'web', '2020-10-10 10:20:22', '2020-10-10 10:20:22');
-INSERT INTO `permissions` VALUES (21, 'pengguna', 'web', '2020-10-10 10:20:22', '2020-10-10 10:20:22');
+INSERT INTO `permissions` VALUES (1, 'dashboard', 'web', '2020-11-03 08:29:54', '2020-11-03 08:29:54');
+INSERT INTO `permissions` VALUES (2, 'barangmasuk', 'web', '2020-11-03 08:29:54', '2020-11-03 08:29:54');
+INSERT INTO `permissions` VALUES (3, 'datamaster', 'web', '2020-11-03 08:29:54', '2020-11-03 08:29:54');
+INSERT INTO `permissions` VALUES (4, 'barang', 'web', '2020-11-03 08:29:54', '2020-11-03 08:29:54');
+INSERT INTO `permissions` VALUES (5, 'dokter', 'web', '2020-11-03 08:29:54', '2020-11-03 08:29:54');
+INSERT INTO `permissions` VALUES (6, 'jenisbarang', 'web', '2020-11-03 08:29:54', '2020-11-03 08:29:54');
+INSERT INTO `permissions` VALUES (7, 'pbf', 'web', '2020-11-03 08:29:54', '2020-11-03 08:29:54');
+INSERT INTO `permissions` VALUES (8, 'laporan', 'web', '2020-11-03 08:29:54', '2020-11-03 08:29:54');
+INSERT INTO `permissions` VALUES (9, 'konsinyasi', 'web', '2020-11-03 08:29:54', '2020-11-03 08:29:54');
+INSERT INTO `permissions` VALUES (10, 'laporankonsinyasiperhari', 'web', '2020-11-03 08:29:54', '2020-11-03 08:29:54');
+INSERT INTO `permissions` VALUES (11, 'laporankonsinyasibulanan', 'web', '2020-11-03 08:29:54', '2020-11-03 08:29:54');
+INSERT INTO `permissions` VALUES (12, 'penerimaan', 'web', '2020-11-03 08:29:54', '2020-11-03 08:29:54');
+INSERT INTO `permissions` VALUES (13, 'laporanpenerimaanperhari', 'web', '2020-11-03 08:29:54', '2020-11-03 08:29:54');
+INSERT INTO `permissions` VALUES (14, 'laporanpenerimaanbulanan', 'web', '2020-11-03 08:29:54', '2020-11-03 08:29:54');
+INSERT INTO `permissions` VALUES (15, 'laporanstokbarang', 'web', '2020-11-03 08:29:55', '2020-11-03 08:29:55');
+INSERT INTO `permissions` VALUES (16, 'penjualan', 'web', '2020-11-03 08:29:55', '2020-11-03 08:29:55');
+INSERT INTO `permissions` VALUES (17, 'penjualanbebas', 'web', '2020-11-03 08:29:55', '2020-11-03 08:29:55');
+INSERT INTO `permissions` VALUES (18, 'penjualanresep', 'web', '2020-11-03 08:29:55', '2020-11-03 08:29:55');
+INSERT INTO `permissions` VALUES (19, 'postingstok', 'web', '2020-11-03 08:29:55', '2020-11-03 08:29:55');
+INSERT INTO `permissions` VALUES (20, 'setup', 'web', '2020-11-03 08:29:55', '2020-11-03 08:29:55');
+INSERT INTO `permissions` VALUES (21, 'biaya', 'web', '2020-11-03 08:29:55', '2020-11-03 08:29:55');
+INSERT INTO `permissions` VALUES (22, 'pengguna', 'web', '2020-11-03 08:29:55', '2020-11-03 08:29:55');
 
 -- ----------------------------
 -- Table structure for role_has_permissions
@@ -1057,9 +1057,9 @@ INSERT INTO `satuan` VALUES (167, 0, 'botol', 297000.00, 1, 1);
 INSERT INTO `satuan` VALUES (220, 0, 'tablet', 1000.00, 1, 1);
 INSERT INTO `satuan` VALUES (109, 0, 'botol', 50000.00, 1, 1);
 INSERT INTO `satuan` VALUES (221, 0, 'botol', 41000.00, 1, 1);
-INSERT INTO `satuan` VALUES (1, 0, 'botol', 62000.00, 1, 1);
 INSERT INTO `satuan` VALUES (178, 0, 'tube', 55000.00, 1, 1);
 INSERT INTO `satuan` VALUES (2, 0, 'tablet', 1500.00, 1, 1);
+INSERT INTO `satuan` VALUES (1, 0, 'botol', 62000.00, 1, 1);
 
 -- ----------------------------
 -- Table structure for stok_awal
@@ -1071,5 +1071,230 @@ CREATE TABLE `stok_awal`  (
   `barang_qty` double(255, 0) NULL DEFAULT NULL,
   PRIMARY KEY (`stok_awal_tanggal`, `barang_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of stok_awal
+-- ----------------------------
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 1, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 2, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 3, 6);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 4, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 5, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 6, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 7, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 8, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 9, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 10, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 11, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 12, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 13, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 14, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 15, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 16, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 17, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 18, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 19, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 20, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 21, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 22, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 23, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 24, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 25, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 26, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 27, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 28, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 29, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 30, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 31, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 32, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 33, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 34, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 35, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 36, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 37, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 38, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 39, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 40, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 41, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 42, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 43, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 44, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 45, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 46, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 47, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 48, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 49, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 50, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 51, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 52, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 53, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 54, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 55, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 56, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 57, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 58, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 59, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 60, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 61, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 62, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 63, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 64, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 65, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 66, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 67, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 68, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 69, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 70, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 71, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 72, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 73, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 74, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 75, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 76, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 77, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 78, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 79, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 80, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 81, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 82, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 83, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 84, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 85, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 86, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 87, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 88, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 89, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 90, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 91, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 92, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 93, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 94, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 95, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 96, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 97, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 98, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 99, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 100, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 101, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 102, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 103, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 104, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 105, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 106, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 107, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 108, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 109, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 110, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 111, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 112, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 113, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 114, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 115, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 116, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 117, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 118, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 119, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 120, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 121, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 122, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 123, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 124, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 125, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 126, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 127, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 128, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 129, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 130, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 131, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 132, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 133, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 134, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 135, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 136, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 137, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 138, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 139, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 140, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 141, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 142, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 143, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 144, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 145, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 146, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 147, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 148, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 149, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 150, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 151, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 152, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 153, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 154, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 155, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 156, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 157, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 158, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 159, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 160, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 161, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 162, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 163, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 164, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 165, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 166, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 167, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 168, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 169, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 170, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 171, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 172, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 173, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 174, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 175, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 176, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 177, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 178, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 179, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 180, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 181, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 182, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 183, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 184, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 185, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 186, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 187, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 188, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 189, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 190, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 191, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 192, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 193, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 194, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 195, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 196, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 197, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 198, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 199, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 200, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 201, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 202, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 203, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 204, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 205, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 206, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 207, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 208, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 209, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 210, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 211, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 212, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 213, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 214, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 215, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 216, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 217, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 218, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 219, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 220, 0);
+INSERT INTO `stok_awal` VALUES ('2020-11-01', 221, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;
