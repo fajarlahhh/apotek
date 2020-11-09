@@ -36,7 +36,7 @@ class Penjualan extends Model
 
     public function getPenjualanTanggalAttribute($value)
     {
-         return Carbon::parse($value)->isoFormat('LL');
+         return Carbon::parse($value)->isoFormat('DD MMM YYYY');
     }
 
     public function getCreatedAtAttribute($value)

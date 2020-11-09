@@ -124,6 +124,7 @@ class BarangController extends Controller
                     $data->barang_nama = $req->get('barang_nama');
                     $data->barang_stok_min = $req->get('barang_stok_min');
                     $data->barang_keterangan = $req->get('barang_keterangan');
+                    $data->stok = $req->get('stok');
                     $data->jenis_barang_id = $req->get('jenis_barang_id');
                     $data->pbf_id = $req->get('pbf_id');
                     $data->save();
@@ -135,6 +136,7 @@ class BarangController extends Controller
                     $data->barang_nama = $req->get('barang_nama');
                     $data->barang_stok_min = $req->get('barang_stok_min');
                     $data->barang_keterangan = $req->get('barang_keterangan');
+                    $data->stok = $req->get('stok');
                     $data->jenis_barang_id = $req->get('jenis_barang_id');
                     $data->pbf_id = $req->get('pbf_id');
                     $data->save();

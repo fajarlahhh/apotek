@@ -8,12 +8,11 @@
 	$bodyClass .= (!empty($paceTop)) ? 'pace-top ' : '';
 	$bodyClass .= (!empty($bodyExtraClass)) ? $bodyExtraClass . ' ' : '';
 @endphp
-<body class="{{ $bodyClass }}">
-	@include('includes.component.page-loader')
+<body >
 
 	@yield('content')
 
-    @include('sweetalert::alert')
-	@include('includes.page-js')
+    <script src="/assets/plugins/jquery/dist/jquery.min.js"></script>
+    @stack('scripts')
 </body>
 </html>

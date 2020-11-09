@@ -58,7 +58,7 @@
                     <th class="width-70">No.</th>
                     <th class="text-nowrap">Tanggal</th>
                     <th class="text-nowrap">Penj. Bebas</th>
-                    <th class="text-nowrap">Harga Resep Sebelum 10%</th>
+                    <th class="text-nowrap">Resep</th>
                     <th class="text-nowrap">Servis</th>
                     @foreach ($dokter as $row)
                     <th class="text-nowrap">{{ $row->dokter_nama }}</th>

@@ -41,10 +41,13 @@ class LaporanController extends Controller
 
         $data = Penjualan::with('detail.barang')->where('penjualan_tanggal', $tanggal)->get()->map(function($q){
             return [
+                'id' => $q->penjualan_id,
                 'jenis' => $q->penjualan_jenis,
                 'dokter' => $q->dokter_id,
                 'tanggal' => $q->penjualan_tanggal,
-                'harga_belum_ppn' => $q->detail->sum(function ($r) {
+                'harga_belum_ppn' => $q->detail->filter(function($r){
+                    return $r->pbf_id == null;
+                })->sum(function ($r) {
                     return ($r->satuan_harga - ($r->satuan_harga * $r->penjualan_detail_diskon/100)) * $r->penjualan_detail_qty;
                 }),
                 'servis' => $q->penjualan_racikan,

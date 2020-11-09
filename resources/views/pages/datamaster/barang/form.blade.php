@@ -144,6 +144,13 @@
                             </table>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="control-label">Wajib Input Stok</label>
+                        <select class="form-control selectpicker" name="stok" id="stok" data-live-search="true" data-style="btn-warning" data-width="100%" >
+                            <option value="0" {{ old('stok', ($aksi == 'Edit'? $data->stok: 0)) == 0? 'selected': '' }}>Tidak</option>
+                            <option value="1" {{ old('stok', ($aksi == 'Edit'? $data->stok: 1)) == 1? 'selected': '' }}>Ya</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>

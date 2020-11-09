@@ -1,4 +1,4 @@
-@extends('layouts.empty')
+@extends('layouts.print')
 
 @section(config("app.name"))
 
