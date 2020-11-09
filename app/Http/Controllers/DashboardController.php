@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang;
 use App\Models\JatuhTempo;
 use App\Models\BarangMasuk;
 use Illuminate\Http\Request;
@@ -23,9 +24,13 @@ class DashboardController extends Controller
 
     public function faktur(Request $req)
     {
-        $data =  BarangMasuk::where('barang_masuk_faktur', $req->faktur)->where('barang_masuk_jatuh_tempo', $req->tanggal)->with('barang')->get();
-
-        return view('pages.dashboard.jatuhtempo',[
+        if (BarangMasuk::where('barang_masuk_faktur', $req->faktur)->where('barang_masuk_jatuh_tempo', $req->tanggal)->count() == 0) {
+            JatuhTempo::where('barang_masuk_faktur', $req->faktur)->where('barang_masuk_jatuh_tempo', $req->tanggal)->with('barang')->delete();
+            return null;
+        }else{
+            $data =  BarangMasuk::where('barang_masuk_faktur', $req->faktur)->where('barang_masuk_jatuh_tempo', $req->tanggal)->with('barang')->get();
+        }
+        return view('pages.dashboard.jatuhtempo', [
             'data' => $data
         ]);
     }

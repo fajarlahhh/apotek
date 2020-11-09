@@ -31,6 +31,14 @@
                 <form id="frm-cari" action="/laporankonsinyasibulanan" method="GET">
                     <div class="form-inline pull-right">
                         <div class="form-group">
+                            <select class="form-control selectpicker cari" name="pbf" data-live-search="true" data-style="btn-success" data-width="100%">
+                                <option value="semua">Semua Konsinyasi</option>
+                                @foreach($konsi as $row)
+                                <option value="{{ $row->pbf_id }}" {{ $pbf == $row->pbf_id? 'selected': '' }}>{{ $row->pbf_nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>&nbsp;
+                        <div class="form-group">
                             <select class="form-control selectpicker cari" name="bulan" data-live-search="true" data-style="btn-info" data-width="100%">
                                 @for($i=1; $i <= 12; $i++)
                                 <option value="{{ $i }}" {{ $bulan == $i? 'selected': '' }}>{{ (DateTime::createFromFormat('!m', $i))->format('F') }}</option>
@@ -56,7 +64,7 @@
         <tr>
             <th class="width-70">No.</th>
             <th class="text-nowrap">Tanggal</th>
-            <th class="text-nowrap">PBF</th>
+            <th class="text-nowrap">Konsinyasi</th>
             <th class="text-nowrap">Nama Barang</th>
             <th class="text-nowrap">Harga</th>
             <th class="text-nowrap">Qty</th>

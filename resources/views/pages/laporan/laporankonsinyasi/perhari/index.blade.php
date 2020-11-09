@@ -6,6 +6,7 @@
 @push('css')
 <link href="/assets/plugins/parsleyjs/src/parsley.css" rel="stylesheet" />
 <link href="/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" rel="stylesheet" />
+<link href="/assets/plugins/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
 @endpush
 
 @section('page')
@@ -32,6 +33,14 @@
                 <form id="frm-cari" action="/laporankonsinyasiperhari" method="GET">
                     <div class="form-inline pull-right">
                         <div class="form-group">
+                            <select class="form-control selectpicker cari" name="pbf" data-live-search="true" data-style="btn-success" data-width="100%">
+                                <option value="semua">Semua Konsinyasi</option>
+                                @foreach($konsi as $row)
+                                <option value="{{ $row->pbf_id }}" {{ $pbf == $row->pbf_id? 'selected': '' }}>{{ $row->pbf_nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>&nbsp;
+                        <div class="form-group">
                             <input type="text" readonly class="form-control date cari" id="tanggal" name="tanggal" value="{{ date('d M Y', strtotime(old('tanggal', $tanggal))) }}" required/>
                         </div>
                     </div>
@@ -46,7 +55,7 @@
                 <tr>
                     <th class="width-70">No.</th>
                     <th class="text-nowrap">Tanggal</th>
-                    <th class="text-nowrap">PBF</th>
+                    <th class="text-nowrap">Konsinyasi</th>
                     <th class="text-nowrap">Nama Barang</th>
                     <th class="text-nowrap">Harga</th>
                     <th class="text-nowrap">Qty</th>

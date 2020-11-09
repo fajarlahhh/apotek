@@ -94,7 +94,7 @@
                     <td class="align-middle">{{ $row->jenis_barang? $row->jenis_barang->jenis_barang_uraian: "" }}</td>
                     <td class="align-middle">{{ $row->pbf? $row->pbf->pbf_nama: "" }}</td>
                     <td class="align-middle">{{ $row->barang_keterangan }}</td>
-                    @role('super-admin|user')
+                    @role('super-admin|supervisor')
                     <td class="with-btn-group align-middle" nowrap>
                         <div class="btn-group">
                             @if ($row->trashed())

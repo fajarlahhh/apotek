@@ -38,7 +38,7 @@
 					foreach ($value as $key => $menu) {
                         $GLOBALS['active'][$GLOBALS['sub_level']] = '';
                         $currentLevel = $GLOBALS['sub_level'];
-						if(Auth::user()->can(substr($menu['url'], 1)) || Auth::user()->getRoleNames()[0] == 'super-admin'){
+						if(Auth::user()->can($menu['id']) || Auth::user()->getRoleNames()[0] == 'super-admin'){
 							$GLOBALS['subparent_level'] = '';
 
 							$subSubMenu = '';

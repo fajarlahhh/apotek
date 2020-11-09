@@ -1,4 +1,5 @@
 <div class="modal-body">
+    @if ($data)
     <table class="table">
         <tr>
             <th>Nama Barang</th>
@@ -27,6 +28,9 @@
             <th class="text-right">{{ number_format($data->first()->barang_masuk_sub_total, 2) }}</th>
         </tr>
     </table>
+    @else
+        Data Barang Tidak Ada
+    @endif
 </div>
 @role('super-admin|supervisor')
 <div class="modal-footer">

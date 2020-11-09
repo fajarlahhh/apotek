@@ -33,7 +33,9 @@
                         <p class="widget-todolist-desc">{{ $row->barang_masuk_faktur }}</p>
                     </div>
                     <div class="widget-todolist-icon">
-                        <a href="#" class="btn-jatuh-tempo" data-tanggal="{{ $row->barang_masuk_jatuh_tempo }}" data-faktur="{{ $row->barang_masuk_faktur }}"><span class="badge badge-warning">Detail</span> </a>
+                        @role('super-admin|supervisor')
+                        <a href="#" class="btn-jatuh-tempo" data-id="{{ $row->barang_masuk_id }}" data-tanggal="{{ $row->barang_masuk_jatuh_tempo }}" data-faktur="{{ $row->barang_masuk_faktur }}"><span class="badge badge-warning">Detail</span> </a>
+                        @endrole
                     </div>
                 </div>
                 @endforeach
@@ -92,13 +94,19 @@
             type : "GET",
             async : false,
             data : {
+                "id" : $(this).data('id'),
                 "faktur" : $(this).data('faktur'),
                 "tanggal" : $(this).data('tanggal')
              },
             success: function(data){
-                $("#modal-detail").empty();
-                $("#modal-detail").append(data);
-                $('#modal-jatuh-tempo').modal('show');
+                if(data){
+                    $("#modal-detail").empty();
+                    $("#modal-detail").append(data);
+                    $('#modal-jatuh-tempo').modal('show');
+                }else{
+                    location.reload();
+                }
+                console.log(data);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 Swal.fire({
