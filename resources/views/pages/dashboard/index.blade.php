@@ -106,7 +106,6 @@
                 }else{
                     location.reload();
                 }
-                console.log(data);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 Swal.fire({
