@@ -55,17 +55,25 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th class="width-70">No.</th>
-                    <th class="text-nowrap">Tanggal</th>
-                    <th class="text-nowrap">Penj. Bebas</th>
-                    <th class="text-nowrap">Resep</th>
-                    <th class="text-nowrap">Servis</th>
+                    <th class="width-70"  rowspan="2">No.</th>
+                    <th class="text-nowrap"  rowspan="2">Tanggal</th>
+                    <th class="text-nowrap" rowspan="2">Penj.  Bebas</th>
+                    <th class="text-nowrap"  rowspan="2">Resep</th>
+                    <th class="text-nowrap"  rowspan="2">Servis</th>
                     @foreach ($dokter as $row)
-                    <th class="text-nowrap">{{ $row->dokter_nama }}</th>
+                    <th class="text-nowrap" @if ($row->biaya == 1)
+                        colspan="2"
+                    @else
+                        rowspan="2"
+                    @endif>{{ $row->dokter_nama }}</th>
                     @endforeach
-                    <th>Listrik</th>
-                    <th>Konsinyasi</th>
-                    <th>Total</th>
+                    <th  rowspan="2">Listrik</th>
+                    <th  rowspan="2">Konsinyasi</th>
+                    <th  rowspan="2">Total</th>
+                </tr>
+                <tr>
+                    <th>Persen</th>
+                    <th>Biaya</th>
                 </tr>
             </thead>
             <tbody>
@@ -80,7 +88,8 @@
                         $nilai = $semua_persen->where('dokter', $dok->dokter_id);
                         $persen[] = [
                             'dokter' => $dok->dokter_id,
-                            'persen' => $nilai->sum('nilai') + $nilai->sum('biaya_dokter')
+                            'persen' => $nilai->sum('nilai'),
+                            'biaya' => $nilai->sum('biaya_dokter')
                         ];
                     }
                 @endphp
@@ -91,13 +100,15 @@
                     <td class="text-nowrap text-right">{{ number_format(($row['harga_belum_ppn']? $row['harga_belum_ppn']: 0) - ($row['konsinyasi']? $row['konsinyasi']: 0), 2) }}</td>
                     <td class="text-nowrap text-right">{{ number_format($row['servis']? $row['servis']: 0, 2) }}</td>
                     @foreach ($dokter as $dok)
-                    <td class="text-nowrap text-right">
                     @php
                         $nilai = $semua_persen->where('dokter', $dok->dokter_id);
-                        echo number_format( $nilai->sum('nilai') + $nilai->sum('biaya_dokter'), 2);
                     @endphp
-                        {{-- {{ number_format($row['dokter'] == $dok->dokter_id? ($row['persen']? $row['persen']: 0): 0, 2) }} --}}
-                    </td>
+                    @if ($dok->biaya == 1)
+                    <td class="text-nowrap text-right">{{ number_format( $nilai->sum('nilai'), 2) }}</td>
+                    <td class="text-nowrap text-right">{{ number_format( $nilai->sum('biaya_dokter'), 2) }}</td>
+                    @else
+                        <td class="text-nowrap text-right">{{ number_format( $nilai->sum('nilai') + $nilai->sum('biaya_dokter'), 2) }}</td>
+                    @endif
                     @endforeach
                     <td class="text-nowrap text-right">{{ number_format($row['listrik']? $row['listrik']: 0, 2)  }}</td>
                     <td class="text-nowrap text-right">{{ number_format($row['konsinyasi']? $row['konsinyasi']: 0, 2)  }}</td>
@@ -115,13 +126,16 @@
                     <th class="text-nowrap text-right">{{ number_format($harga_belum_ppn, 2) }}</th>
                     <th class="text-nowrap text-right">{{ number_format($servis, 2) }}</th>
                     @foreach ($dokter as $dok)
-                    <th class="text-nowrap text-right">
-                        {{ number_format(collect($persen)->where('dokter', $dok->dokter_id)->sum('persen'), 2) }}
-                    </th>
+                    @if ($dok->biaya == 1)
+                    <td class="text-nowrap text-right">{{ number_format(collect($persen)->where('dokter', $dok->dokter_id)->sum('persen'), 2) }}</td>
+                    <td class="text-nowrap text-right">{{ number_format(collect($persen)->where('dokter', $dok->dokter_id)->sum('biaya'), 2) }}</td>
+                    @else
+                    <td class="text-nowrap text-right">{{ number_format(collect($persen)->where('dokter', $dok->dokter_id)->sum('persen') + collect($persen)->where('dokter', $dok->dokter_id)->sum('biaya_dokter'), 2) }}</td>
+                    @endif
                     @endforeach
                     <th class="text-nowrap text-right">{{ number_format($listrik, 2) }}</th>
                     <th class="text-nowrap text-right">{{ number_format($konsinyasi, 2) }}</th>
-                    <th class="text-nowrap text-right">{{ number_format($harga_belum_ppn + $servis + $listrik + $konsinyasi + collect($persen)->sum('persen'), 2) }}</th>
+                    <th class="text-nowrap text-right">{{ number_format($harga_belum_ppn + $servis + $listrik + $konsinyasi + collect($persen)->sum('persen')+ collect($persen)->sum('biaya'), 2) }}</th>
                 </tr>
             </tbody>
         </table>

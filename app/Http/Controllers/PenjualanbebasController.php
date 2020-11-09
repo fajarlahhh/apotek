@@ -136,7 +136,7 @@ class PenjualanbebasController extends Controller
                 $data->penjualan_id = $id;
                 $data->penjualan_tanggal = Carbon::now()->format('Y-m-d');
                 $data->penjualan_jenis = "Bebas";
-                $data->penjualan_keterangan = $req->get('penjualan_keterangan') || '';
+                $data->penjualan_keterangan = $req->get('penjualan_keterangan');
                 $data->penjualan_tagihan = str_replace(',', '', $req->get('penjualan_tagihan'));
                 $data->penjualan_bayar = str_replace(',', '', $req->get('penjualan_bayar'));
                 $data->penjualan_sisa = str_replace(',', '', $req->get('penjualan_sisa'));

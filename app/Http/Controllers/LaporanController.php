@@ -81,7 +81,7 @@ class LaporanController extends Controller
         $bulan = $req->bulan?:date('m');
         $tahun = $req->tahun?:date('Y');
 
-        $data = Penjualan::with('detail.barang')->orderBy('penjualan_tanggal')->whereRaw('month(penjualan_tanggal)='.$bulan)->whereRaw('year(penjualan_tanggal)='.$tahun)->get()->map(function($q){
+         $data = Penjualan::with('detail.barang')->orderBy('penjualan_tanggal')->whereRaw('month(penjualan_tanggal)='.$bulan)->whereRaw('year(penjualan_tanggal)='.$tahun)->get()->map(function($q){
             return [
                 'jenis' => $q->penjualan_jenis,
                 'dokter' => $q->dokter_id,
@@ -118,8 +118,8 @@ class LaporanController extends Controller
                 })->groupBy('dokter')->map(function($r){
                     return [
                         'dokter' => $r->first()['dokter'],
-                        'biaya_dokter' => $r->first()['biaya_dokter'],
-                        'nilai' => $r->first()['nilai']
+                        'biaya_dokter' => $r->sum('biaya_dokter'),
+                        'nilai' => $r->sum('nilai')
                     ];
                 })->toArray())
             ];

@@ -173,7 +173,7 @@ class PenjualanresepController extends Controller
                 $data->penjualan_id = $id;
                 $data->penjualan_tanggal = Carbon::now()->format('Y-m-d');
                 $data->penjualan_jenis = "Resep";
-                $data->penjualan_keterangan = $req->get('penjualan_keterangan') || '';
+                $data->penjualan_keterangan = $req->get('penjualan_keterangan');
                 $data->penjualan_tagihan = str_replace(',', '', $req->get('penjualan_tagihan'));
                 $data->penjualan_racikan = str_replace(',', '', $req->get('racikan'));
                 $data->penjualan_admin = str_replace(',', '', $req->get('admin'));

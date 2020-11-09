@@ -30,8 +30,8 @@
         @csrf
         <div class="panel-body">
             <div class="form-group">
-                <label class="control-label">Keterangan</label>
-                <textarea class="form-control" rows="3" name="penjualan_keterangan">{{ old('penjualan_keterangan') }}</textarea>
+                <label class="control-label">Keterangan (Nama)</label>
+                <textarea class="form-control" rows="3" name="penjualan_keterangan" required>{{ old('penjualan_keterangan') }}</textarea>
             </div>
             <div class="note bg-grey-transparent-5">
                 <div class="note-content table-responsive p-l-5 p-r-5">
