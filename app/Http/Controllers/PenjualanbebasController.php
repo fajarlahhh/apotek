@@ -89,7 +89,7 @@ class PenjualanbebasController extends Controller
                 return $q->barang_id == $row['barang_id'];
             })->first();
 
-            if (!$stok_barang->stok == 1) {
+            if ($stok_barang->stok != 1) {
                 $stok = $stok_barang->stok_awal->count() > 0? $stok_barang->stok_awal->sum('barang_qty'): 0;
                 $masuk = $stok_barang->barang_masuk->count() > 0? $stok_barang->barang_masuk->sum('masuk'): 0;
                 $keluar = $stok_barang->penjualan->count() > 0? $stok_barang->penjualan->sum('keluar'): 0;
