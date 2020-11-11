@@ -194,7 +194,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['role_or_permission:super-admin|laporanpenerimaandokterperhari']], function () {
         Route::prefix('laporanpenerimaandokterperhari')->group(function () {
             Route::get('/', [LaporanController::class, 'laporanpenerimaandokterperhari'])->name('laporanpenerimaandokterperhari');
-            Route::get('/{cetak}', [LaporanController::class, 'laporanpenerimaandokterperhari'])->name('laporankonsinyasibulanan.cetak');
+            Route::get('/{cetak}', [LaporanController::class, 'laporanpenerimaandokterperhari'])->name('laporanpenerimaandokterperhari.cetak');
         });
     });
 
