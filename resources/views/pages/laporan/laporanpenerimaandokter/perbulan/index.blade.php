@@ -64,11 +64,7 @@
                     <th class="width-70">No.</th>
                     <th class="text-nowrap">Tanggal</th>
                     @foreach ($dokter as $row)
-                    <th class="text-nowrap" @if ($row->biaya == 1)
-                        colspan="2"
-                    @else
-
-                    @endif>{{ $row->dokter_nama }}</th>
+                    <th class="text-nowrap">{{ $row->dokter_nama }}</th>
                     @endforeach
                 </tr>
             </thead>
