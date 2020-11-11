@@ -43,7 +43,7 @@
 @else
     <div class="text-center">
         <h3>APOTEK SEJAHTERA <br>
-        <small>LAPORAN KONSINYASI TANGGAL {{ strtoupper(date('d M Y', strtotime($tanggal))) }}</small></h3>
+        <small>LAPORAN PENERIMAAN TANGGAL {{ strtoupper(date('d M Y', strtotime($tanggal))) }}</small></h3>
     </div>
     <br>
 @endif
