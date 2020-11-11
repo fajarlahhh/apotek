@@ -81,6 +81,20 @@ return [
                 'title' => 'Perbulan'
             ]]
         ],[
+            'title' => 'Penerimaan Dokter',
+            'url' => 'javascript:;',
+            'caret' => true,
+            'id' => 'penerimaandokter',
+            'sub_menu' => [[
+                'url' => '/laporanpenerimaandokterperhari',
+                'id' => 'laporanpenerimaandokterperhari',
+                'title' => 'Perhari'
+            ],[
+                'url' => '/laporanpenerimaandokterbulanan',
+                'id' => 'laporanpenerimaandokterbulanan',
+                'title' => 'Perbulan'
+            ]]
+        ],[
             'url' => '/laporanstokbarang',
             'id' => 'laporanstokbarang',
             'title' => 'Stok Barang'

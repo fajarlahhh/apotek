@@ -1,7 +1,7 @@
 
 @extends($cetak != 'cetak'? 'pages.laporan.main': 'pages.laporan.cetak')
 
-@section('title', ' | Per Bulan')
+@section('title', ' | Konsinyasi Per Bulan')
 
 @push('css')
 <link href="/assets/plugins/parsleyjs/src/parsley.css" rel="stylesheet" />
@@ -13,7 +13,7 @@
 @endsection
 
 @section('header')
-    <h1 class="page-header">Per Bulan</h1>
+    <h1 class="page-header">Penerimaan Per Bulan</h1>
 @endsection
 
 @section('subcontent')
@@ -58,8 +58,14 @@
         </div>
     </div>
     <div class="panel-body table-responsive">
+@else
+    <div class="text-center">
+        <h3>APOTEK SEJAHTERA <br>
+        <small>LAPORAN KONSINYASI BULAN {{ strtoupper(date('M Y', strtotime($tahun."-".$bulan))) }}</small></h3>
+    </div>
+    <br>
 @endif
-<table class="table table-hover">
+<table class="table table-bordered">
     <thead>
         <tr>
             <th class="width-70">No.</th>

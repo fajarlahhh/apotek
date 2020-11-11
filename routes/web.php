@@ -190,6 +190,20 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/{cetak}', [LaporanController::class, 'laporankonsinyasibulanan'])->name('laporankonsinyasibulanan.cetak');
         });
     });
+
+    Route::group(['middleware' => ['role_or_permission:super-admin|laporanpenerimaandokterperhari']], function () {
+        Route::prefix('laporanpenerimaandokterperhari')->group(function () {
+            Route::get('/', [LaporanController::class, 'laporanpenerimaandokterperhari'])->name('laporanpenerimaandokterperhari');
+            Route::get('/{cetak}', [LaporanController::class, 'laporanpenerimaandokterperhari'])->name('laporankonsinyasibulanan.cetak');
+        });
+    });
+
+    Route::group(['middleware' => ['role_or_permission:super-admin|laporanpenerimaandokterbulanan']], function () {
+        Route::prefix('laporanpenerimaandokterbulanan')->group(function () {
+            Route::get('/', [LaporanController::class, 'laporanpenerimaandokterbulanan'])->name('laporanpenerimaandokterbulanan');
+            Route::get('/{cetak}', [LaporanController::class, 'laporanpenerimaandokterbulanan'])->name('laporanpenerimaandokterbulanan.cetak');
+        });
+    });
 });
 
 
