@@ -138,6 +138,109 @@ class LaporanController extends Controller
         ]);
     }
 
+    public function laporanpenerimaandokterperhari(Request $req, $cetak = null)
+    {
+        $tanggal = $req->tanggal? date('Y-m-d', strtotime($req->tanggal)):date('Y-m-d');
+
+        $data = Penjualan::with('detail.barang')->where('penjualan_tanggal', $tanggal)->get()->map(function($q){
+            return [
+                'id' => $q->penjualan_id,
+                'jenis' => $q->penjualan_jenis,
+                'dokter' => $q->dokter_id,
+                'tanggal' => $q->penjualan_tanggal,
+                'harga_belum_ppn' => $q->detail->filter(function($r){
+                    return $r->pbf_id == null;
+                })->sum(function ($r) {
+                    return ($r->satuan_harga - ($r->satuan_harga * $r->penjualan_detail_diskon/100)) * $r->penjualan_detail_qty;
+                }),
+                'servis' => $q->penjualan_racikan,
+                'biaya_dokter' => $q->penjualan_biaya_dokter,
+                'persen' => $q->detail->sum(function ($r) {
+                    return $r->penjualan_detail_tambahan * $r->penjualan_detail_qty;
+                }),
+                'listrik' => $q->penjualan_admin,
+                'konsinyasi' => $q->detail->filter(function($r){
+                    return $r->pbf_id != null;
+                })->sum(function ($r) {
+                    return ($r->satuan_harga - ($r->satuan_harga * $r->penjualan_detail_diskon/100)) * $r->penjualan_detail_qty;
+                }),
+            ];
+        });
+        return view('pages.laporan.laporanpenerimaandokter.perhari.index', [
+            'data' => $data,
+            'cetak' => $cetak,
+            'dokter' => Dokter::all(),
+            'tanggal' => $tanggal,
+            'harga_belum_ppn' => 0,
+            'servis' => 0,
+            'persen' => [],
+            'listrik' => 0,
+            'konsinyasi' => 0
+        ]);
+    }
+
+    public function laporanpenerimaandokterbulanan(Request $req, $cetak = null)
+    {
+        $bulan = $req->bulan?:date('m');
+        $tahun = $req->tahun?:date('Y');
+
+         $data = Penjualan::with('detail.barang')->orderBy('penjualan_tanggal')->whereRaw('month(penjualan_tanggal)='.$bulan)->whereRaw('year(penjualan_tanggal)='.$tahun)->get()->map(function($q){
+            return [
+                'jenis' => $q->penjualan_jenis,
+                'dokter' => $q->dokter_id,
+                'tanggal' => $q->penjualan_tanggal,
+                'harga_belum_ppn' => $q->detail->sum(function ($r) {
+                    return ($r->satuan_harga - ($r->satuan_harga * $r->penjualan_detail_diskon/100)) * $r->penjualan_detail_qty;
+                }),
+                'servis' => $q->penjualan_racikan,
+                'persen' => [
+                    'biaya_dokter' => $q->penjualan_biaya_dokter,
+                    'dokter' => $q->dokter_id,
+                    'nilai' => $q->detail->sum(function ($r) {
+                        return $r->penjualan_detail_tambahan * $r->penjualan_detail_qty;
+                    })
+                ],
+                'listrik' => $q->penjualan_admin,
+                'konsinyasi' => $q->detail->filter(function($r){
+                    return $r->pbf_id != null;
+                })->sum(function ($r) {
+                    return ($r->satuan_harga - ($r->satuan_harga * $r->penjualan_detail_diskon/100)) * $r->penjualan_detail_qty;
+                }),
+            ];
+        })->groupBy('tanggal')->map(function($q){
+            return [
+                'tanggal' => $q->first()['tanggal'],
+                'bebas' => sizeof($q->where('jenis', 'Bebas')->all()),
+                'resep' => sizeof($q->where('jenis', 'Resep')->all()),
+                'harga_belum_ppn' => $q->sum('harga_belum_ppn'),
+                'servis' => $q->sum('servis'),
+                'listrik' => $q->sum('listrik'),
+                'konsinyasi' => $q->sum('konsinyasi'),
+                'persen' => array_values(collect($q)->map(function($r){
+                    return $r['persen'];
+                })->groupBy('dokter')->map(function($r){
+                    return [
+                        'dokter' => $r->first()['dokter'],
+                        'biaya_dokter' => $r->sum('biaya_dokter'),
+                        'nilai' => $r->sum('nilai')
+                    ];
+                })->toArray())
+            ];
+        })->toArray();
+        return view('pages.laporan.laporanpenerimaandokter.perbulan.index', [
+            'data' => array_values($data),
+            'cetak' => $cetak,
+            'dokter' => Dokter::all(),
+            'bulan' => $bulan,
+            'tahun' => $tahun,
+            'harga_belum_ppn' => 0,
+            'servis' => 0,
+            'persen' => [],
+            'listrik' => 0,
+            'konsinyasi' => 0
+        ]);
+    }
+
     public function laporankonsinyasiperhari(Request $req, $cetak = null)
     {
         $tanggal = $req->tanggal? date('Y-m-d', strtotime($req->tanggal)):date('Y-m-d');

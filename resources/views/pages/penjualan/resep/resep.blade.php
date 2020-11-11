@@ -58,7 +58,6 @@
     function harga(id) {
         var harga = parseFloat($("#satuan" + id + " option:selected").data('harga') || 0);
         var dokter = parseFloat($("#dokter").val().split(',').join('')  || 0);
-        console.log(dokter);
         AutoNumeric.getAutoNumericElement('#harga' + id).set((harga * dokter/100) + harga);
         total_harga_barang(id);
     }

@@ -1,7 +1,7 @@
 
 @extends($cetak != 'cetak'? 'pages.laporan.main': 'pages.laporan.cetak')
 
-@section('title', ' | Per Hari')
+@section('title', ' | Konsinyasi Per Hari')
 
 @push('css')
 <link href="/assets/plugins/parsleyjs/src/parsley.css" rel="stylesheet" />
@@ -15,7 +15,7 @@
 @endsection
 
 @section('header')
-    <h1 class="page-header">Per Hari</h1>
+    <h1 class="page-header">Penerimaan Per Hari</h1>
 @endsection
 
 @section('subcontent')
@@ -49,8 +49,14 @@
         </div>
     </div>
     <div class="panel-body table-responsive">
+@else
+    <div class="text-center">
+        <h3>APOTEK SEJAHTERA <br>
+        <small>LAPORAN KONSINYASI TANGGAL {{ strtoupper(date('d M Y', strtotime($tanggal))) }}</small></h3>
+    </div>
+    <br>
 @endif
-        <table class="table table-hover">
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th class="width-70">No.</th>
