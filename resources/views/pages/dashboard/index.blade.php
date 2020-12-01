@@ -33,9 +33,7 @@
                         <p class="widget-todolist-desc">{{ $row->barang_masuk_faktur }}</p>
                     </div>
                     <div class="widget-todolist-icon">
-                        @role('super-admin|supervisor')
                         <a href="#" class="btn-jatuh-tempo" data-id="{{ $row->barang_masuk_id }}" data-tanggal="{{ $row->barang_masuk_jatuh_tempo }}" data-faktur="{{ $row->barang_masuk_faktur }}"><span class="badge badge-warning">Detail</span> </a>
-                        @endrole
                     </div>
                 </div>
                 @endforeach
@@ -62,9 +60,7 @@
                         <p class="widget-todolist-desc">{{ $row->barang->barang_nama." (".$row->barang_masuk_qty." ".$row->barang->satuan_utama->satuan_nama.")" }}</p>
                     </div>
                     <div class="widget-todolist-icon">
-                        @role('super-admin|supervisor')
-                            <a href="javascript:;" class="btn btn-sm btn-danger btn-ok" data-nama="{{ $row->barang->barang_nama }}" data-tanggal="{{ $row->barang_masuk_kadaluarsa }}" data-barang="{{ $row->barang_id }}" data-id="{{ $row->barang_masuk_id }}"/>OK</a>
-                        @endrole
+                        <a href="javascript:;" class="btn btn-sm btn-danger btn-ok" data-nama="{{ $row->barang->barang_nama }}" data-tanggal="{{ $row->barang_masuk_kadaluarsa }}" data-barang="{{ $row->barang_id }}" data-id="{{ $row->barang_masuk_id }}"/>OK</a>
                     </div>
                 </div>
                 @endforeach

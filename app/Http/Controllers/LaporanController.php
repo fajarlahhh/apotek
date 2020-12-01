@@ -81,7 +81,7 @@ class LaporanController extends Controller
         $bulan = $req->bulan?:date('m');
         $tahun = $req->tahun?:date('Y');
 
-         $data = Penjualan::with('detail.barang')->orderBy('penjualan_tanggal')->whereRaw('month(penjualan_tanggal)='.$bulan)->whereRaw('year(penjualan_tanggal)='.$tahun)->get()->map(function($q){
+        $data = Penjualan::with('detail.barang')->orderBy('penjualan_tanggal')->whereRaw('month(penjualan_tanggal)='.$bulan)->whereRaw('year(penjualan_tanggal)='.$tahun)->get()->map(function($q){
             return [
                 'jenis' => $q->penjualan_jenis,
                 'dokter' => $q->dokter_id,
@@ -109,7 +109,8 @@ class LaporanController extends Controller
                 'tanggal' => $q->first()['tanggal'],
                 'bebas' => sizeof($q->where('jenis', 'Bebas')->all()),
                 'resep' => sizeof($q->where('jenis', 'Resep')->all()),
-                'harga_belum_ppn' => $q->sum('harga_belum_ppn'),
+                'harga_belum_ppn_resep' => $q->where('jenis', 'Resep')->sum('harga_belum_ppn'),
+                'harga_belum_ppn_bebas' => $q->where('jenis', 'Bebas')->sum('harga_belum_ppn'),
                 'servis' => $q->sum('servis'),
                 'listrik' => $q->sum('listrik'),
                 'konsinyasi' => $q->sum('konsinyasi'),
@@ -130,7 +131,8 @@ class LaporanController extends Controller
             'dokter' => Dokter::all(),
             'bulan' => $bulan,
             'tahun' => $tahun,
-            'harga_belum_ppn' => 0,
+            'harga_belum_ppn_resep' => 0,
+            'harga_belum_ppn_bebas' => 0,
             'servis' => 0,
             'persen' => [],
             'listrik' => 0,

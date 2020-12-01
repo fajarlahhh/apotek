@@ -35,7 +35,7 @@ class PenjualanbebasController extends Controller
         }
 
         $data = $data->paginate(10);
-        $data->appends([$req->cari, $req->tipe]);
+        $data->appends(['cari' => $req->cari, 'tipe' => $req->tipe, 'tanggal' =>  date('d F Y', strtotime($tgl1)).' - '.date('d F Y', strtotime($tgl2))]);
         return view('pages.penjualan.bebas.index', [
             'data' => $data,
             'tgl' => date('d F Y', strtotime($tgl1)).' - '.date('d F Y', strtotime($tgl2)),
