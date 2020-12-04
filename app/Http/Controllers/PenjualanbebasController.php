@@ -89,7 +89,7 @@ class PenjualanbebasController extends Controller
                 return $q->barang_id == $row['barang_id'];
             })->first();
 
-            if ($stok_barang->stok != 1) {
+            if ($stok_barang->stok == 1) {
                 $stok = $stok_barang->stok_awal->count() > 0? $stok_barang->stok_awal->sum('barang_qty'): 0;
                 $masuk = $stok_barang->barang_masuk->count() > 0? $stok_barang->barang_masuk->sum('masuk'): 0;
                 $keluar = $stok_barang->penjualan->count() > 0? $stok_barang->penjualan->sum('keluar'): 0;
@@ -97,7 +97,7 @@ class PenjualanbebasController extends Controller
                 $sisa = $stok + $masuk - $keluar;
 
                 $satuan = explode(";", $row["satuan_nama"]);
-                $jual = $stok_barang['penjualan_detail_qty'] * 1/$satuan[2];
+                $jual = $row['penjualan_detail_qty']/$satuan[2];
 
                 if($sisa < $jual || $sisa == 0){
                     if (!in_array("Stok ".$stok_barang['barang_nama']." tersisa ".$sisa."<br>", $pesan)) {
@@ -123,9 +123,16 @@ class PenjualanbebasController extends Controller
             alert()->error('Simpan Data Gagal', "Barang Belum Diinputkan");
             return redirect()->back()->withInput();
         }
-
+        $barang_id = [];
+        foreach ($req->barang as $brg) {
+            array_push($barang_id, [
+                'barang_id' => $brg['barang_id'],
+                'satuan_nama' => $brg['satuan_nama'],
+                'penjualan_detail_qty' => $brg['penjualan_detail_qty']
+            ]);
+        }
         try{
-            $stok = $this->cek_stok($req->barang);
+            $stok = $this->cek_stok($barang_id);
             if ($stok){
                 alert()->error('Simpan Data Gagal', "Stok Beberapa Barang Tidak Tersedia");
                 return redirect()->back()->withInput()->with(['stok_kurang' => $stok]);

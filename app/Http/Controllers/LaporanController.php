@@ -18,7 +18,7 @@ class LaporanController extends Controller
         $bulan = $req->bulan?:date('m');
         $tahun = $req->tahun?:date('Y');
 
-        $data = Barang::with('satuan_utama')->with('jenis_barang')->with(['stok_awal' => function($q) use ($bulan, $tahun){
+        return $data = Barang::with('satuan_utama')->with('jenis_barang')->with(['stok_awal' => function($q) use ($bulan, $tahun){
             $q->select('barang_id', 'barang_qty')->whereRaw(DB::raw("year(stok_awal_tanggal)=$tahun"))->whereRaw(DB::raw("month(stok_awal_tanggal)=$bulan"));
         }])->with(['barang_masuk' => function($q) use ($bulan, $tahun){
             $q->select('barang_id', DB::raw("sum(barang_masuk_qty) masuk"))->whereRaw(DB::raw("year(barang_masuk_tanggal)=$tahun"))->whereRaw(DB::raw("month(barang_masuk_tanggal)=$bulan"))->groupBy('barang_id');

@@ -30,8 +30,7 @@ class PostingstokController extends Controller
             $bulan = $req->get('bulan');
             $tahun = $req->get('tahun');
             $periode = Carbon::create($tahun, $bulan, 1, 0)->addMonths(1)->format('Y-m-01');
-            StokAwal::whereRaw('month(stok_awal_tanggal)='.$bulan)->whereRaw('year(stok_awal_tanggal)='.$tahun)->delete();
-
+            StokAwal::where('stok_awal_tanggal', $periode)->delete();
             $barang = Barang::with(['stok_awal' => function($q) use ($bulan, $tahun){
                 $q->select('barang_id', 'barang_qty')->whereRaw(DB::raw("year(stok_awal_tanggal)=$tahun"))->whereRaw(DB::raw("month(stok_awal_tanggal)=$bulan"));
             }])->with(['barang_masuk' => function($q) use ($bulan, $tahun){
@@ -40,7 +39,7 @@ class PostingstokController extends Controller
                 $q->select('barang_id', DB::raw("sum(penjualan_detail_qty/satuan_rasio_dari_utama) keluar"))->whereHas('penjualan', function($r) use ($bulan, $tahun){
                     $r->whereRaw(DB::raw("year(penjualan_tanggal)=$tahun"))->whereRaw(DB::raw("month(penjualan_tanggal)=$bulan"));
                 })->groupBy('barang_id');
-            }])->get();
+            }])->whereNull('pbf_id')->get();
 
             $data = [];
             foreach ($barang as $index => $row) {
