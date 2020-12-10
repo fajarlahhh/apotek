@@ -63,6 +63,7 @@
                     <th>Waktu Input</th>
                     <th>No. Faktur</th>
                     <th>PBF</th>
+                    <th>Jatuh Tempo</th>
                     <th>Nama Barang</th>
                     <th>Harga</th>
                     <th>Diskon (%)</th>
@@ -84,6 +85,7 @@
                     </td>
                     <td class="text-nowrap">{{ $row->barang_masuk_faktur }}</td>
                     <td class="text-nowrap">{{ $row->pbf? $row->pbf->pbf_nama: '' }}</td>
+                    <td class="text-nowrap">{{ date('d F Y', strtotime($row->barang_masuk_jatuh_tempo)) }}</td>
                     <td class="text-nowrap">{{ $row->barang? $row->barang->barang_nama: '' }}</td>
                     <td class="text-nowrap text-right">{{ number_format($row->barang_masuk_harga_barang, 2) }}</td>
                     <td class="text-nowrap text-right">{{ number_format($row->barang_masuk_diskon, 2) }}</td>

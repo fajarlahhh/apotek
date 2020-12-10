@@ -30,7 +30,7 @@
                 <div class="widget-todolist-item">
                     <div class="widget-todolist-content">
                         <h4 class="widget-todolist-title">{{ \Carbon\Carbon::parse($row->barang_masuk_jatuh_tempo)->isoFormat('LL') }}</h4>
-                        <p class="widget-todolist-desc">{{ $row->barang_masuk_faktur }}</p>
+                        <p class="widget-todolist-desc">{{ $row->barang_masuk_faktur." - ".($row->barang_masuk? ($row->barang_masuk->first()? ($row->barang_masuk->first()->pbf?  $row->barang_masuk->first()->pbf->pbf_nama:''): ''): '') }}</p>
                     </div>
                     <div class="widget-todolist-icon">
                         <a href="#" class="btn-jatuh-tempo" data-id="{{ $row->barang_masuk_id }}" data-tanggal="{{ $row->barang_masuk_jatuh_tempo }}" data-faktur="{{ $row->barang_masuk_faktur }}"><span class="badge badge-warning">Detail</span> </a>

@@ -13,7 +13,7 @@ class DashboardController extends Controller
 
     public function index(Request $req)
     {
-        $jatuh_tempo = JatuhTempo::orderBy('barang_masuk_jatuh_tempo')->whereRaw("TIMESTAMPDIFF(day, now(), barang_masuk_jatuh_tempo) <= 7")->get();
+        $jatuh_tempo = JatuhTempo::orderBy('barang_masuk_jatuh_tempo')->with('barang_masuk.pbf')->whereRaw("TIMESTAMPDIFF(day, now(), barang_masuk_jatuh_tempo) <= 7")->get();
         $barang_masuk = BarangMasuk::where('barang_masuk_kadaluarsa', '<=', date('Y-m-d'))->where('check', 0)->orderBy('barang_masuk_kadaluarsa')->whereRaw("TIMESTAMPDIFF(day, now(), barang_masuk_kadaluarsa) <= 7")->get();
 
         return view('pages.dashboard.index',[
