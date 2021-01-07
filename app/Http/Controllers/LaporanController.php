@@ -246,21 +246,21 @@ class LaporanController extends Controller
     public function laporankonsinyasiperhari(Request $req, $cetak = null)
     {
         $tanggal = $req->tanggal? date('Y-m-d', strtotime($req->tanggal)):date('Y-m-d');
-        $pbf = $req->pbf? $req->pbf: 'semua';
+        $dokter = $req->dokter? $req->dokter: 'semua';
 
         $data = PenjualanDetail::select('penjualan_id', 'barang_id', 'pbf_id', DB::raw('sum(penjualan_detail_qty) qty'), DB::raw('sum(satuan_harga - (satuan_harga * penjualan_detail_diskon/100)) harga'), DB::raw('sum((satuan_harga - (satuan_harga * penjualan_detail_diskon/100)) * penjualan_detail_qty) total'))->with('pbf')->with('barang')->with('penjualan')->whereHas('penjualan', function ($q) use ($tanggal){
             return $q->where('penjualan_tanggal', $tanggal);
         })->whereNotNull('pbf_id')->groupBy(['penjualan_id', 'barang_id', 'pbf_id']);
-        if ($pbf != 'semua') {
-            $data = $data->where('pbf_id', $pbf);
+        if ($dokter != 'semua') {
+            $data = $data->whereHas('penjualan', fn ($q) => $q->where('dokter_id', $dokter));
         }
         $data = $data->get();
         return view('pages.laporan.laporankonsinyasi.perhari.index', [
             'data' => $data,
             'cetak' => $cetak,
             'tanggal' => $tanggal,
-            'pbf' => $pbf,
-            'konsi' => Pbf::whereIn('pbf_id', Barang::whereNotNull('pbf_id')->get()->pluck('pbf_id'))->get()
+            'dokter' => $dokter,
+            'konsi' => Dokter::all()
         ]);
     }
 
@@ -268,13 +268,13 @@ class LaporanController extends Controller
     {
         $bulan = $req->bulan?:date('m');
         $tahun = $req->tahun?:date('Y');
-        $pbf = $req->pbf? $req->pbf: 'semua';
+        $dokter = $req->dokter? $req->dokter: 'semua';
 
         $data = PenjualanDetail::select('penjualan_id', 'barang_id', 'pbf_id', DB::raw('sum(penjualan_detail_qty) qty'), DB::raw('sum(satuan_harga - (satuan_harga * penjualan_detail_diskon/100)) harga'), DB::raw('sum((satuan_harga - (satuan_harga * penjualan_detail_diskon/100)) * penjualan_detail_qty) total'))->with('pbf')->with('barang')->with('penjualan')->whereHas('penjualan', function ($q) use ($bulan, $tahun){
             return $q->whereRaw('month(penjualan_tanggal)='.$bulan)->whereRaw('year(penjualan_tanggal)='.$tahun);
         })->whereNotNull('pbf_id')->groupBy(['penjualan_id', 'barang_id', 'pbf_id']);
-        if ($pbf != 'semua') {
-            $data = $data->where('pbf_id', $pbf);
+        if ($dokter != 'semua') {
+            $data = $data->whereHas('penjualan', fn ($q) => $q->where('dokter_id', $dokter));
         }
         $data = $data->get()->groupBy(function($q){
             return [$q->penjualan->penjualan_tanggal];
@@ -298,9 +298,9 @@ class LaporanController extends Controller
             'bulan' => $bulan,
             'tahun' => $tahun,
             'total' => 0,
-            'pbf' => $pbf,
+            'dokter' => $dokter,
             'no' => 0,
-            'konsi' => Pbf::whereIn('pbf_id', Barang::whereNotNull('pbf_id')->get()->pluck('pbf_id'))->get()
+            'konsi' => Dokter::all()
         ]);
     }
 }

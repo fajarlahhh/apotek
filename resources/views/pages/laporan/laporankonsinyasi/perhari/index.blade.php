@@ -15,7 +15,7 @@
 @endsection
 
 @section('header')
-    <h1 class="page-header">Penerimaan Per Hari</h1>
+    <h1 class="page-header">Konsinyasi Per Hari</h1>
 @endsection
 
 @section('subcontent')
