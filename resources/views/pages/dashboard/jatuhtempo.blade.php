@@ -13,8 +13,8 @@
         </tr>
         @foreach ($data as $index => $row)
         <tr>
-            <td>{{ $row->barang->barang_nama }}</td>
-            <td>{{ $row->barang->satuan_utama->satuan_nama }}</td>
+            <td>{{ $row->barang? $row->barang->barang_nama: '' }}</td>
+            <td>{{ $row->barang? $row->barang->satuan_utama->satuan_nama: '' }}</td>
             <td>{{ $row->barang_masuk_nomor_batch }}</td>
             <td class="text-right">{{ number_format($row->barang_masuk_harga_barang, 2) }}</td>
             <td class="text-right">{{ number_format($row->barang_masuk_diskon) }} %</td>

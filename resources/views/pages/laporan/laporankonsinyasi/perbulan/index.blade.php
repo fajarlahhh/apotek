@@ -24,7 +24,7 @@
         <div class="row width-full">
             <div class="col-xl-3 col-sm-3">
                 <div class="form-inline">
-                    <a href="/laporankonsinyasibulanan/cetak?bulan={{ $bulan }}&tahun={{ $tahun }}" target="_blank" class="btn btn-warning"> Cetak</a>
+                    <a href="/laporankonsinyasibulanan/cetak?dokter={{ $dokter }}&bulan={{ $bulan }}&tahun={{ $tahun }}" target="_blank" class="btn btn-warning"> Cetak</a>
                 </div>
             </div>
             <div class="col-xl-9 col-sm-9">
