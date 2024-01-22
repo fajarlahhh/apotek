@@ -75,7 +75,7 @@
                 @foreach ($data as $index => $row)
                 <tr>
                     <td>{{  ++$index }}</td>
-                    <td>{{  $row->barang_id." ".$row->barang_nama }}</td>
+                    <td>{{  $row->barang_nama }}</td>
                     <td>{{  $row->jenis_barang? $row->jenis_barang->jenis_barang_uraian: '' }}</td>
                     <td>{{  $row->satuan_utama? $row->satuan_utama->satuan_nama: '' }}</td>
                     <td>{{  number_format($row->stok_awal->count() > 0? $row->stok_awal->sum('barang_qty'): 0) }}</td>

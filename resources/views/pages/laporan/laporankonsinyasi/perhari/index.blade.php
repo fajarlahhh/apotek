@@ -33,10 +33,10 @@
                 <form id="frm-cari" action="/laporankonsinyasiperhari" method="GET">
                     <div class="form-inline pull-right">
                         <div class="form-group">
-                            <select class="form-control selectpicker cari" name="pbf" data-live-search="true" data-style="btn-success" data-width="100%">
-                                <option value="semua">Semua Konsinyasi</option>
+                            <select class="form-control selectpicker cari" name="dokter" data-live-search="true" data-style="btn-success" data-width="100%">
+                                <option value="semua">Semua Dokter</option>
                                 @foreach($konsi as $row)
-                                <option value="{{ $row->pbf_id }}" {{ $pbf == $row->pbf_id? 'selected': '' }}>{{ $row->pbf_nama }}</option>
+                                <option value="{{ $row->dokter_id }}" {{ $dokter == $row->dokter_id? 'selected': '' }}>{{ $row->dokter_nama }}</option>
                                 @endforeach
                             </select>
                         </div>&nbsp;

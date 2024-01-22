@@ -115,10 +115,6 @@ class PenjualanbebasController extends Controller
             alert()->error('Simpan Data Gagal', "Jumlah Pembayaran Kurang");
             return redirect()->back()->withInput();
         }
-        if (str_replace(',', '', $req->get('penjualan_tagihan')) <= 0) {
-            alert()->error('Simpan Data Gagal', "Subtotal tidak ada");
-            return redirect()->back()->withInput();
-        }
         if (!$req->barang) {
             alert()->error('Simpan Data Gagal', "Barang Belum Diinputkan");
             return redirect()->back()->withInput();
