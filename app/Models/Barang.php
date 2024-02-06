@@ -61,7 +61,7 @@ class Barang extends Model
 
     public function pengguna()
     {
-        return $this->belongsTo('App\Models\Pengguna', 'pengguna_id', 'pengguna_id');
+        return $this->belongsTo('App\Models\Pengguna', 'pengguna_id', 'pengguna_id')->withTrashed();
     }
 
     public function getCreatedAtAttribute($value)

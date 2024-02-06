@@ -25,12 +25,12 @@
                 <div class="row width-full">
                     <div class="col-xl-3 col-sm-3">
                         <div class="form-inline">
-                            <a href="/laporanbarangkeluar/cetak?bulan={{ $bulan }}&tahun={{ $tahun }}&cari={{ $cari }}"
+                            <a href="/laporanbarangkeluarbulanan/cetak?bulan={{ $bulan }}&tahun={{ $tahun }}&cari={{ $cari }}"
                                 target="_blank" class="btn btn-warning"> Cetak</a>
                         </div>
                     </div>
                     <div class="col-xl-9 col-sm-9">
-                        <form id="frm-cari" action="/laporanbarangkeluar" method="GET">
+                        <form id="frm-cari" action="/laporanbarangkeluarbulanan" method="GET">
                             <div class="form-inline pull-right">
                                 <div class="form-group">
                                     <select class="form-control selectpicker cari" name="bulan" data-live-search="true"
