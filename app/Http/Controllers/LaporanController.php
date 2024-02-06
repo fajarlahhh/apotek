@@ -335,18 +335,39 @@ class LaporanController extends Controller
         ]);
     }
 
-    public function laporanfakturmasuk(Request $req, $cetak = null)
+    public function laporanbarangmasukbulanan(Request $req, $cetak = null)
     {
         $bulan = $req->bulan ?: date('m');
         $tahun = $req->tahun ?: date('Y');
         $cari = $req->cari ?: '';
 
-        $data = BarangMasuk::select('barang_masuk_tanggal', 'barang_masuk_faktur', 'pbf_nama', 'satuan_harga', DB::raw('sum(penjualan_detail_qty) qty'), DB::raw('sum(satuan_harga * penjualan_detail_qty) harga'))->leftJoin('pbf', 'pbf.pbf_id', '=', 'barang_masuk.pbf_id')->where('penjualan_tanggal', 'like', $tahun . '-' . $bulan . '-%')->groupBy(['barang_masuk_tanggal', 'barang_masuk_faktur', 'pbf_nama', 'satuan_harga'])->orderBy('barang_masuk_tanggal')->get();
-        return view('pages.laporan.laporanfakturmasuk.index', [
+        $data = BarangMasuk::with('barang')->select(DB::raw('barang_masuk.barang_id barang_id'), 'barang_masuk_faktur', 'barang_masuk_tanggal', 'barang_nama', 'barang_masuk_harga_ppn', 'barang_masuk_diskon', DB::raw('(barang_masuk_harga_barang) harga'), DB::raw('sum(barang_masuk_qty) qty'), DB::raw('sum(barang_masuk_sub_total_ppn) jumla_ppn'), DB::raw('sum(barang_masuk_sub_total) jumlah_harga'))
+            ->leftJoin('barang', 'barang.barang_id', '=', 'barang_masuk.barang_id')
+            ->groupBy(['barang_masuk_tanggal', 'barang_masuk_diskon', 'barang_masuk_faktur', 'barang_masuk.barang_id', 'barang_nama', 'barang_masuk_harga_ppn', 'barang_masuk_harga_barang'])
+            ->orderBy('barang_masuk_tanggal')->orderBy('barang_masuk_faktur')->whereRaw(DB::raw("year(barang_masuk_tanggal)=$tahun"))->whereRaw(DB::raw("month(barang_masuk_tanggal)=$bulan"))->where('barang_nama', 'like', '%' . $cari . '%')->get();
+        return view('pages.laporan.laporanbarangmasuk.perbulan.index', [
             'data' => $data,
+            'cari' => $cari,
             'cetak' => $cetak,
             'bulan' => $bulan,
             'tahun' => $tahun
+        ]);
+    }
+
+    public function laporanbarangmasukperhari(Request $req, $cetak = null)
+    {
+        $tanggal = $req->tanggal ? date('Y-m-d', strtotime($req->tanggal)) : date('Y-m-d');
+        $cari = $req->cari ?: '';
+
+        $data = BarangMasuk::with('barang')->select(DB::raw('barang_masuk.barang_id barang_id'), 'barang_masuk_faktur', 'barang_masuk_tanggal', 'barang_nama', 'barang_masuk_harga_ppn', 'barang_masuk_diskon', DB::raw('(barang_masuk_harga_barang) harga'), DB::raw('sum(barang_masuk_qty) qty'), DB::raw('sum(barang_masuk_sub_total_ppn) jumla_ppn'), DB::raw('sum(barang_masuk_sub_total) jumlah_harga'))
+            ->leftJoin('barang', 'barang.barang_id', '=', 'barang_masuk.barang_id')
+            ->groupBy(['barang_masuk_tanggal', 'barang_masuk_diskon', 'barang_masuk_faktur', 'barang_masuk.barang_id', 'barang_nama', 'barang_masuk_harga_ppn', 'barang_masuk_harga_barang'])
+            ->orderBy('barang_masuk_tanggal')->orderBy('barang_masuk_faktur')->where('barang_masuk_tanggal', $tanggal)->where('barang_nama', 'like', '%' . $cari . '%')->get();
+        return view('pages.laporan.laporanbarangmasuk.perhari.index', [
+            'data' => $data,
+            'cetak' => $cetak,
+            'tanggal' => $tanggal,
+            'cari' => $cari
         ]);
     }
 }

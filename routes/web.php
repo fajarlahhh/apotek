@@ -170,6 +170,20 @@ Route::group(['middleware' => ['auth']], function () {
         });
     });
 
+    Route::group(['middleware' => ['role_or_permission:super-admin|laporanbarangmasukbulanan']], function () {
+        Route::prefix('laporanbarangmasukbulanan')->group(function () {
+            Route::get('/', [LaporanController::class, 'laporanbarangmasukbulanan'])->name('laporanbarangmasukbulanan');
+            Route::get('/{cetak}', [LaporanController::class, 'laporanbarangmasukbulanan'])->name('laporanbarangmasukbulanan.cetak');
+        });
+    });
+
+    Route::group(['middleware' => ['role_or_permission:super-admin|laporanbarangmasukperhari']], function () {
+        Route::prefix('laporanbarangmasukperhari')->group(function () {
+            Route::get('/', [LaporanController::class, 'laporanbarangmasukperhari'])->name('laporanbarangmasukperhari');
+            Route::get('/{cetak}', [LaporanController::class, 'laporanbarangmasukperhari'])->name('laporanbarangmasukperhari.cetak');
+        });
+    });
+
     Route::group(['middleware' => ['role_or_permission:super-admin|laporanfakturmasuk']], function () {
         Route::prefix('laporanfakturmasuk')->group(function () {
             Route::get('/', [LaporanController::class, 'laporanfakturmasuk'])->name('laporanfakturmasuk');

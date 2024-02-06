@@ -67,6 +67,20 @@ return [
                 'title' => 'Perbulan'
             ]]
         ], [
+            'title' => 'Barang Masuk',
+            'url' => 'javascript:;',
+            'caret' => true,
+            'id' => 'laporanbarangmasuk',
+            'sub_menu' => [[
+                'url' => '/laporanbarangmasukperhari',
+                'id' => 'laporanbarangmasukperhari',
+                'title' => 'Perhari'
+            ], [
+                'url' => '/laporanbarangmasukbulanan',
+                'id' => 'laporanbarangmasukbulanan',
+                'title' => 'Perbulan'
+            ]]
+        ], [
             'title' => 'Konsinyasi',
             'url' => 'javascript:;',
             'caret' => true,

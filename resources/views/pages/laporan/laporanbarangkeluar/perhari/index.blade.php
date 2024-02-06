@@ -82,7 +82,8 @@
                 </tr>
             @endforeach
             <tr>
-                <td colspan="5">TOTAL</td>
+                <td colspan="4">TOTAL</td>
+                <td class="text-nowrap text-right">{{ number_format($data->sum('qty'), 2) }}</td>
                 <td class="text-nowrap text-right">{{ number_format($data->sum('jumlah_harga'), 2) }}</td>
             </tr>
         </tbody>

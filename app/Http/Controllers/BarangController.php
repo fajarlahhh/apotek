@@ -22,11 +22,11 @@ class BarangController extends Controller
 
         $data = Barang::with('jenis_barang')->with('satuan_utama')->with('pengguna')->where('barang_nama', 'like', '%'.$req->cari.'%');
 
-        if($jenis != 'semua'){
+        if($jenis && $jenis != 'semua'){
             $data = $data->where('jenis_barang_id', $jenis);
         }
 
-        if($konsinyasi != 'semua'){
+        if($konsinyasi && $konsinyasi != 'semua'){
             $data = $data->where('pbf_id', $konsinyasi);
         }
 
