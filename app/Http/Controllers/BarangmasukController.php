@@ -17,6 +17,7 @@ class BarangmasukController extends Controller
     public function index(Request $req)
 	{
         $tipe = $req->tipe? $req->tipe: 0;
+        $status = $req->status? $req->status: 0;
 		$tanggal = explode(' - ', $req->get('tanggal'));
 		$tgl1 = $req->get('tanggal')? date('Y-m-d', strtotime($tanggal[0])): date('Y-m-01');
 		$tgl2 = $req->get('tanggal')? date('Y-m-d', strtotime($tanggal[1])): date('Y-m-d');
@@ -27,7 +28,16 @@ class BarangmasukController extends Controller
             })->orWhereHas('pbf', function($q) use ($req){
                 $q->where('pbf_nama', 'like', '%'.$req->cari.'%');
             });
-        })->whereBetween('barang_masuk_tanggal', [$tgl1, $tgl2])->orderBy('created_at', 'desc');
+        })->orderBy('created_at', 'desc');
+
+        switch ($status) {
+            case '1':
+                $data = $data->whereNull('barang_masuk_jatuh_tempo')->whereBetween('barang_masuk_tanggal', [$tgl1, $tgl2]);
+                break;
+            case '2':
+                $data = $data->whereNotNull('barang_masuk_jatuh_tempo');
+                break;
+        }
 
         switch ($tipe) {
             case '1':
@@ -39,7 +49,7 @@ class BarangmasukController extends Controller
         }
 
         $data = $data->paginate(10);
-        $data->appends([$req->cari, $req->tipe]);
+        $data->appends([$req->cari, $req->tipe, $req->status]);
         return view('pages.barangmasuk.index', [
             'data' => $data,
             'tgl' => date('d F Y', strtotime($tgl1)).' - '.date('d F Y', strtotime($tgl2)),
@@ -48,6 +58,7 @@ class BarangmasukController extends Controller
             'i' => ($req->input('page', 1) - 1) * 10,
             'tipe' => $tipe,
             'cari' => $req->cari,
+            'status' => $status,
         ]);
     }
 

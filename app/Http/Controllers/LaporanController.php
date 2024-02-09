@@ -344,7 +344,7 @@ class LaporanController extends Controller
         $data = BarangMasuk::with('barang')->select(DB::raw('barang_masuk.barang_id barang_id'), 'barang_masuk_faktur', 'barang_masuk_tanggal', 'barang_nama', 'barang_masuk_harga_ppn', 'barang_masuk_diskon', DB::raw('(barang_masuk_harga_barang) harga'), DB::raw('sum(barang_masuk_qty) qty'), DB::raw('sum(barang_masuk_sub_total_ppn) jumla_ppn'), DB::raw('sum(barang_masuk_sub_total) jumlah_harga'))
             ->leftJoin('barang', 'barang.barang_id', '=', 'barang_masuk.barang_id')
             ->groupBy(['barang_masuk_tanggal', 'barang_masuk_diskon', 'barang_masuk_faktur', 'barang_masuk.barang_id', 'barang_nama', 'barang_masuk_harga_ppn', 'barang_masuk_harga_barang'])
-            ->orderBy('barang_masuk_tanggal')->orderBy('barang_masuk_faktur')->whereRaw(DB::raw("year(barang_masuk_tanggal)=$tahun"))->whereRaw(DB::raw("month(barang_masuk_tanggal)=$bulan"))->where('barang_nama', 'like', '%' . $cari . '%')->get();
+            ->orderBy('barang_masuk_tanggal')->orderBy('barang_masuk_faktur')->whereRaw(DB::raw("year(barang_masuk_tanggal)=$tahun"))->whereRaw(DB::raw("month(barang_masuk_tanggal)=$bulan"))->where(fn($q) => $q->where('barang_nama', 'like', '%' . $cari . '%')->orWhere('barang_masuk_faktur', 'like', '%' . $cari . '%'))->get();
         return view('pages.laporan.laporanbarangmasuk.perbulan.index', [
             'data' => $data,
             'cari' => $cari,

@@ -32,13 +32,24 @@
                 <div class="col-xl-9 col-sm-9">
                     <form id="frm-cari" action="{{ route('barangmasuk') }}" method="GET">
                         <div class="form-inline pull-right">
-                            <div class="input-group" id="default-daterange">
-                                <input type="text" name="tanggal" class="form-control" value="{{ $tgl }}"
-                                    placeholder="Pilih Tanggal Izin" readonly />
-                                <span class="input-group-append">
-                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                                </span>
+
+                            <div class="form-group">
+                                <select class="form-control selectpicker cari" name="status" data-live-search="true"
+                                    data-style="btn-info" data-width="100%">
+                                    <option value="0" {{ $status == '0' ? 'selected' : '' }}>Semua Status</option>
+                                    <option value="1" {{ $status == '1' ? 'selected' : '' }}>Lunas</option>
+                                    <option value="2" {{ $status == '2' ? 'selected' : '' }}>Belum Lunas</option>
+                                </select>
                             </div>&nbsp;
+                            @if ($status == 1)
+                                <div class="input-group" id="default-daterange">
+                                    <input type="text" name="tanggal" class="form-control" value="{{ $tgl }}"
+                                        placeholder="Pilih Tanggal Izin" readonly />
+                                    <span class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                    </span>
+                                </div>&nbsp;
+                            @endif
                             <div class="form-group">
                                 <select class="form-control selectpicker cari" name="tipe" data-live-search="true"
                                     data-style="btn-warning" data-width="100%">
@@ -91,7 +102,9 @@
                             </td>
                             <td class="text-nowrap">{{ $row->barang_masuk_faktur }}</td>
                             <td class="text-nowrap">{{ $row->pbf ? $row->pbf->pbf_nama : '' }}</td>
-                            <td class="text-nowrap">{{ date('d F Y', strtotime($row->barang_masuk_jatuh_tempo)) }}</td>
+                            <td class="text-nowrap">
+                                {{ $row->barang_masuk_jatuh_tempo ? date('d F Y', strtotime($row->barang_masuk_jatuh_tempo)) : null }}
+                            </td>
                             <td class="text-nowrap">{{ $row->barang ? $row->barang->barang_nama : '' }}</td>
                             <td class="text-nowrap text-right">{{ number_format($row->barang_masuk_harga_barang, 2) }}</td>
                             <td class="text-nowrap text-right">{{ number_format($row->barang_masuk_diskon, 2) }}</td>
