@@ -308,15 +308,18 @@ class LaporanController extends Controller
     public function laporanbarangkeluarbulanan(Request $req, $cetak = null)
     {
         $bulan = $req->bulan ?: date('m');
+        $pbf = $req->pbf ?: null;
         $tahun = $req->tahun ?: date('Y');
         $cari = $req->cari ?: '';
 
-        $data = PenjualanDetail::select('penjualan_tanggal', 'barang_nama', 'satuan_nama', DB::raw('(satuan_harga + ifnull(penjualan_detail_tambahan,0)) harga'), 'penjualan_detail_tambahan', DB::raw('sum(penjualan_detail_qty) qty'), DB::raw('sum(penjualan_detail_total) jumlah_harga'))->leftJoin('penjualan', 'penjualan.penjualan_id', '=', 'penjualan_detail.penjualan_id')->leftJoin('barang', 'barang.barang_id', '=', 'penjualan_detail.barang_id')->groupBy(['penjualan_tanggal', 'barang_nama', 'satuan_nama', 'satuan_harga', 'penjualan_detail_tambahan'])->orderBy('penjualan_tanggal')->orderBy('barang_nama')->whereRaw(DB::raw("year(penjualan_tanggal)=$tahun"))->whereRaw(DB::raw("month(penjualan_tanggal)=$bulan"))->where('barang_nama', 'like', '%' . $cari . '%')->get();
+        $data = PenjualanDetail::select('penjualan_tanggal', 'barang_nama', 'satuan_nama', DB::raw('(satuan_harga + ifnull(penjualan_detail_tambahan,0)) harga'), 'penjualan_detail_tambahan', DB::raw('sum(penjualan_detail_qty) qty'), DB::raw('sum(penjualan_detail_total) jumlah_harga'))->leftJoin('penjualan', 'penjualan.penjualan_id', '=', 'penjualan_detail.penjualan_id')->leftJoin('barang', 'barang.barang_id', '=', 'penjualan_detail.barang_id')->groupBy(['penjualan_tanggal', 'barang_nama', 'satuan_nama', 'satuan_harga', 'penjualan_detail_tambahan'])->orderBy('penjualan_tanggal')->when($pbf > 0, fn ($q) => $q->where('barang.pbf_id', $pbf))->when($pbf < 0, fn ($q) => $q->whereNull('barang.pbf_id'))->orderBy('barang_nama')->whereRaw(DB::raw("year(penjualan_tanggal)=$tahun"))->whereRaw(DB::raw("month(penjualan_tanggal)=$bulan"))->where('barang_nama', 'like', '%' . $cari . '%')->get();
         return view('pages.laporan.laporanbarangkeluar.perbulan.index', [
             'data' => $data,
             'cari' => $cari,
             'cetak' => $cetak,
             'bulan' => $bulan,
+            'pbf' => $pbf,
+            'dataPbf' => Pbf::whereIn('pbf_id', Barang::whereNotNull('pbf_id')->select('pbf_id')->groupBy('pbf_id')->get()->pluck('pbf_id')->toArray())->get(),
             'tahun' => $tahun
         ]);
     }
@@ -324,13 +327,16 @@ class LaporanController extends Controller
     public function laporanbarangkeluarperhari(Request $req, $cetak = null)
     {
         $tanggal = $req->tanggal ? date('Y-m-d', strtotime($req->tanggal)) : date('Y-m-d');
+        $pbf = $req->pbf ?: null;
         $cari = $req->cari ?: '';
 
-        $data = PenjualanDetail::select('penjualan_tanggal', 'barang_nama', 'satuan_nama', DB::raw('(satuan_harga + ifnull(penjualan_detail_tambahan,0)) harga'), 'penjualan_detail_tambahan', DB::raw('sum(penjualan_detail_qty) qty'), DB::raw('sum(penjualan_detail_total) jumlah_harga'))->leftJoin('penjualan', 'penjualan.penjualan_id', '=', 'penjualan_detail.penjualan_id')->leftJoin('barang', 'barang.barang_id', '=', 'penjualan_detail.barang_id')->groupBy(['penjualan_tanggal', 'barang_nama', 'satuan_nama', 'satuan_harga', 'penjualan_detail_tambahan'])->orderBy('penjualan_tanggal')->orderBy('barang_nama')->where('penjualan_tanggal', $tanggal)->where('barang_nama', 'like', '%' . $cari . '%')->get();
+        $data = PenjualanDetail::select('penjualan_tanggal', 'barang_nama', 'satuan_nama', DB::raw('(satuan_harga + ifnull(penjualan_detail_tambahan,0)) harga'), 'penjualan_detail_tambahan', DB::raw('sum(penjualan_detail_qty) qty'), DB::raw('sum(penjualan_detail_total) jumlah_harga'))->leftJoin('penjualan', 'penjualan.penjualan_id', '=', 'penjualan_detail.penjualan_id')->leftJoin('barang', 'barang.barang_id', '=', 'penjualan_detail.barang_id')->groupBy(['penjualan_tanggal', 'barang_nama', 'satuan_nama', 'satuan_harga', 'penjualan_detail_tambahan'])->orderBy('penjualan_tanggal')->orderBy('barang_nama')->when($pbf > 0, fn ($q) => $q->where('barang.pbf_id', $pbf))->when($pbf < 0, fn ($q) => $q->whereNull('barang.pbf_id'))->where('penjualan_tanggal', $tanggal)->where('barang_nama', 'like', '%' . $cari . '%')->get();
         return view('pages.laporan.laporanbarangkeluar.perhari.index', [
             'data' => $data,
             'cetak' => $cetak,
             'tanggal' => $tanggal,
+            'pbf' => $pbf,
+            'dataPbf' => Pbf::whereIn('pbf_id', Barang::whereNotNull('pbf_id')->select('pbf_id')->groupBy('pbf_id')->get()->pluck('pbf_id')->toArray())->get(),
             'cari' => $cari
         ]);
     }
@@ -344,7 +350,7 @@ class LaporanController extends Controller
         $data = BarangMasuk::with('barang')->select(DB::raw('barang_masuk.barang_id barang_id'), 'barang_masuk_faktur', 'barang_masuk_tanggal', 'barang_nama', 'barang_masuk_harga_ppn', 'barang_masuk_diskon', DB::raw('(barang_masuk_harga_barang) harga'), DB::raw('sum(barang_masuk_qty) qty'), DB::raw('sum(barang_masuk_sub_total_ppn) jumla_ppn'), DB::raw('sum(barang_masuk_sub_total) jumlah_harga'))
             ->leftJoin('barang', 'barang.barang_id', '=', 'barang_masuk.barang_id')
             ->groupBy(['barang_masuk_tanggal', 'barang_masuk_diskon', 'barang_masuk_faktur', 'barang_masuk.barang_id', 'barang_nama', 'barang_masuk_harga_ppn', 'barang_masuk_harga_barang'])
-            ->orderBy('barang_masuk_tanggal')->orderBy('barang_masuk_faktur')->whereRaw(DB::raw("year(barang_masuk_tanggal)=$tahun"))->whereRaw(DB::raw("month(barang_masuk_tanggal)=$bulan"))->where(fn($q) => $q->where('barang_nama', 'like', '%' . $cari . '%')->orWhere('barang_masuk_faktur', 'like', '%' . $cari . '%'))->get();
+            ->orderBy('barang_masuk_tanggal')->orderBy('barang_masuk_faktur')->whereRaw(DB::raw("year(barang_masuk_tanggal)=$tahun"))->whereRaw(DB::raw("month(barang_masuk_tanggal)=$bulan"))->where(fn ($q) => $q->where('barang_nama', 'like', '%' . $cari . '%')->orWhere('barang_masuk_faktur', 'like', '%' . $cari . '%'))->get();
         return view('pages.laporan.laporanbarangmasuk.perbulan.index', [
             'data' => $data,
             'cari' => $cari,
@@ -362,7 +368,7 @@ class LaporanController extends Controller
         $data = BarangMasuk::with('barang')->select(DB::raw('barang_masuk.barang_id barang_id'), 'barang_masuk_faktur', 'barang_masuk_tanggal', 'barang_nama', 'barang_masuk_harga_ppn', 'barang_masuk_diskon', DB::raw('(barang_masuk_harga_barang) harga'), DB::raw('sum(barang_masuk_qty) qty'), DB::raw('sum(barang_masuk_sub_total_ppn) jumla_ppn'), DB::raw('sum(barang_masuk_sub_total) jumlah_harga'))
             ->leftJoin('barang', 'barang.barang_id', '=', 'barang_masuk.barang_id')
             ->groupBy(['barang_masuk_tanggal', 'barang_masuk_diskon', 'barang_masuk_faktur', 'barang_masuk.barang_id', 'barang_nama', 'barang_masuk_harga_ppn', 'barang_masuk_harga_barang'])
-            ->orderBy('barang_masuk_tanggal')->orderBy('barang_masuk_faktur')->where('barang_masuk_tanggal', $tanggal)->where(fn($q) => $q->where('barang_nama', 'like', '%' . $cari . '%')->orWhere('barang_masuk_faktur', 'like', '%' . $cari . '%'))->get();
+            ->orderBy('barang_masuk_tanggal')->orderBy('barang_masuk_faktur')->where('barang_masuk_tanggal', $tanggal)->where(fn ($q) => $q->where('barang_nama', 'like', '%' . $cari . '%')->orWhere('barang_masuk_faktur', 'like', '%' . $cari . '%'))->get();
         return view('pages.laporan.laporanbarangmasuk.perhari.index', [
             'data' => $data,
             'cetak' => $cetak,

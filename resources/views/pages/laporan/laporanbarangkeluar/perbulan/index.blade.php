@@ -33,6 +33,20 @@
                         <form id="frm-cari" action="/laporanbarangkeluarbulanan" method="GET">
                             <div class="form-inline pull-right">
                                 <div class="form-group">
+                                    <select class="form-control selectpicker cari" name="pbf" data-live-search="true"
+                                        data-style="btn-info" data-width="100%">
+                                        <option value="" @if ($pbf == '') selected @endif>Semua Jenis
+                                        </option>
+                                        <option value="-1" @if ($pbf == '-1') selected @endif>Non PBF
+                                        </option>
+                                        @foreach ($dataPbf as $row)
+                                            <option value="{{ $row->pbf_id }}"
+                                                @if ($pbf == $row->pbf_id) selected @endif>{{ $row->pbf_nama }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>&nbsp;
+                                <div class="form-group">
                                     <select class="form-control selectpicker cari" name="bulan" data-live-search="true"
                                         data-style="btn-info" data-width="100%">
                                         @for ($i = 1; $i <= 12; $i++)

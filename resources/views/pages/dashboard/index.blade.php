@@ -119,7 +119,7 @@
         var nama = $(this).data('nama');
         var tanggal = $(this).data('tanggal');
         Swal.fire({
-            title: 'Cek Stok',
+            title: 'Barang Kadaluarsa',
             text: 'Barang ' + nama + ' kadaluarsa tanggal ' + tanggal + ' sudah dicek stok?',
             icon: 'warning',
             showCancelButton: true,

@@ -5,6 +5,7 @@
 @push('css')
     <link href="/assets/plugins/parsleyjs/src/parsley.css" rel="stylesheet" />
     <link href="/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="/assets/plugins/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
 @endpush
 
 @section('page')
@@ -31,6 +32,20 @@
                     <div class="col-xl-9 col-sm-9">
                         <form id="frm-cari" action="/laporanbarangkeluarperhari" method="GET">
                             <div class="form-inline pull-right">
+                                <div class="form-group">
+                                    <select class="form-control selectpicker cari" name="pbf" data-live-search="true"
+                                        data-style="btn-info" data-width="100%">
+                                        <option value="" @if ($pbf == '') selected @endif>Semua Jenis
+                                        </option>
+                                        <option value="-1" @if ($pbf == '-1') selected @endif>Non PBF
+                                        </option>
+                                        @foreach ($dataPbf as $row)
+                                            <option value="{{ $row->pbf_id }}"
+                                                @if ($pbf == $row->pbf_id) selected @endif>{{ $row->pbf_nama }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>&nbsp;
                                 <div class="form-group">
                                     <input type="text" readonly class="form-control date cari" id="tanggal"
                                         name="tanggal" value="{{ date('d M Y', strtotime(old('tanggal', $tanggal))) }}"
@@ -100,6 +115,7 @@
             window.print();
         </script>
     @else
+        <script src="/assets/plugins/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
         <script src="/assets/plugins/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
         <script src="/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
         <script>
