@@ -19,7 +19,7 @@ class JenisBarang extends Model
 
     public function barang()
     {
-        return $this->hasMany('App\Models\Barang', 'jenis_barang_id', 'jenis_barang_id');
+        return $this->hasMany('App\Models\Barang', 'jenis_barang_id', 'jenis_barang_id')->withTrashed();
     }
 
     public function pengguna()

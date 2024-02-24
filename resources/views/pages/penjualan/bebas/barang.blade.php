@@ -32,7 +32,7 @@
     <td class="with-btn width-100">
         <input class="form-control" onchange="total_harga_barang({{ $id }})"
             onkeyup="total_harga_barang({{ $id }})" type="number" id="diskon{{ $id }}"
-            name="barang[{{ $id }}][penjualan_detail_diskon]" max="100"
+            name="barang[{{ $id }}][penjualan_detail_diskon]" max="@role('user') 90 @else 100 @endrole"
             value="{{ $data ? $data['penjualan_detail_diskon'] : 0 }}" autocomplete="off" min="0"
             @role('guest|user')
             readonly

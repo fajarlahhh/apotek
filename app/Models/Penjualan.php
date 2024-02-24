@@ -21,7 +21,7 @@ class Penjualan extends Model
 
     public function dokter()
     {
-        return $this->belongsTo('App\Models\Dokter', 'dokter_id', 'dokter_id');
+        return $this->belongsTo('App\Models\Dokter', 'dokter_id', 'dokter_id')->withTrashed();
     }
 
     public function detail()

@@ -15,6 +15,6 @@ class JatuhTempo extends Model
 
     public function barang_masuk()
     {
-        return $this->hasMany('App\Models\BarangMasuk', 'barang_masuk_faktur', 'barang_masuk_faktur');
+        return $this->hasMany('App\Models\BarangMasuk', 'barang_masuk_faktur', 'barang_masuk_faktur')->withTrashed();
     }
 }

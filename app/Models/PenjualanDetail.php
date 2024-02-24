@@ -20,7 +20,7 @@ class PenjualanDetail extends Model
 
     public function pbf()
     {
-        return $this->belongsTo('App\Models\Pbf', 'pbf_id', 'pbf_id');
+        return $this->belongsTo('App\Models\Pbf', 'pbf_id', 'pbf_id')->withTrashed();
     }
 
     public function penjualan()

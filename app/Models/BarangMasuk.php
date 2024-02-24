@@ -26,12 +26,12 @@ class BarangMasuk extends Model
 
     public function pengguna()
     {
-        return $this->belongsTo('App\Models\Pengguna', 'pengguna_id', 'pengguna_id');
+        return $this->belongsTo('App\Models\Pengguna', 'pengguna_id', 'pengguna_id')->withTrashed();
     }
 
     public function pbf()
     {
-        return $this->belongsTo('App\Models\Pbf', 'pbf_id', 'pbf_id');
+        return $this->belongsTo('App\Models\Pbf', 'pbf_id', 'pbf_id')->withTrashed();
     }
 
     public function getCreatedAtAttribute($value)
